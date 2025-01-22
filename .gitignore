@@ -310,7 +310,7 @@
 # **/*.back.*
 
 node_modules
-
+venv/
 # *.sublime*
 
 # psd
