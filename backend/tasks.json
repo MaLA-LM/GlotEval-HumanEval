@@ -1,0 +1,26 @@
+{
+  "Translation": {
+    "benchmarks": ["Flores-200", "others"],
+    "models": {
+      "Flores-200": {
+        "gemma-7b": {
+          "languages": ["eng_Latn-to-ace_Arab", "others"],
+          "file_paths": {
+            "eng_Latn-to-ace_Arab": "outputs/Flores-200/en-X/gemma-7b/eng_Latn-to-ace_Arab.jsonl",
+            "others": "other.jsonl"
+          }
+        }
+      }
+    }
+  },
+  "Classification": {
+    "benchmarks": ["xx", "yy"],
+    "models": {
+      "xx" : {
+        "/////": {
+          
+        }
+      }
+    }
+  }
+}
