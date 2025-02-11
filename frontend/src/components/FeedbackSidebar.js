@@ -1,4 +1,3 @@
-// src/components/FeedbackSidebar.js
 import React, { useState } from "react";
 import {
   Drawer,

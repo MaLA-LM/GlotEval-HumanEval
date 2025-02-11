@@ -1,4 +1,3 @@
-// src/components/DataTable.js
 import React, { useState } from "react";
 import {
   TableContainer,

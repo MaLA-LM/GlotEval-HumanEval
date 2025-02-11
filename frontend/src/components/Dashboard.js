@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, Snackbar } from "@mui/material";
 import api from "../services/api";
