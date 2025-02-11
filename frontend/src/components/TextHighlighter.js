@@ -1,9 +1,18 @@
 // src/components/TextHighlighter.js
 import React, { useState, useRef } from "react";
-import { Box, Button, List, ListItem, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  TextField,
+  Typography,
+  List,
+  ListItem,
+  IconButton,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// Map error types to colors (customize as needed)
+// Mapping error types to colors (customize as needed)
 const errorColors = {
   "Grammar Error": "#ffcccc",
   "Spelling or Typographical Error": "#d1e7dd",
@@ -14,45 +23,36 @@ const errorColors = {
   "Cultural Sensitivity or Offensive Content": "#f5c2c7",
 };
 
-const intervalsOverlap = (a, b) => a.start <= b.end && b.start <= a.end;
-const mergeIntervals = (a, b) => ({
-  start: Math.min(a.start, b.start),
-  end: Math.max(a.end, b.end),
-  errorType: a.errorType, // assume same error type
-});
-
 function TextHighlighter({ text, errorType, onHighlightChange }) {
   const textRef = useRef(null);
   const [annotations, setAnnotations] = useState([]);
+  const [currentSelection, setCurrentSelection] = useState(null);
+  const [translateOpen, setTranslateOpen] = useState(false);
+  const [translatedText, setTranslatedText] = useState("");
 
+  // When mouse is released, record the selection (using offsets from a single text node)
   const handleMouseUp = () => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed) return;
-    // Ensure selection is inside our text container.
     if (!textRef.current.contains(selection.anchorNode)) return;
+    const anchor = selection.anchorOffset;
+    const focus = selection.focusOffset;
+    const start = Math.min(anchor, focus);
+    const end = Math.max(anchor, focus);
+    setCurrentSelection({ start, end });
+  };
 
-    const fullText = textRef.current.innerText;
-    const selectedText = selection.toString();
-    const start = fullText.indexOf(selectedText);
-    if (start === -1) return;
-    const end = start + selectedText.length;
-    const newAnnotation = { start, end, errorType };
-
-    // Merge overlapping annotations if same error type.
-    let mergedAnnotation = newAnnotation;
-    const remaining = [];
-    annotations.forEach((ann) => {
-      if (ann.errorType === errorType && intervalsOverlap(ann, mergedAnnotation)) {
-        mergedAnnotation = mergeIntervals(ann, mergedAnnotation);
-      } else {
-        remaining.push(ann);
-      }
-    });
-    const updatedAnnotations = [...remaining, mergedAnnotation];
+  // When "Label Selected Text" is clicked, record the annotation.
+  const handleLabelSelectedText = () => {
+    if (!currentSelection || !errorType) return;
+    const newAnnotation = { ...currentSelection, errorType };
+    // Allow multiple annotations (even overlapping). Simply add it.
+    const updatedAnnotations = [...annotations, newAnnotation];
     updatedAnnotations.sort((a, b) => a.start - b.start);
     setAnnotations(updatedAnnotations);
     if (onHighlightChange) onHighlightChange(updatedAnnotations);
-    selection.removeAllRanges();
+    setCurrentSelection(null);
+    window.getSelection().removeAllRanges();
   };
 
   const clearAnnotations = () => {
@@ -60,7 +60,22 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
     if (onHighlightChange) onHighlightChange([]);
   };
 
-  // Render the text with annotations highlighted.
+  // Dummy translation: simulate a delay and then return the original text appended with a note.
+  const simulateTranslate = (inputText) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(inputText + " (translated to English)");
+      }, 1000);
+    });
+  };
+
+  const handleTranslate = async () => {
+    const result = await simulateTranslate(text);
+    setTranslatedText(result);
+    setTranslateOpen(true);
+  };
+
+  // Render text with annotations highlighted.
   const getHighlightedText = () => {
     if (annotations.length === 0) return text;
     let segments = [];
@@ -97,25 +112,52 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
       >
         {getHighlightedText()}
       </Box>
-      <Box sx={{ mt: 1 }}>
+      <Box sx={{ mt: 1, display: "flex", gap: 1 }}>
+        <Button variant="outlined" onClick={handleLabelSelectedText} size="small">
+          Label Selected Text
+        </Button>
         <Button variant="outlined" onClick={clearAnnotations} size="small">
           Clear Highlights
         </Button>
+      </Box>
+      <Box sx={{ mt: 1 }}>
+        <Button variant="outlined" onClick={handleTranslate} size="small">
+          Google Translate to English
+        </Button>
+        <Collapse in={translateOpen}>
+          <TextField
+            fullWidth
+            multiline
+            rows={3}
+            variant="outlined"
+            value={translatedText}
+            sx={{ mt: 1 }}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Collapse>
       </Box>
       {annotations.length > 0 && (
         <Box sx={{ mt: 1 }}>
           <Typography variant="subtitle2">Current Annotations:</Typography>
           <List dense>
             {annotations.map((ann, idx) => (
-              <ListItem key={idx} secondaryAction={
-                <IconButton edge="end" onClick={() => {
-                  const updated = annotations.filter((_, i) => i !== idx);
-                  setAnnotations(updated);
-                  if (onHighlightChange) onHighlightChange(updated);
-                }}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-              }>
+              <ListItem
+                key={idx}
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    onClick={() => {
+                      const updated = annotations.filter((_, i) => i !== idx);
+                      setAnnotations(updated);
+                      if (onHighlightChange) onHighlightChange(updated);
+                    }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                }
+              >
                 <Typography variant="body2">
                   {ann.errorType} [{ann.start}, {ann.end}]
                 </Typography>

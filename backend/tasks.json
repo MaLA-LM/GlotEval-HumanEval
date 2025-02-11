@@ -14,11 +14,14 @@
     }
   },
   "Classification": {
-    "benchmarks": ["xx", "yy"],
+    "benchmarks": ["sib-200"],
     "models": {
-      "xx" : {
-        "/////": {
-          
+      "sib-200" : {
+        "bloom-7b1": {
+          "languages": ["ace_Arab"],
+          "file_paths":{
+            "ace_Arab" : "outputs/SIB-200/bloom-7b1/ace_Arab.jsonl"
+          }
         }
       }
     }

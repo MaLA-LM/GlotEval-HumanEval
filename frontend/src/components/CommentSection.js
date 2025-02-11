@@ -7,7 +7,7 @@ import {
   Paper,
   Avatar,
   Grid,
-  TextField, // <-- Added this import
+  TextField,
   Button,
   Dialog,
   DialogTitle,
@@ -92,15 +92,24 @@ function CommentSection({ refreshFlag }) {
           </Typography>
         </Grid>
         <Grid item>
+          <Rating value={comment.rating} readOnly size="small" />
+        </Grid>
+        <Grid item>
           <Typography variant="caption">
             {new Date(comment.timestamp).toLocaleString()}
           </Typography>
         </Grid>
       </Grid>
-      {/* Main comment area: feedback and rating */}
       <Box sx={{ mt: 1 }}>
-        <Typography variant="body1">{comment.feedback}</Typography>
-        <Rating value={comment.rating} readOnly size="small" />
+        <Typography variant="body2">
+          <strong>Entry ID:</strong> {comment.entry_id}
+        </Typography>
+        <Typography variant="body2">
+          <strong>Question:</strong> {comment.question}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Feedback:</strong> {comment.feedback}
+        </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
         <IconButton
