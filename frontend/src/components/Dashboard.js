@@ -30,6 +30,12 @@ function Dashboard({ user }) {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    // Hide the table when any of the dropdown selections change.
+    setTableData([]);
+  }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
+  
+
   const handleLoadData = async () => {
     if (!selectedTask || !selectedBenchmark || !selectedModel || !selectedLanguage) {
       alert("Please select a task, benchmark, model, and language.");

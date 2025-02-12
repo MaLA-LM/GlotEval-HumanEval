@@ -10,7 +10,7 @@ class User(db.Model):
 class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
-    task_id = db.Column(db.String(20))
+    entry_id = db.Column(db.String(20))
     row_data = db.Column(db.Text)  # JSON serialized table row
     error_type = db.Column(db.String(50))
     span_start = db.Column(db.Integer)

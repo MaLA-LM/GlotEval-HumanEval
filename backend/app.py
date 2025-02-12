@@ -6,7 +6,8 @@ from db import db
 from models import User, Annotation, Comment
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
-
+from deep_translator import GoogleTranslator
+import re
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -133,18 +134,50 @@ def save_annotation():
         return jsonify({"error": "Authentication required"}), 401
     data = request.json
     username = session["username"]
-    annotation = Annotation(
-        username=username,
-        entry_id=data.get("entry_id"),
-        row_data=json.dumps(data.get("row_data")),
-        error_type=data.get("error_type"),
-        span_start=data.get("span", [0, 0])[0],
-        span_end=data.get("span", [0, 0])[1],
-        timestamp=datetime.utcnow()
-    )
-    db.session.add(annotation)
-    db.session.commit()
-    return jsonify({"message": "Annotation saved", "id": annotation.id})
+    # Expecting data to contain an "annotations" array
+    annotations = data.get("annotations")
+    if annotations and isinstance(annotations, list):
+        saved_annotations = []
+        for ann in annotations:
+            # If error type is missing, skip (or you can decide to throw an error)
+            if ann.get("errorType") is None:
+                continue
+            new_ann = Annotation(
+                username=username,
+                entry_id=data.get("entry_id"),
+                row_data=json.dumps(data.get("row_data")),
+                error_type=ann.get("errorType"),
+                span_start=ann.get("start", 0),
+                span_end=ann.get("end", 0),
+                timestamp=datetime.utcnow()
+            )
+            db.session.add(new_ann)
+            saved_annotations.append(new_ann)
+        try:
+            db.session.commit()
+            return jsonify({"message": f"{len(saved_annotations)} annotations saved."})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 500
+    else:
+        # Fallback: if annotations array is not provided, try saving a single annotation.
+        new_ann = Annotation(
+            username=username,
+            entry_id=data.get("entry_id"),
+            row_data=json.dumps(data.get("row_data")),
+            error_type=data.get("error_type"),
+            span_start=data.get("span", [0, 0])[0],
+            span_end=data.get("span", [0, 0])[1],
+            timestamp=datetime.utcnow()
+        )
+        db.session.add(new_ann)
+        try:
+            db.session.commit()
+            return jsonify({"message": "Annotation saved", "id": new_ann.id})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 500
+
 
 ### Comments endpoints ###
 @app.route("/api/comments", methods=["GET"])
@@ -257,6 +290,55 @@ def export_data():
     with open(export_path, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2)
     return send_file(export_path, as_attachment=True)
+
+
+
+SUPPORTED_LANGUAGES = {
+    'en': 'English',
+    'es': 'Spanish',
+    'fr': 'French',
+    'de': 'German',
+    'zh': 'Chinese',
+    'ja': 'Japanese'
+}
+
+@app.route('/api/translate', methods=['POST'])
+def translate():
+    try:
+        data = request.get_json()
+        text = data.get('text')
+        target_lang = data.get('target_lang', 'en')
+        
+        if not text:
+            return jsonify({"error": "No text provided for translation"}), 400
+            
+        if target_lang not in SUPPORTED_LANGUAGES:
+            return jsonify({"error": f"Unsupported target language: {target_lang}"}), 400
+
+        # Split text into smaller chunks if needed (Google Translate has character limits)
+        chunks = [text[i:i+4500] for i in range(0, len(text), 4500)]
+        
+        translator = GoogleTranslator(source='auto', target=target_lang)
+        translated_chunks = []
+        
+        for chunk in chunks:
+            try:
+                translated = translator.translate(chunk)
+                translated_chunks.append(translated)
+            except Exception as e:
+                print(f"Translation error for chunk: {str(e)}")
+                return jsonify({"error": "Translation failed"}), 500
+
+        translated_text = ' '.join(translated_chunks)
+        
+        return jsonify({
+            "translated_text": translated_text,
+            "target_lang": target_lang
+        })
+        
+    except Exception as e:
+        print(f"Translation error: {str(e)}")
+        return jsonify({"error": "Translation failed"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -166,7 +166,13 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
               ))}
             </Select>
           </FormControl>
-          <TextHighlighter text={fieldText} errorType={errorType} onHighlightChange={setAnnotations} />
+          <TextHighlighter 
+            text={fieldText} 
+            errorType={errorType} 
+            onHighlightChange={setAnnotations} 
+            row={row}
+            taskType={taskType}
+          />
           <Button variant="contained" onClick={handleAnnotationsSubmit} sx={{ mt: 1 }}>
             Submit Annotations
           </Button>

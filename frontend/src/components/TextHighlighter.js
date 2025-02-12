@@ -2,20 +2,19 @@ import React, { useState, useRef } from "react";
 import {
   Box,
   Button,
-  Collapse,
   TextField,
   Typography,
   List,
   ListItem,
   IconButton,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import api from "../services/api"; // Import the api service
 
-// Define background colors for error types.
 const errorColors = {
   "Grammar Error": "#ffcccc",
   "Spelling or Typographical Error": "#d1e7dd",
@@ -26,47 +25,37 @@ const errorColors = {
   "Cultural Sensitivity or Offensive Content": "#f5c2c7",
 };
 
-// List of target languages.
-const targetLanguages = [
-  { code: "en", name: "English" },
-  { code: "es", name: "Spanish" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
-  { code: "zh", name: "Chinese" },
-  { code: "ja", name: "Japanese" },
-];
+const supportedLanguages = {
+  'en': 'English',
+  'es': 'Spanish',
+  'fr': 'French',
+  'de': 'German',
+  'zh': 'Chinese',
+  'ja': 'Japanese'
+};
 
-/**
- * Helper to compute selection offsets relative to the container’s text.
- * Assumes that the container’s text equals the original text.
- */
-function getSelectionOffsets(container) {
+function getSelectionCharacterOffsetWithin(element) {
   const selection = window.getSelection();
   if (!selection || selection.rangeCount === 0) return { start: 0, end: 0 };
   const range = selection.getRangeAt(0);
-  const preRange = range.cloneRange();
-  preRange.selectNodeContents(container);
-  preRange.setEnd(range.startContainer, range.startOffset);
-  const start = preRange.toString().length;
+  const preCaretRange = range.cloneRange();
+  preCaretRange.selectNodeContents(element);
+  preCaretRange.setEnd(range.startContainer, range.startOffset);
+  const start = preCaretRange.toString().length;
   const selectedText = range.toString();
   return { start, end: start + selectedText.length };
 }
 
-/**
- * For each character index in text, if one or more annotations cover that character,
- * use the annotation that was applied last.
- */
 function renderAnnotatedText(text, annotations) {
   if (!annotations || annotations.length === 0) return text;
   const len = text.length;
   let segments = [];
   let i = 0;
   while (i < len) {
-    // Determine which annotation (if any) covers index i.
     let appliedAnn = null;
     annotations.forEach((ann) => {
       if (i >= ann.start && i < ann.end) {
-        appliedAnn = ann; // later annotations override earlier ones (they are appended)
+        appliedAnn = ann;
       }
     });
     let j = i;
@@ -100,35 +89,45 @@ function renderAnnotatedText(text, annotations) {
   return segments;
 }
 
-function TextHighlighter({ text, errorType, onHighlightChange }) {
-  // Save original text (assumed constant).
-  const originalTextRef = useRef(text);
-  const containerRef = useRef(null);
-  // Annotations: array of objects { start, end, errorType }.
-  const [annotations, setAnnotations] = useState([]);
-  // The current selection span.
-  const [currentSelection, setCurrentSelection] = useState(null);
-
-  // Translation-related state.
-  const [selectedTargetLanguage, setSelectedTargetLanguage] = useState("en");
-  const [translationLoading, setTranslationLoading] = useState(false);
-  const [translationError, setTranslationError] = useState("");
-  const [translationVisible, setTranslationVisible] = useState(false);
-  const [translatedText, setTranslatedText] = useState("");
-
-  // When the mouse is released, record the selection offsets.
-  const handleMouseUp = () => {
-    const offsets = getSelectionOffsets(containerRef.current);
-    if (offsets.start === offsets.end) return;
-    setCurrentSelection(offsets);
+// Helper function to get text from row based on fields
+const getFullRowText = (row, taskType) => {
+  const detailOrder = {
+    classification: ["model_name", "test_lang", "prompt", "predicted_category", "correct_category"],
+    translation: ["model_name", "src_lang", "tgt_lang", "src_text", "ref_text", "hyp_text", "prompt"],
+    summarization: ["model_name", "input", "target", "output"],
+    generation: ["model_name", "input", "target", "output"],
   };
 
-  // When "Label Selected Text" is clicked, append a new annotation.
+  const fields = detailOrder[taskType.toLowerCase()] || [];
+  return fields.map(field => {
+    const value = row[field];
+    return `${field.toUpperCase()}: ${
+      typeof value === 'object' ? JSON.stringify(value) : value || 'N/A'
+    }`;
+  }).join('\n');
+};
+
+function TextHighlighter({ text, errorType, onHighlightChange, row, taskType }) {
+  const originalTextRef = useRef(text);
+  const containerRef = useRef(null);
+  const [annotations, setAnnotations] = useState([]);
+  const [currentSelection, setCurrentSelection] = useState(null);
+  const [translationVisible, setTranslationVisible] = useState(false);
+  const [translatedText, setTranslatedText] = useState("");
+  const [targetLanguage, setTargetLanguage] = useState("es");
+  const [translationScope, setTranslationScope] = useState("selected");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleMouseUp = () => {
+    const offsets = getSelectionCharacterOffsetWithin(containerRef.current);
+    if (offsets.start === offsets.end) return;
+    setCurrentSelection({ start: offsets.start, end: offsets.end });
+  };
+
   const handleLabelSelectedText = () => {
     if (!currentSelection || !errorType) return;
-    // For simplicity, we simply append the new annotation.
     const newAnnotation = { ...currentSelection, errorType };
-    // In our simple version, we do not merge or subtract; we simply push the new annotation.
     const updatedAnnotations = [...annotations, newAnnotation];
     setAnnotations(updatedAnnotations);
     if (onHighlightChange) onHighlightChange(updatedAnnotations);
@@ -136,66 +135,47 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
     window.getSelection().removeAllRanges();
   };
 
-  // Clear all annotations.
   const clearAnnotations = () => {
     setAnnotations([]);
     if (onHighlightChange) onHighlightChange([]);
   };
 
-  // ----- Google Translate Implementation -----
-  // Replace this function with an actual call using your API key.
-  async function translateText(inputText, targetLang) {
-    const apiKey = "YOUR_API_KEY"; // <-- Provide your API key later.
-    const url = "https://translation.googleapis.com/language/translate/v2";
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          q: inputText,
-          target: targetLang,
-          source: "auto", // Auto-detect the source language.
-          format: "text",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error.message || `HTTP error: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.data.translations[0].translatedText;
-    } catch (err) {
-      throw err;
-    }
-  }
-
   const handleTranslate = async () => {
-    setTranslationError("");
-    setTranslationLoading(true);
+    setIsLoading(true);
+    setError(null);
     try {
-      const result = await translateText(originalTextRef.current, selectedTargetLanguage);
-      setTranslatedText(result);
+      let textToTranslate;
+      if (translationScope === "selected" && currentSelection) {
+        textToTranslate = originalTextRef.current.slice(currentSelection.start, currentSelection.end);
+      } else {
+        // Get full row text for translation
+        textToTranslate = getFullRowText(row, taskType);
+      }
+
+      if (!textToTranslate.trim()) {
+        throw new Error("Please select text to translate or choose 'Entire Text'");
+      }
+
+      const response = await api.post('/translate', {
+        text: textToTranslate,
+        target_lang: targetLanguage
+      });
+
+      setTranslatedText(Array.isArray(response.data.translated_text) 
+        ? response.data.translated_text.join(' ') 
+        : response.data.translated_text);
       setTranslationVisible(true);
     } catch (err) {
-      console.error("Translation error:", err);
-      setTranslationError(err.message || "Translation failed. Please try again.");
+      setError(err.response?.data?.error || err.message);
     } finally {
-      setTranslationLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const handleHideTranslation = () => {
-    setTranslationVisible(false);
-  };
-
-  // Render the annotated text using a simple algorithm:
   const highlightedContent = renderAnnotatedText(originalTextRef.current, annotations);
 
   return (
     <Box>
-      {/* Text display area */}
       <Box
         ref={containerRef}
         onMouseUp={handleMouseUp}
@@ -209,7 +189,7 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
       >
         {highlightedContent}
       </Box>
-      {/* Annotation action buttons */}
+      
       <Box sx={{ mt: 1, display: "flex", gap: 1 }}>
         <Button variant="outlined" onClick={handleLabelSelectedText} size="small">
           Label Selected Text
@@ -218,7 +198,7 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
           Clear Highlights
         </Button>
       </Box>
-      {/* Display list of current annotations */}
+
       {annotations.length > 0 && (
         <Box sx={{ mt: 1 }}>
           <Typography variant="subtitle2">Current Annotations:</Typography>
@@ -247,64 +227,70 @@ function TextHighlighter({ text, errorType, onHighlightChange }) {
           </List>
         </Box>
       )}
-      {/* Translation area with target language dropdown */}
-      <Box
-        sx={{
-          mt: 2,
-          border: "1px dashed gray",
-          p: 1,
-          bgcolor: "#f9f9f9",
-        }}
-      >
-        <Typography variant="subtitle2" color="textSecondary">
-          Translation
+
+      <Box sx={{ mt: 2, p: 2, border: "1px solid #e0e0e0", borderRadius: 1 }}>
+        <Typography variant="subtitle2" gutterBottom>
+          Translation Options
         </Typography>
-        {/* Dropdown to select target language */}
-        <FormControl size="small" sx={{ mt: 1, minWidth: 150 }}>
-          <InputLabel>Target Language</InputLabel>
-          <Select
-            label="Target Language"
-            value={selectedTargetLanguage}
-            onChange={(e) => setSelectedTargetLanguage(e.target.value)}
+        
+        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>Language</InputLabel>
+            <Select
+              value={targetLanguage}
+              onChange={(e) => setTargetLanguage(e.target.value)}
+              label="Language"
+            >
+              {Object.entries(supportedLanguages).map(([code, name]) => (
+                <MenuItem key={code} value={code}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>Translate</InputLabel>
+            <Select
+              value={translationScope}
+              onChange={(e) => setTranslationScope(e.target.value)}
+              label="Translate"
+            >
+              <MenuItem value="selected">Selected Text</MenuItem>
+              <MenuItem value="entire">Entire Entry</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Button 
+            variant="contained" 
+            onClick={handleTranslate}
+            disabled={isLoading}
           >
-            {targetLanguages.map((lang) => (
-              <MenuItem key={lang.code} value={lang.code}>
-                {lang.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Box sx={{ mt: 1 }}>
-          {translationLoading ? (
-            <Typography variant="body2">Translating…</Typography>
-          ) : translationVisible ? (
-            <>
-              <TextField
-                fullWidth
-                multiline
-                rows={3}
-                variant="outlined"
-                value={translatedText}
-                sx={{ mt: 1 }}
-                InputProps={{ readOnly: true }}
-              />
-              <Button variant="outlined" onClick={handleHideTranslation} size="small" sx={{ mt: 1 }}>
-                Hide Translation
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="outlined" onClick={handleTranslate} size="small">
-                Translate to {targetLanguages.find((l) => l.code === selectedTargetLanguage)?.name}
-              </Button>
-              {translationError && (
-                <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-                  {translationError}
-                </Typography>
-              )}
-            </>
-          )}
+            {isLoading ? "Translating..." : "Translate"}
+          </Button>
         </Box>
+
+        {error && (
+          <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+            {error}
+          </Typography>
+        )}
+
+        {translationVisible && translatedText && (
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle2" gutterBottom>
+              Translation
+            </Typography>
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              variant="outlined"
+              value={translatedText}
+              InputProps={{ readOnly: true }}
+            />
+          </Box>
+        )}
       </Box>
     </Box>
   );
