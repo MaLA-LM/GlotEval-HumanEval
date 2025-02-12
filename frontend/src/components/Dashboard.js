@@ -34,10 +34,14 @@ function Dashboard({ user }) {
     // Hide the table when any of the dropdown selections change.
     setTableData([]);
   }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
-  
 
   const handleLoadData = async () => {
-    if (!selectedTask || !selectedBenchmark || !selectedModel || !selectedLanguage) {
+    if (
+      !selectedTask ||
+      !selectedBenchmark ||
+      !selectedModel ||
+      !selectedLanguage
+    ) {
       alert("Please select a task, benchmark, model, and language.");
       return;
     }
@@ -50,8 +54,13 @@ function Dashboard({ user }) {
       });
       setTableData(res.data);
     } catch (error) {
-      console.error("Error loading data:", error.response?.data || error.message);
-      alert("Error loading data: " + (error.response?.data?.error || error.message));
+      console.error(
+        "Error loading data:",
+        error.response?.data || error.message
+      );
+      alert(
+        "Error loading data: " + (error.response?.data?.error || error.message)
+      );
     }
   };
 
@@ -74,9 +83,23 @@ function Dashboard({ user }) {
   let columnOrder = [];
   const taskKey = selectedTask.toLowerCase();
   if (taskKey === "classification") {
-    columnOrder = ["model_name", "test_lang", "prompt", "predicted_category", "correct_category"];
+    columnOrder = [
+      "model_name",
+      "test_lang",
+      "prompt",
+      "predicted_category",
+      "correct_category",
+    ];
   } else if (taskKey === "translation") {
-    columnOrder = ["model_name", "src_lang", "tgt_lang", "src_text", "ref_text", "hyp_text", "prompt"];
+    columnOrder = [
+      "model_name",
+      "src_lang",
+      "tgt_lang",
+      "src_text",
+      "ref_text",
+      "hyp_text",
+      "prompt",
+    ];
   } else if (taskKey === "generation" || taskKey === "summarization") {
     columnOrder = ["model_name", "input", "target", "output"];
   } else if (tableData.length > 0) {
@@ -116,7 +139,11 @@ function Dashboard({ user }) {
       <Button variant="contained" sx={{ my: 2 }} onClick={handleLoadData}>
         Load Data
       </Button>
-      <DataTable data={tableData} onRowSelect={handleRowSelect} columnOrder={columnOrder} />
+      <DataTable
+        data={tableData}
+        onRowSelect={handleRowSelect}
+        columnOrder={columnOrder}
+      />
       {sidebarOpen && selectedRow && user && (
         <FeedbackSidebar
           row={selectedRow}

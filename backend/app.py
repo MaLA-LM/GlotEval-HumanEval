@@ -7,13 +7,11 @@ from models import User, Annotation, Comment
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from deep_translator import GoogleTranslator
-import re
 
 app = Flask(__name__)
 app.config.from_object(Config)
 CORS(app, supports_credentials=True)
 db.init_app(app)
-
 
 # Create database tables if they do not exist
 with app.app_context():
@@ -78,6 +76,7 @@ def get_data():
     benchmark = data.get("benchmark")
     model = data.get("model")
     language = data.get("language")
+
     if not all([task_type, benchmark, model, language]):
         return jsonify({"error": "Missing one or more required parameters: task, benchmark, model, language."}), 400
 
@@ -92,7 +91,7 @@ def get_data():
     except KeyError:
         return jsonify({"error": f"Task '{task_type}' not found in configuration."}), 400
     try:
-        benchmark_models = task_config["models"][benchmark]
+        benchmark_models = task_config[benchmark]
     except KeyError:
         return jsonify({"error": f"Benchmark '{benchmark}' not found for task '{task_type}'."}), 400
     try:
@@ -100,7 +99,8 @@ def get_data():
     except KeyError:
         return jsonify({"error": f"Model '{model}' not found under benchmark '{benchmark}' for task '{task_type}'."}), 400
     try:
-        file_path = model_config["file_paths"][language]
+        file_path = os.path.join("outputs",benchmark,model,f"{language}.jsonl")
+        
     except KeyError:
         return jsonify({"error": f"Language '{language}' not found for model '{model}' under benchmark '{benchmark}' for task '{task_type}'."}), 400
 
@@ -340,5 +340,67 @@ def translate():
         print(f"Translation error: {str(e)}")
         return jsonify({"error": "Translation failed"}), 500
 
+
+TASK_BENCHMARK_MAP = {
+"Classification": ["SIB-200","Taxi-1500"],
+"Translation": ["Flores-200"],
+"Summarization": ["XLSum"],
+"Generation": ["Aya","PolyWrite"]
+}
+    
+    # Function to scan directory and update database
+def generate_index_json(root_dir):
+    """Sync the database with the directory structure."""
+    with app.app_context():
+        index = {}
+        for task_type, benchmarks in TASK_BENCHMARK_MAP.items():
+            index[task_type] = {}  # initialize task_type
+            
+            for benchmark in benchmarks:
+                benchmark_path = os.path.join(root_dir, benchmark)
+                index[task_type][benchmark] = {}  # initialize benchmark
+
+                if not os.path.exists(benchmark_path):
+                    continue
+
+                # handle the translation task differently
+                if task_type == "translation":
+                    for lang_type_folder in os.listdir(benchmark_path):
+                        lang_path = os.path.join(benchmark_path, lang_type_folder)
+                        if not os.path.isdir(lang_path):
+                            continue
+
+                        for model in os.listdir(lang_path):
+                            model_path = os.path.join(lang_path, model)
+                            if not os.path.isdir(model_path):
+                                continue
+
+                            index[task_type][benchmark][model] = []
+                            for file in os.listdir(model_path):
+                                if file.endswith(".jsonl"):
+                                    language = file.replace(".jsonl", "")
+                                    index[task_type][benchmark][model].append(language)
+
+                else:
+                    # handle other task type
+                    for model in os.listdir(benchmark_path):
+                        model_path = os.path.join(benchmark_path, model)
+                        if not os.path.isdir(model_path):
+                            continue
+
+                        index[task_type][benchmark][model] = []
+                        for file in os.listdir(model_path):
+                            if file.endswith(".jsonl"):
+                                language = file.replace(".jsonl", "")
+                                index[task_type][benchmark][model].append(language)
+            
+    with open(Config.TASKS_FILE , "w") as f:
+        json.dump(index, f, indent=4)
+
+
 if __name__ == "__main__":
+    with app.app_context(): 
+        root_dir = os.path.join(Config.DATA_DIR,"outputs")
+        generate_index_json(root_dir)
+
     app.run(debug=True)
