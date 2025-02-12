@@ -27,7 +27,7 @@ function App() {
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6">
-            Annotation Feedback System
+            Human Feedback System - Error Analysis
           </Typography>
           {user ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

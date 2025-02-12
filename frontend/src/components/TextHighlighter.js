@@ -156,7 +156,7 @@ function TextHighlighter({ text, errorType, onHighlightChange, row, taskType }) 
         throw new Error("Please select text to translate or choose 'Entire Text'");
       }
 
-      const response = await api.post('/translate', {
+      const response = await api.post('api/translate', {
         text: textToTranslate,
         target_lang: targetLanguage
       });
