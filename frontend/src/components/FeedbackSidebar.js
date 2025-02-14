@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Drawer,
   Box,
@@ -50,6 +50,26 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
   const [comment, setComment] = useState("");
   const [commErrorMsg, setCommErrorMsg] = useState("");
 
+  // Resize the drawer width by user dragging the resizer.
+  const [drawerWidth, setDrawerWidth] = useState("800px");
+  const [resizerHover, setResizerHover] = useState(false);
+  const resizerRef = useRef(null);
+
+  const handleMouseDown = (e) => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (e) => {
+    const newWidth = window.innerWidth - e.clientX;
+    setDrawerWidth(Math.max(100, Math.min(newWidth, window.innerWidth - 50))); // 允许更大范围
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
   // Task-specific questions.
   const taskQuestions = {
     translation: [
@@ -69,8 +89,22 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
 
   // Define the desired order for row details.
   const detailOrder = {
-    classification: ["model_name", "test_lang", "prompt", "predicted_category", "correct_category"],
-    translation: ["model_name", "src_lang", "tgt_lang", "src_text", "ref_text", "hyp_text", "prompt"],
+    classification: [
+      "model_name",
+      "test_lang",
+      "prompt",
+      "predicted_category",
+      "correct_category",
+    ],
+    translation: [
+      "model_name",
+      "src_lang",
+      "tgt_lang",
+      "src_text",
+      "ref_text",
+      "hyp_text",
+      "prompt",
+    ],
     summarization: ["model_name", "input", "target", "output"],
     generation: ["model_name", "input", "target", "output"],
   };
@@ -109,14 +143,19 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
       await api.post("/api/annotation", annotationPayload);
       setAnnMsg("Annotations submitted successfully.");
     } catch (error) {
-      setAnnMsg("Error submitting annotations: " + (error.response?.data?.error || error.message));
+      setAnnMsg(
+        "Error submitting annotations: " +
+          (error.response?.data?.error || error.message)
+      );
     }
   };
 
   // Submit comment.
   const handleCommentSubmit = async () => {
     if (!rating || !question || comment.trim() === "") {
-      setCommErrorMsg("Please provide a rating, select a question, and enter a comment.");
+      setCommErrorMsg(
+        "Please provide a rating, select a question, and enter a comment."
+      );
       return;
     }
     setCommErrorMsg("");
@@ -131,7 +170,10 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
       await api.post("/api/comments", commentPayload);
       onCommentSubmit();
     } catch (error) {
-      setCommErrorMsg("Error submitting comment: " + (error.response?.data?.error || error.message));
+      setCommErrorMsg(
+        "Error submitting comment: " +
+          (error.response?.data?.error || error.message)
+      );
     }
   };
 
@@ -139,15 +181,30 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
     <Drawer
       anchor="right"
       open={true}
-      variant="persistent"
-      PaperProps={{ sx: { width: "50vw" } }}
+      // variant="persistent"
+      PaperProps={{ sx: { width: drawerWidth } }}
     >
+      {/* Draggable border */}
+      <div
+        ref={resizerRef}
+        onMouseDown={handleMouseDown}
+        onMouseEnter={() => setResizerHover(true)}
+        onMouseLeave={() => setResizerHover(false)}
+        style={{
+          width: "5px",
+          height: "100%",
+          cursor: "ew-resize",
+          position: "absolute",
+          left: 0,
+          top: 0,
+          background: resizerHover ? "#888" : "#ccc",
+          transition: "background 0.2s ease",
+        }}
+      />
       <Box sx={{ p: 2 }}>
         <Typography variant="h6">Review Details</Typography>
         {/* Render row details */}
-        <Box sx={{ my: 1 }}>
-          {renderRowDetails()}
-        </Box>
+        <Box sx={{ my: 1 }}>{renderRowDetails()}</Box>
 
         {/* Section A: Inline Error Labeling */}
         <Box sx={{ my: 2, borderBottom: "1px solid #ccc", pb: 2 }}>
@@ -166,17 +223,25 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
               ))}
             </Select>
           </FormControl>
-          <TextHighlighter 
-            text={fieldText} 
-            errorType={errorType} 
-            onHighlightChange={setAnnotations} 
+          <TextHighlighter
+            text={fieldText}
+            errorType={errorType}
+            onHighlightChange={setAnnotations}
             row={row}
             taskType={taskType}
           />
-          <Button variant="contained" onClick={handleAnnotationsSubmit} sx={{ mt: 1 }}>
+          <Button
+            variant="contained"
+            onClick={handleAnnotationsSubmit}
+            sx={{ mt: 1 }}
+          >
             Submit Annotations
           </Button>
-          {annMsg && <Alert severity="info" sx={{ mt: 1 }}>{annMsg}</Alert>}
+          {annMsg && (
+            <Alert severity="info" sx={{ mt: 1 }}>
+              {annMsg}
+            </Alert>
+          )}
         </Box>
 
         {/* Section B: Comment Submission */}
@@ -184,13 +249,24 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
           <Typography variant="subtitle1">Submit Comment</Typography>
           <Box sx={{ my: 1 }}>
             <Typography component="legend">Rating</Typography>
-            <Rating value={rating} onChange={(e, newValue) => setRating(newValue)} />
+            <Rating
+              value={rating}
+              onChange={(e, newValue) => setRating(newValue)}
+            />
           </Box>
           <FormControl component="fieldset" sx={{ my: 1 }}>
             <Typography variant="body2">Task-specific Question:</Typography>
-            <RadioGroup value={question} onChange={(e) => setQuestion(e.target.value)}>
+            <RadioGroup
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+            >
               {(taskQuestions[taskKey] || []).map((q, idx) => (
-                <FormControlLabel key={idx} value={q} control={<Radio />} label={q} />
+                <FormControlLabel
+                  key={idx}
+                  value={q}
+                  control={<Radio />}
+                  label={q}
+                />
               ))}
             </RadioGroup>
           </FormControl>

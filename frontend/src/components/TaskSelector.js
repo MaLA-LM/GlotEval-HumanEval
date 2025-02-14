@@ -29,32 +29,6 @@ function TaskSelector({
   // Get the list of tasks (keys of tasksConfig)
   const taskKeys = Object.keys(tasksConfig);
 
-  // // Get benchmarks array from the selected task, or an empty array if not available.
-  // const benchmarks =
-  //   selectedTask && tasksConfig[selectedTask].benchmarks
-  //     ? tasksConfig[selectedTask].benchmarks
-  //     : [];
-
-  // // Get models for the selected task and benchmark.
-  // const models =
-  //   selectedTask &&
-  //   selectedBenchmark &&
-  //   tasksConfig[selectedTask].models &&
-  //   tasksConfig[selectedTask].models[selectedBenchmark]
-  //     ? Object.keys(tasksConfig[selectedTask].models[selectedBenchmark])
-  //     : [];
-
-  // // Get languages for the selected task, benchmark, and model.
-  // const languages =
-  // selectedTask &&
-  // selectedBenchmark &&
-  // selectedModel &&
-  // tasksConfig[selectedTask].models &&
-  // tasksConfig[selectedTask].models[selectedBenchmark] &&
-  // tasksConfig[selectedTask].models[selectedBenchmark][selectedModel] &&
-  // tasksConfig[selectedTask].models[selectedBenchmark][selectedModel].languages
-  //   ? tasksConfig[selectedTask].models[selectedBenchmark][selectedModel].languages
-  //   : [];
   // Get benchmarks array from the selected task, or an empty array if not available.
   const benchmarks = Object.keys(tasksConfig[selectedTask] ?? {});
 

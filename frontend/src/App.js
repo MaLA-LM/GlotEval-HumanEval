@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { CssBaseline, AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import {
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import api from "./services/api";
+import DataVisualisation from "./components/DataVisualisation/DataVisualisation";
+import AnnotationGuidelines from "./components/AnnotationGuideline";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,16 +33,29 @@ function App() {
   return (
     <Router>
       <CssBaseline />
+
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6">
-            Human Feedback System - Error Analysis
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Polyeval-Visual
           </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Button color="inherit" component={Link} to="/data-visualisation">
+              Data Visualisation
+            </Button>
+            <Button color="inherit" component={Link} to="/human-feedback">
+              Human Feedback
+            </Button>
+            <Button color="inherit" component={Link} to="/guideline">
+              Guidelines
+            </Button>
+          </Box>
           {user ? (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Typography variant="body1" sx={{ textAlign: "right" }}>
                 Welcome, {user}
               </Typography>
+
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
@@ -47,7 +69,9 @@ function App() {
       </AppBar>
       <Box sx={{ p: 2 }}>
         <Routes>
-          <Route path="/" element={<Dashboard user={user} />} />
+          <Route path="/data-visualisation" element={<DataVisualisation />} />
+          <Route path="/guideline" element={<AnnotationGuidelines />} />
+          <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup setUser={setUser} />} />
         </Routes>

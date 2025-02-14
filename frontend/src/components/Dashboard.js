@@ -17,7 +17,6 @@ function Dashboard({ user }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshCommentsFlag, setRefreshCommentsFlag] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -123,7 +122,7 @@ function Dashboard({ user }) {
         />
       )}
       <Typography variant="h4" sx={{ my: 2 }}>
-        Dashboard
+        Human Feedback
       </Typography>
       <TaskSelector
         tasksConfig={tasksConfig}
@@ -142,6 +141,7 @@ function Dashboard({ user }) {
       <DataTable
         data={tableData}
         onRowSelect={handleRowSelect}
+        taskType={taskKey}
         columnOrder={columnOrder}
       />
       {sidebarOpen && selectedRow && user && (
