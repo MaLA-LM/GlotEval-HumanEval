@@ -149,7 +149,7 @@ const Translator = ({ textToTranslate, row, taskType }) => {
       {translationVisible && translatedText && (
         <Box sx={{ mt: 2 }}>
           <Typography variant="subtitle2" gutterBottom>
-            Translation
+            Google translation
           </Typography>
           <TextField
             fullWidth

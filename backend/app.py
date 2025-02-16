@@ -327,7 +327,7 @@ def translate():
                 translated_chunks.append(translated)
             except Exception as e:
                 print(f"Translation error for chunk: {str(e)}")
-                return jsonify({"error": "Translation failed"}), 500
+                return jsonify({"error": "Failed to detect the source language"}), 500
 
         translated_text = ' '.join(translated_chunks)
         

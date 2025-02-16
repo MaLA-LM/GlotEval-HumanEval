@@ -1,0 +1,34 @@
+{
+    "Classification": {
+        "SIB-200": {
+            "bloom-7b1": [
+                "ace_Arab"
+            ]
+        },
+        "Taxi-1500": {
+            "yayi-7b": [
+                "awa_Deva"
+            ]
+        }
+    },
+    "Translation": {
+        "Flores-200": {
+            "en-X": []
+        }
+    },
+    "Summarization": {
+        "XLSum": {
+            "mGPT": [
+                "amh_Ethi"
+            ]
+        }
+    },
+    "Generation": {
+        "Aya": {
+            "bloomz-7b1": [
+                "ace_Arab"
+            ]
+        },
+        "PolyWrite": {}
+    }
+}

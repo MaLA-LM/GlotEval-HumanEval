@@ -68,20 +68,25 @@ const Translator = ({ row, taskType }) => {
 
       {error && <Typography color="error">{error}</Typography>}
       {translationVisible && translatedText && (
-        <TextField
-          fullWidth
-          multiline
-          rows={10}
-          variant="outlined"
-          value={translatedText}
-          InputProps={{ readOnly: true }}
-          sx={{
-            backgroundColor: "white",
-            borderRadius: 2,
-            boxShadow: 1,
-            width: "100%",
-          }}
-        />
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle2" gutterBottom>
+            Google translation
+          </Typography>
+          <TextField
+            fullWidth
+            multiline
+            rows={10}
+            variant="outlined"
+            value={translatedText}
+            InputProps={{ readOnly: true }}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 2,
+              boxShadow: 1,
+              width: "100%",
+            }}
+          />
+        </Box>
       )}
     </Box>
   );
