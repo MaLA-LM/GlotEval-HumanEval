@@ -35,8 +35,8 @@ function App() {
       <CssBaseline />
 
       <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Toolbar sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Typography variant="h6" component="div">
             Polyeval-Visual
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -50,21 +50,23 @@ function App() {
               Guidelines
             </Button>
           </Box>
-          {user ? (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <Typography variant="body1" sx={{ textAlign: "right" }}>
-                Welcome, {user}
-              </Typography>
+          <Box sx={{ marginLeft: "auto" }}>
+            {user ? (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Typography variant="body1" sx={{ textAlign: "right" }}>
+                  Welcome, {user}
+                </Typography>
 
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
+                <Button color="inherit" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Box>
+            ) : (
+              <Button color="inherit" component={Link} to="/login">
+                Login
               </Button>
-            </Box>
-          ) : (
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
-          )}
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
       <Box sx={{ p: 2 }}>
