@@ -71,7 +71,10 @@ function App() {
       </AppBar>
       <Box sx={{ p: 2 }}>
         <Routes>
-          <Route path="/data-visualisation" element={<DataVisualisation />} />
+          <Route
+            path="/data-visualisation"
+            element={<DataVisualisation user={user} />}
+          />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />

@@ -1,66 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Snackbar } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Snackbar,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import api from "../services/api";
-import TaskSelector from "./TaskSelector";
+
 import DataTable from "./DataTable";
 import FeedbackSidebar from "./FeedbackSidebar";
 import CommentSection from "./CommentSection";
 
-function Dashboard({ user }) {
-  const [tasksConfig, setTasksConfig] = useState({});
-  const [selectedTask, setSelectedTask] = useState("");
-  const [selectedBenchmark, setSelectedBenchmark] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
+function Dashboard({ user, task, benchmark, model }) {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [tableData, setTableData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshCommentsFlag, setRefreshCommentsFlag] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [availableLanguages, setAvailableLanguages] = useState([]);
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const res = await api.get("/api/tasks");
-        setTasksConfig(res.data);
+        // setTasksConfig(res.data);
+
+        if (
+          res.data[task] &&
+          res.data[task][benchmark] &&
+          res.data[task][benchmark][model]
+        ) {
+          setAvailableLanguages(res.data[task][benchmark][model] || []);
+        } else {
+          setAvailableLanguages([]);
+        }
       } catch (err) {
         console.error("Error fetching tasks:", err);
       }
     };
     fetchTasks();
-
-    //Clear the selected task, benchmark, model, and language when the component unmounts.
-    const handleBeforeUnload = () => {
-      setSelectedTask("");
-      setSelectedBenchmark("");
-      setSelectedModel("");
-      setSelectedLanguage("");
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, []);
 
   useEffect(() => {
     // Hide the table when any of the dropdown selections change.
     setTableData([]);
-  }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
+  }, [selectedLanguage]);
 
   const handleLoadData = async () => {
-    if (
-      !selectedTask ||
-      !selectedBenchmark ||
-      !selectedModel ||
-      !selectedLanguage
-    ) {
-      alert("Please select a task, benchmark, model, and language.");
+    if (!selectedLanguage) {
+      alert("Please select a language.");
       return;
     }
     try {
       const res = await api.post("/api/data", {
-        task: selectedTask,
-        benchmark: selectedBenchmark,
-        model: selectedModel,
+        task,
+        benchmark,
+        model,
         language: selectedLanguage,
       });
       setTableData(res.data);
@@ -92,7 +91,7 @@ function Dashboard({ user }) {
 
   // Define column order based on task type.
   let columnOrder = [];
-  const taskKey = selectedTask.toLowerCase();
+  const taskKey = task.toLowerCase();
   if (taskKey === "classification") {
     columnOrder = [
       "model_name",
@@ -133,20 +132,22 @@ function Dashboard({ user }) {
           }}
         />
       )}
-      <Typography variant="h4" sx={{ my: 2 }}>
-        Human Feedback
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Select a language to view the output results
       </Typography>
-      <TaskSelector
-        tasksConfig={tasksConfig}
-        selectedTask={selectedTask}
-        setSelectedTask={setSelectedTask}
-        selectedBenchmark={selectedBenchmark}
-        setSelectedBenchmark={setSelectedBenchmark}
-        selectedModel={selectedModel}
-        setSelectedModel={setSelectedModel}
-        selectedLanguage={selectedLanguage}
-        setSelectedLanguage={setSelectedLanguage}
-      />
+      <FormControl fullWidth sx={{ my: 2 }}>
+        <InputLabel>Language</InputLabel>
+        <Select
+          value={selectedLanguage}
+          onChange={(e) => setSelectedLanguage(e.target.value)}
+        >
+          {availableLanguages.map((lang) => (
+            <MenuItem key={lang} value={lang}>
+              {lang}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <Button variant="contained" sx={{ my: 2 }} onClick={handleLoadData}>
         Load Data
       </Button>
@@ -159,12 +160,12 @@ function Dashboard({ user }) {
       {sidebarOpen && selectedRow && user && (
         <FeedbackSidebar
           row={selectedRow}
-          taskType={selectedTask}
+          taskType={task}
           onClose={() => setSidebarOpen(false)}
           onCommentSubmit={handleCommentSubmit}
         />
       )}
-      <CommentSection refreshFlag={refreshCommentsFlag} />
+      {/* <CommentSection refreshFlag={refreshCommentsFlag} /> */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}

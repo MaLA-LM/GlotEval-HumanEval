@@ -4,8 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextClassification from "./TextClassification";
 import Sidebar from "./Sidebar";
+import DashboardSection from "../DashboardSection";
 
-const DataVisualisation = () => {
+const DataVisualisation = ({ user }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [filters, setFilters] = useState(null);
 
@@ -38,11 +39,21 @@ const DataVisualisation = () => {
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+    console.log(selectedTab);
     setFilters(null); // Reset filters when changing tabs
   };
 
   const handleFiltersComplete = (newFilters) => {
     setFilters(newFilters);
+  };
+
+  const task = {
+    0: "Classification",
+    1: "Translation",
+    2: "Summarization",
+    3: "Generation",
+    4: "Comprehension",
+    5: "Evaluation",
   };
 
   return (
@@ -78,13 +89,15 @@ const DataVisualisation = () => {
               filters={filters}
             />
           )}
-          {/* {filters && (
-            <LanguageSelector
-              taskType="generation"
-              benchmark="Aya"
-              model="bloomz-7b1"
+          {/* Error analysis section (include human evaluation) */}
+          {filters && filters.filterType === "model" && (
+            <DashboardSection
+              user={user}
+              task={task[selectedTab]}
+              benchmark={filters.dataset}
+              model={filters.filterValue}
             />
-          )} */}
+          )}
         </Box>
       </Box>
     </Box>

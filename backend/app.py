@@ -343,7 +343,7 @@ def translate():
 
 TASK_BENCHMARK_MAP = {
 "Classification": ["SIB-200","Taxi-1500"],
-"Translation": ["Flores-200"],
+"Translation": ["Flores200 Eng-X","Flores200 X-Eng"],
 "Summarization": ["XLSum"],
 "Generation": ["Aya","PolyWrite"]
 }
