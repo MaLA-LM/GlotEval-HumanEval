@@ -298,7 +298,7 @@ SUPPORTED_LANGUAGES = {
     'es': 'Spanish',
     'fr': 'French',
     'de': 'German',
-    'zh': 'Chinese',
+    'zh-CN': 'Chinese',
     'ja': 'Japanese'
 }
 
