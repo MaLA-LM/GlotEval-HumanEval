@@ -29,7 +29,7 @@ const errorOptions = [
 ];
 
 function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
-  // Determine the inline field for annotation based on task type.
+  // Determine inline field based on task type.
   let inlineField = "";
   const taskKey = taskType.toLowerCase();
   if (taskKey === "translation") {
@@ -41,8 +41,8 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
   }
   const fieldText = row[inlineField] || "No text available";
 
-  // Define state variables.
-  const [errorType, setErrorType] = useState(""); // <-- Added missing errorType state
+  // State variables.
+  const [errorType, setErrorType] = useState("");
   const [annotations, setAnnotations] = useState([]);
   const [annMsg, setAnnMsg] = useState("");
   const [rating, setRating] = useState(0);
@@ -50,7 +50,7 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
   const [comment, setComment] = useState("");
   const [commErrorMsg, setCommErrorMsg] = useState("");
 
-  // Resize the drawer width by user dragging the resizer.
+  // For resizing the drawer (optional).
   const [drawerWidth, setDrawerWidth] = useState("800px");
   const [resizerHover, setResizerHover] = useState(false);
   const resizerRef = useRef(null);
@@ -62,7 +62,7 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
 
   const handleMouseMove = (e) => {
     const newWidth = window.innerWidth - e.clientX;
-    setDrawerWidth(Math.max(100, Math.min(newWidth, window.innerWidth - 50))); // 允许更大范围
+    setDrawerWidth(Math.max(100, Math.min(newWidth, window.innerWidth - 50)));
   };
 
   const handleMouseUp = () => {
@@ -87,7 +87,7 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
     generation: ["Is the generated text coherent?", "Is the output relevant?"],
   };
 
-  // Define the desired order for row details.
+  // Order for row details.
   const detailOrder = {
     classification: [
       "model_name",
@@ -128,7 +128,7 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
     );
   };
 
-  // Submit annotations.
+  // Submit annotations to backend (each annotation becomes a row).
   const handleAnnotationsSubmit = async () => {
     if (annotations.length === 0) {
       setAnnMsg("No annotations to submit.");
@@ -181,10 +181,11 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
     <Drawer
       anchor="right"
       open={true}
-      // variant="persistent"
+      onClose={onClose}
+      variant="temporary"
       PaperProps={{ sx: { width: drawerWidth } }}
     >
-      {/* Draggable border */}
+      {/* Draggable resizer */}
       <div
         ref={resizerRef}
         onMouseDown={handleMouseDown}
@@ -203,7 +204,6 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
       />
       <Box sx={{ p: 2 }}>
         <Typography variant="h6">Review Details</Typography>
-        {/* Render row details */}
         <Box sx={{ my: 1 }}>{renderRowDetails()}</Box>
 
         {/* Section A: Inline Error Labeling */}
@@ -226,7 +226,9 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
           <TextHighlighter
             text={fieldText}
             errorType={errorType}
-            onHighlightChange={setAnnotations}
+            onHighlightChange={(anns) => {
+              setAnnotations(anns);
+            }}
             row={row}
             taskType={taskType}
           />

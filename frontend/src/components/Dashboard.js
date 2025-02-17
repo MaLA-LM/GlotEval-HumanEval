@@ -17,6 +17,7 @@ function Dashboard({ user }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshCommentsFlag, setRefreshCommentsFlag] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -28,7 +29,7 @@ function Dashboard({ user }) {
     };
     fetchTasks();
 
-    //Clear the selected task, benchmark, model, and language when the component unmounts.
+    // Clear selections on unload.
     const handleBeforeUnload = () => {
       setSelectedTask("");
       setSelectedBenchmark("");
@@ -41,8 +42,8 @@ function Dashboard({ user }) {
     };
   }, []);
 
+  // Hide table when dropdowns change.
   useEffect(() => {
-    // Hide the table when any of the dropdown selections change.
     setTableData([]);
   }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
 
@@ -70,7 +71,8 @@ function Dashboard({ user }) {
         error.response?.data || error.message
       );
       alert(
-        "Error loading data: " + (error.response?.data?.error || error.message)
+        "Error loading data: " +
+          (error.response?.data?.error || error.message)
       );
     }
   };
@@ -119,20 +121,6 @@ function Dashboard({ user }) {
 
   return (
     <Box sx={{ position: "relative" }}>
-      {sidebarOpen && (
-        <Box
-          onClick={() => setSidebarOpen(false)}
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backdropFilter: "blur(3px)",
-            zIndex: 1,
-          }}
-        />
-      )}
       <Typography variant="h4" sx={{ my: 2 }}>
         Human Feedback
       </Typography>
