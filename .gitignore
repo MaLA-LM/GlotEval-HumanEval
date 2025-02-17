@@ -311,6 +311,8 @@
 
 node_modules
 venv/
+backend/tasks.json
+backend/__pycache__/
 # *.sublime*
 
 # psd

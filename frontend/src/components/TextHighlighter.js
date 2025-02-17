@@ -11,14 +11,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Translator from "./Translator";
 
 const errorColors = {
-  "Grammar Error": "#ffcccc",
-  "Spelling or Typographical Error": "#d1e7dd",
-  "Incoherent or Illogical": "#fff3cd",
-  "Off-topic or Irrelevant": "#cfe2ff",
-  Redundancy: "#e2e3e5",
-  "Ambiguity or Vagueness": "#f8d7da",
-  "Cultural Sensitivity or Offensive Content": "#f5c2c7",
+  "Grammar Error": "#ffdfdf",  // Soft peach
+  "Spelling or Typographical Error": "#d0f7d0",  // Light mint green
+  "Incoherent or Illogical": "#fff8cc",  // Pale yellow
+  "Off-topic or Irrelevant": "#cce4ff",  // Light sky blue
+  "Redundancy": "#e3e3e3",  // Light gray
+  "Ambiguity or Vagueness": "#C4A484",  // Light brown
+  "Cultural Sensitivity or Offensive Content": "#ffccf5",  // Light lavender
 };
+
+
 
 function getSelectionCharacterOffsetWithin(element) {
   const selection = window.getSelection();
