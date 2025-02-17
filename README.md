@@ -10,6 +10,9 @@ $`CD polyeval`
 Then, cd into the backend folder by typing:\
 $`CD backend` 
 
+Then, install all the required dependencies by typing:\
+$`pip install -r requirements.txt` 
+
 Then, type:\
 $ `python app.py`
 This starts the backend\

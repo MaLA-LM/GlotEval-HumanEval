@@ -1,4 +1,7 @@
-Flask
-Flask-Cors
-Flask-SQLAlchemy
-Werkzeug
+Flask==2.2.2
+Flask-Cors==5.0.0
+Flask-SQLAlchemy==3.1.1
+deep-translator==1.8.1
+bcrypt==4.0.1
+SQLAlchemy==2.1.1
+python-dotenv==0.21.0
