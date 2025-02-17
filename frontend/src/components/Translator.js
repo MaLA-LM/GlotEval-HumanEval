@@ -154,7 +154,7 @@ const Translator = ({ textToTranslate, row, taskType }) => {
           <TextField
             fullWidth
             multiline
-            rows={3}
+            rows={5}
             variant="outlined"
             value={translatedText}
             InputProps={{ readOnly: true }}
