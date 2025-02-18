@@ -28,7 +28,14 @@ const errorOptions = [
   "Cultural Sensitivity or Offensive Content",
 ];
 
-function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
+function FeedbackSidebar({ 
+  row, 
+  taskType, 
+  onClose, 
+  onCommentSubmit, 
+  isDialog, 
+  userFeedback 
+}) {
   // Determine inline field based on task type.
   let inlineField = "";
   const taskKey = taskType.toLowerCase();
@@ -178,121 +185,133 @@ function FeedbackSidebar({ row, taskType, onClose, onCommentSubmit }) {
   };
 
   return (
-    <Drawer
-      anchor="right"
-      open={true}
-      onClose={onClose}
-      variant="temporary"
-      PaperProps={{ sx: { width: drawerWidth } }}
-    >
-      {/* Draggable resizer */}
-      <div
-        ref={resizerRef}
-        onMouseDown={handleMouseDown}
-        onMouseEnter={() => setResizerHover(true)}
-        onMouseLeave={() => setResizerHover(false)}
-        style={{
-          width: "5px",
-          height: "100%",
-          cursor: "ew-resize",
-          position: "absolute",
-          left: 0,
-          top: 0,
-          background: resizerHover ? "#888" : "#ccc",
-          transition: "background 0.2s ease",
-        }}
-      />
-      <Box sx={{ p: 2 }}>
-        <Typography variant="h6">Review Details</Typography>
-        <Box sx={{ my: 1 }}>{renderRowDetails()}</Box>
-
-        {/* Section A: Inline Error Labeling */}
-        <Box sx={{ my: 2, borderBottom: "1px solid #ccc", pb: 2 }}>
-          <Typography variant="subtitle1">Inline Error Labeling</Typography>
-          <FormControl fullWidth sx={{ my: 1 }}>
-            <InputLabel>Error Type</InputLabel>
-            <Select
-              value={errorType}
-              label="Error Type"
-              onChange={(e) => setErrorType(e.target.value)}
-            >
-              {errorOptions.map((opt) => (
-                <MenuItem key={opt} value={opt}>
-                  {opt}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextHighlighter
-            text={fieldText}
-            errorType={errorType}
-            onHighlightChange={(anns) => {
-              setAnnotations(anns);
-            }}
-            row={row}
-            taskType={taskType}
-          />
-          <Button
-            variant="contained"
-            onClick={handleAnnotationsSubmit}
-            sx={{ mt: 1 }}
-          >
-            Submit Annotations
-          </Button>
-          {annMsg && (
-            <Alert severity="info" sx={{ mt: 1 }}>
-              {annMsg}
-            </Alert>
-          )}
+    <Box sx={{
+      width: '100%',
+      height: '100%',
+      p: 3,
+      overflowY: 'auto',
+      '& .MuiFormControl-root': {
+        width: '100%',
+        mb: 2
+      },
+      '& .MuiTextField-root': {
+        width: '100%',
+        mb: 2
+      }
+    }}>
+      {isDialog && userFeedback && (
+        <Box sx={{ 
+          mb: 3, 
+          p: 2, 
+          bgcolor: 'warning.light', 
+          borderRadius: 1 
+        }}>
+          <Typography variant="subtitle1" color="warning.dark" sx={{ fontWeight: 'bold' }}>
+            Previous Feedback
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            <Typography variant="body2">
+              <strong>Question:</strong> {userFeedback.question}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Feedback:</strong> {userFeedback.comment}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Rating:</strong> {userFeedback.rating}/5
+            </Typography>
+          </Box>
         </Box>
+      )}
 
-        {/* Section B: Comment Submission */}
-        <Box sx={{ my: 2 }}>
-          <Typography variant="subtitle1">Submit Comment</Typography>
-          <Box sx={{ my: 1 }}>
-            <Typography component="legend">Rating</Typography>
-            <Rating
-              value={rating}
-              onChange={(e, newValue) => setRating(newValue)}
-            />
-          </Box>
-          <FormControl component="fieldset" sx={{ my: 1 }}>
-            <Typography variant="body2">Task-specific Question:</Typography>
-            <RadioGroup
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-            >
-              {(taskQuestions[taskKey] || []).map((q, idx) => (
-                <FormControlLabel
-                  key={idx}
-                  value={q}
-                  control={<Radio />}
-                  label={q}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl>
-          <TextField
-            label="Comments"
-            multiline
-            fullWidth
-            rows={3}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            sx={{ my: 1 }}
+      <Typography variant="h6">Review Details</Typography>
+      <Box sx={{ my: 1 }}>{renderRowDetails()}</Box>
+
+      {/* Section A: Inline Error Labeling */}
+      <Box sx={{ my: 2, borderBottom: "1px solid #ccc", pb: 2 }}>
+        <Typography variant="subtitle1">Inline Error Labeling</Typography>
+        <FormControl fullWidth sx={{ my: 1 }}>
+          <InputLabel>Error Type</InputLabel>
+          <Select
+            value={errorType}
+            label="Error Type"
+            onChange={(e) => setErrorType(e.target.value)}
+          >
+            {errorOptions.map((opt) => (
+              <MenuItem key={opt} value={opt}>
+                {opt}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextHighlighter
+          text={fieldText}
+          errorType={errorType}
+          onHighlightChange={(anns) => {
+            setAnnotations(anns);
+          }}
+          row={row}
+          taskType={taskType}
+        />
+        <Button
+          variant="contained"
+          onClick={handleAnnotationsSubmit}
+          sx={{ mt: 1 }}
+        >
+          Submit Annotations
+        </Button>
+        {annMsg && (
+          <Alert severity="info" sx={{ mt: 1 }}>
+            {annMsg}
+          </Alert>
+        )}
+      </Box>
+
+      {/* Section B: Comment Submission */}
+      <Box sx={{ my: 2 }}>
+        <Typography variant="subtitle1">Submit Comment</Typography>
+        <Box sx={{ my: 1 }}>
+          <Typography component="legend">Rating</Typography>
+          <Rating
+            value={rating}
+            onChange={(e, newValue) => setRating(newValue)}
           />
-          {commErrorMsg && <Alert severity="error">{commErrorMsg}</Alert>}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-            <Button variant="outlined" onClick={onClose} sx={{ mr: 1 }}>
-              Cancel
-            </Button>
-            <Button variant="contained" onClick={handleCommentSubmit}>
-              Submit Comment
-            </Button>
-          </Box>
+        </Box>
+        <FormControl component="fieldset" sx={{ my: 1 }}>
+          <Typography variant="body2">Task-specific Question:</Typography>
+          <RadioGroup
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          >
+            {(taskQuestions[taskKey] || []).map((q, idx) => (
+              <FormControlLabel
+                key={idx}
+                value={q}
+                control={<Radio />}
+                label={q}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+        <TextField
+          label="Comments"
+          multiline
+          fullWidth
+          rows={3}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          sx={{ my: 1 }}
+        />
+        {commErrorMsg && <Alert severity="error">{commErrorMsg}</Alert>}
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+          <Button variant="outlined" onClick={onClose} sx={{ mr: 1 }}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={handleCommentSubmit}>
+            Submit Comment
+          </Button>
         </Box>
       </Box>
-    </Drawer>
+    </Box>
   );
 }
 

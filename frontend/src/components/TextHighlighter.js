@@ -91,6 +91,8 @@ function TextHighlighter({ text, errorType, onHighlightChange, row, taskType }) 
   const containerRef = useRef(null);
   const [annotations, setAnnotations] = useState([]);
   const [currentSelection, setCurrentSelection] = useState(null);
+  const [annMsg, setAnnMsg] = useState("");
+  const [selectedText, setSelectedText] = useState("");
 
   // Determine if there's valid text.
   const noTextWarning =
@@ -98,12 +100,28 @@ function TextHighlighter({ text, errorType, onHighlightChange, row, taskType }) 
 
   const handleMouseUp = () => {
     if (!containerRef.current) return;
+    const selection = window.getSelection();
+    const selectedString = selection.toString().trim();
+    
+    if (selectedString) {
+      setSelectedText(selectedString);
+    }
+    
     const offsets = getSelectionCharacterOffsetWithin(containerRef.current);
     if (offsets.start === offsets.end) return;
     setCurrentSelection({ start: offsets.start, end: offsets.end });
   };
 
   const handleLabelSelectedText = () => {
+    const selection = window.getSelection();
+    const selectedString = selection.toString().trim();
+
+    if (!selectedString) {
+      setAnnMsg("Please select some text first");
+      return;
+    }
+
+    setSelectedText(selectedString);
     if (!currentSelection || !errorType) return;
     const newAnnotation = { ...currentSelection, errorType };
     const updatedAnnotations = [...annotations, newAnnotation];
@@ -195,7 +213,12 @@ function TextHighlighter({ text, errorType, onHighlightChange, row, taskType }) 
             </Box>
           )}
 
-          <Translator row={row} taskType={taskType} />
+          <Translator 
+            textToTranslate={selectedText} 
+            row={row} 
+            taskType={taskType} 
+            showTextField={true}
+          />
         </>
       )}
     </Box>

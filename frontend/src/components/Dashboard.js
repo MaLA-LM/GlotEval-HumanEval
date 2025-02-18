@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Snackbar } from "@mui/material";
+import { Box, Typography, Button, Snackbar, Dialog, DialogContent, DialogTitle, IconButton, Drawer } from "@mui/material";
 import api from "../services/api";
 import TaskSelector from "./TaskSelector";
 import DataTable from "./DataTable";
 import FeedbackSidebar from "./FeedbackSidebar";
 import CommentSection from "./CommentSection";
+import CloseIcon from '@mui/icons-material/Close';
 
 function Dashboard({ user }) {
   const [tasksConfig, setTasksConfig] = useState({});
@@ -17,6 +18,9 @@ function Dashboard({ user }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshCommentsFlag, setRefreshCommentsFlag] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [userFeedback, setUserFeedback] = useState(null);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -119,6 +123,66 @@ function Dashboard({ user }) {
     columnOrder = Object.keys(tableData[0]);
   }
 
+  // Add this new function to fetch existing feedback
+  const checkExistingFeedback = async (rowData) => {
+    if (!rowData?.entry_id || !user) {
+      console.log("Missing required data:", { rowData, user });
+      setUserFeedback(null);
+      return;
+    }
+    
+    try {
+      const res = await api.post(`/api/feedback`, {
+        entry_id: rowData.entry_id,
+        username: user
+      });
+      
+      setUserFeedback(res.data);
+    } catch (err) {
+      if (err.response?.status !== 404) {
+        console.error("Error fetching feedback:", err);
+      }
+      setUserFeedback(null);
+    }
+  };
+
+  // Update handleEvaluateOneByOne
+  const handleEvaluateOneByOne = () => {
+    if (!user) {
+      setSnackbarOpen(true);
+      return;
+    }
+    if (tableData.length > 0) {
+      setCurrentIndex(0);
+      checkExistingFeedback(tableData[0]);
+      setDialogOpen(true);
+    }
+  };
+
+  // Update navigation handlers
+  const handleNext = () => {
+    if (currentIndex < tableData.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      checkExistingFeedback(tableData[currentIndex + 1]);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+      checkExistingFeedback(tableData[currentIndex - 1]);
+    }
+  };
+
+  const handleSkipTo = () => {
+    const skipIndex = prompt("Enter entry number to skip to (1-" + tableData.length + "):");
+    const index = parseInt(skipIndex) - 1;
+    if (!isNaN(index) && index >= 0 && index < tableData.length) {
+      setCurrentIndex(index);
+      checkExistingFeedback(tableData[index]);
+    }
+  };
+
   return (
     <Box sx={{ position: "relative" }}>
       <Typography variant="h4" sx={{ my: 2 }}>
@@ -135,23 +199,90 @@ function Dashboard({ user }) {
         selectedLanguage={selectedLanguage}
         setSelectedLanguage={setSelectedLanguage}
       />
-      <Button variant="contained" sx={{ my: 2 }} onClick={handleLoadData}>
-        Load Data
-      </Button>
+      <Box sx={{ display: 'flex', gap: 2, my: 2 }}>
+        <Button variant="contained" onClick={handleLoadData}>
+          Load Data
+        </Button>
+        <Button 
+          variant="contained" 
+          onClick={handleEvaluateOneByOne}
+        >
+          Evaluate 1-by-1
+        </Button>
+      </Box>
       <DataTable
         data={tableData}
         onRowSelect={handleRowSelect}
         taskType={taskKey}
         columnOrder={columnOrder}
       />
-      {sidebarOpen && selectedRow && user && (
-        <FeedbackSidebar
-          row={selectedRow}
-          taskType={selectedTask}
-          onClose={() => setSidebarOpen(false)}
-          onCommentSubmit={handleCommentSubmit}
-        />
+
+      {/* Add the evaluation dialog */}
+      <Dialog 
+        open={dialogOpen} 
+        onClose={() => setDialogOpen(false)}
+        maxWidth="xl"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography>Evaluate 1-by-1 (Entry {currentIndex + 1} of {tableData.length})</Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button onClick={handleSkipTo}>Skip To</Button>
+            <Button onClick={handleBack} disabled={currentIndex === 0}>Back</Button>
+            <Button onClick={handleNext} disabled={currentIndex === tableData.length - 1}>Next</Button>
+            <IconButton onClick={() => setDialogOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {userFeedback && (
+            <Typography color="warning.main" sx={{ mb: 2 }}>
+              You have already provided feedback for this entry: "{userFeedback.comment}"
+            </Typography>
+          )}
+          {dialogOpen && tableData[currentIndex] && (
+            <FeedbackSidebar
+              row={tableData[currentIndex]}
+              taskType={selectedTask}
+              onClose={() => setDialogOpen(false)}
+              onCommentSubmit={() => {
+                handleCommentSubmit();
+                handleNext();
+              }}
+              isDialog={true}
+              key={currentIndex}
+              userFeedback={userFeedback}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modify the feedback sidebar section */}
+      {selectedRow && !dialogOpen && (
+        <Drawer
+          anchor="right"
+          open={Boolean(selectedRow)}
+          onClose={() => setSelectedRow(null)}
+          PaperProps={{
+            sx: { 
+              width: '50%',
+              '& > *': {  // This ensures children take full width
+                width: '100%'
+              }
+            }
+          }}
+        >
+          <FeedbackSidebar
+            row={selectedRow}
+            taskType={selectedTask}
+            onClose={() => setSelectedRow(null)}
+            onCommentSubmit={handleCommentSubmit}
+            isDialog={false}
+          />
+        </Drawer>
       )}
+      
       <CommentSection refreshFlag={refreshCommentsFlag} />
       <Snackbar
         open={snackbarOpen}

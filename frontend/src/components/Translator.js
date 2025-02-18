@@ -20,7 +20,7 @@ const supportedLanguages = {
   ja: "Japanese",
 };
 
-const Translator = ({ textToTranslate, row, taskType }) => {
+const Translator = ({ textToTranslate, row, taskType, showTextField }) => {
   const [translationVisible, setTranslationVisible] = useState(false);
   const [translatedText, setTranslatedText] = useState("");
   const [targetLanguage, setTargetLanguage] = useState("es");
@@ -65,23 +65,16 @@ const Translator = ({ textToTranslate, row, taskType }) => {
   const handleTranslate = async () => {
     setIsLoading(true);
     setError(null);
+
+    // Use translationScope to determine what text to translate
+    const textToSend = translationScope === "selected" 
+      ? textToTranslate 
+      : getFullRowText(row, taskType);
+    
     try {
-      let text;
-      if (translationScope === "selected" && textToTranslate) {
-        text = textToTranslate;
-      } else {
-        text = getFullRowText(row, taskType);
-      }
-
-      if (!text.trim()) {
-        throw new Error(
-          "Please select text to translate or choose 'Entire Text'"
-        );
-      }
-
       const response = await api.post("api/translate", {
-        text,
-        target_lang: targetLanguage,
+        text: textToSend,
+        target_lang: targetLanguage, // Use the selected target language
       });
 
       setTranslatedText(

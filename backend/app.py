@@ -398,6 +398,33 @@ def generate_index_json(root_dir):
         json.dump(index, f, indent=4)
 
 
+@app.route("/api/feedback", methods=["POST"])
+def get_feedback():
+    data = request.json
+    entry_id = data.get('entry_id')
+    username = data.get('username')
+    
+    if not entry_id or not username:
+        return jsonify({"error": "Missing entry_id or username"}), 400
+        
+    comment = Comment.query.filter_by(
+        entry_id=entry_id,
+        username=username
+    ).first()
+    
+    if not comment:
+        return jsonify({"message": "No feedback found"}), 404
+        
+    return jsonify({
+        "id": comment.id,
+        "username": comment.username,
+        "entry_id": comment.entry_id,
+        "question": comment.question,
+        "comment": comment.feedback,
+        "rating": comment.rating,
+        "timestamp": comment.timestamp.isoformat()
+    })
+
 if __name__ == "__main__":
     with app.app_context(): 
         root_dir = os.path.join(Config.DATA_DIR,"outputs")
