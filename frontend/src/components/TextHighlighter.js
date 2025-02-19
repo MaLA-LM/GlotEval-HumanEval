@@ -18,6 +18,19 @@ const errorColors = {
   "Redundancy": "#e3e3e3", // Light gray
   "Ambiguity or Vagueness": "#C4A484", // Light brown
   "Cultural Sensitivity or Offensive Content": "#ffccf5", // Light lavender
+  "Lack of Creativity": "#FDD7E4", // Soft pastel pink
+  "Lack of Empathy": "#FFC6A7" , // Warm peach
+  "Overly Generic Response": "#E1EBEE", //Soft cool gray-blue
+  "Contradictory or Factually Incorrect": "#F4A8A8", // Light coral red
+  "Missing Key Points": "#FFE599", // Warm pastel yellow
+  "Unnecessary Details": "#D5C7BC", // Soft sand beige
+  "Bias or Subjectivity": "#D1CFE2", // Gentle periwinkle",
+  "Literal Translation": "#BFEFFF", // Light aqua blue
+  "Contextual Error": "#FFD3B6", // Warm apricot orange
+  "Terminology Inconsistency": "#C3E6CB", // Soft sage green
+  "Tone Mismatch": "#E2B8A8", // Gentle rosewood
+  "Off-target Translation": "#D4A5A5", // Muted blush red
+
 };
 
 function getSelectionCharacterOffsetWithin(element) {

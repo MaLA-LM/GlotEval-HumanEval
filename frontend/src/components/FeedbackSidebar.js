@@ -18,15 +18,17 @@ import {
 import api from "../services/api";
 import TextHighlighter from "./TextHighlighter";
 
-const errorOptions = [
-  "Grammar Error",
-  "Spelling or Typographical Error",
-  "Incoherent or Illogical",
-  "Off-topic or Irrelevant",
-  "Redundancy",
-  "Ambiguity or Vagueness",
-  "Cultural Sensitivity or Offensive Content",
-];
+// const errorOptions = [
+//   "Grammar Error",
+//   "Spelling or Typographical Error",
+//   "Incoherent or Illogical",
+//   "Off-topic or Irrelevant",
+//   "Redundancy",
+//   "Ambiguity or Vagueness",
+//   "Cultural Sensitivity or Offensive Content",
+// ];
+
+
 
 function FeedbackSidebar({ 
   row, 
@@ -47,6 +49,51 @@ function FeedbackSidebar({
     inlineField = "output";
   }
   const fieldText = row[inlineField] || "No text available";
+
+  //task-specific errors
+  const errorOptions = {
+    generation : [
+      "Grammar Error",
+      "Spelling or Typographical Error",
+      "Incoherent or Illogical",
+      "Off-topic or Irrelevant",
+      "Redundancy",
+      "Ambiguity or Vagueness",
+      "Cultural Sensitivity or Offensive Content",
+      "Lack of Creativity",
+      "Lack of Empathy",
+      "Overly Generic Response",
+      "Contradictory or Factually Incorrect"
+  
+    ],
+    summarization: [
+      "Grammar Error",
+      "Spelling or Typographical Error",
+      "Incoherent or Illogical",
+      "Off-topic or Irrelevant",
+      "Redundancy",
+      "Ambiguity or Vagueness",
+      "Cultural Sensitivity or Offensive Content",
+      "Missing Key Points",
+      "Unnecessary Details",
+      "Bias or Subjectivity"
+    ],
+    translation: [
+      "Grammar Error",
+      "Spelling or Typographical Error",
+      "Incoherent or Illogical",
+      "Off-topic or Irrelevant",
+      "Redundancy",
+      "Ambiguity or Vagueness",
+      "Cultural Sensitivity or Offensive Content",
+      "Literal Translation",
+      "Contextual Error",
+      "Terminology Inconsistency",
+      "Tone Mismatch",
+      "Off-target Translation"
+    ],
+  }
+  const taskErrors = errorOptions[taskKey] || ["General Error"];
 
   // State variables.
   const [errorType, setErrorType] = useState("");
@@ -219,6 +266,7 @@ function FeedbackSidebar({
             <Typography variant="body2">
               <strong>Rating:</strong> {userFeedback.rating}/5
             </Typography>
+    
           </Box>
         </Box>
       )}
@@ -236,7 +284,7 @@ function FeedbackSidebar({
             label="Error Type"
             onChange={(e) => setErrorType(e.target.value)}
           >
-            {errorOptions.map((opt) => (
+            {taskErrors.map((opt) => (
               <MenuItem key={opt} value={opt}>
                 {opt}
               </MenuItem>
