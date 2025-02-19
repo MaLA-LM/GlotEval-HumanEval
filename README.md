@@ -17,7 +17,7 @@ Then, type:\
 $ `python app.py`
 This starts the backend\
 
-Then, cd into the frontend folder by typing:\
+Then, in another terminal, cd into the frontend folder by typing:\
 $`CD ../frontend` 
 
 Then, type:\
