@@ -1,18 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Snackbar, Dialog, DialogContent, DialogTitle, IconButton, Drawer } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Snackbar,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Drawer,
+} from "@mui/material";
 import api from "../services/api";
+import { useLocation } from "react-router-dom";
 import TaskSelector from "./TaskSelector";
 import DataTable from "./DataTable";
 import FeedbackSidebar from "./FeedbackSidebar";
 import CommentSection from "./CommentSection";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 function Dashboard({ user }) {
+  const location = useLocation(); // Get the current location object
+  const searchParams = new URLSearchParams(location.search); // Create a URLSearchParams object from the search string
+
+  // Handle the parameters from the URL
+  const taskFromURL = searchParams.get("task") || "";
+  const benchmarkFromURL = searchParams.get("benchmark") || "";
+  const modelFromURL = searchParams.get("model") || "";
+  const languageFromURL = searchParams.get("language") || "";
+
   const [tasksConfig, setTasksConfig] = useState({});
-  const [selectedTask, setSelectedTask] = useState("");
-  const [selectedBenchmark, setSelectedBenchmark] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedTask, setSelectedTask] = useState(taskFromURL);
+  const [selectedBenchmark, setSelectedBenchmark] = useState(benchmarkFromURL);
+  const [selectedModel, setSelectedModel] = useState(modelFromURL);
+  const [selectedLanguage, setSelectedLanguage] = useState(languageFromURL);
   const [tableData, setTableData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -50,7 +70,17 @@ function Dashboard({ user }) {
   useEffect(() => {
     setTableData([]);
   }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
-
+  // Load data when task, benchmark, model, and language are selected.
+  useEffect(() => {
+    if (
+      selectedTask &&
+      selectedBenchmark &&
+      selectedModel &&
+      selectedLanguage
+    ) {
+      handleLoadData();
+    }
+  }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
   const handleLoadData = async () => {
     if (
       !selectedTask ||
@@ -75,8 +105,7 @@ function Dashboard({ user }) {
         error.response?.data || error.message
       );
       alert(
-        "Error loading data: " +
-          (error.response?.data?.error || error.message)
+        "Error loading data: " + (error.response?.data?.error || error.message)
       );
     }
   };
@@ -130,13 +159,13 @@ function Dashboard({ user }) {
       setUserFeedback(null);
       return;
     }
-    
+
     try {
       const res = await api.post(`/api/feedback`, {
         entry_id: rowData.entry_id,
-        username: user
+        username: user,
       });
-      
+
       setUserFeedback(res.data);
     } catch (err) {
       if (err.response?.status !== 404) {
@@ -162,20 +191,22 @@ function Dashboard({ user }) {
   // Update navigation handlers
   const handleNext = () => {
     if (currentIndex < tableData.length - 1) {
-      setCurrentIndex(prev => prev + 1);
+      setCurrentIndex((prev) => prev + 1);
       checkExistingFeedback(tableData[currentIndex + 1]);
     }
   };
 
   const handleBack = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1);
+      setCurrentIndex((prev) => prev - 1);
       checkExistingFeedback(tableData[currentIndex - 1]);
     }
   };
 
   const handleSkipTo = () => {
-    const skipIndex = prompt("Enter entry number to skip to (1-" + tableData.length + "):");
+    const skipIndex = prompt(
+      "Enter entry number to skip to (1-" + tableData.length + "):"
+    );
     const index = parseInt(skipIndex) - 1;
     if (!isNaN(index) && index >= 0 && index < tableData.length) {
       setCurrentIndex(index);
@@ -199,14 +230,11 @@ function Dashboard({ user }) {
         selectedLanguage={selectedLanguage}
         setSelectedLanguage={setSelectedLanguage}
       />
-      <Box sx={{ display: 'flex', gap: 2, my: 2 }}>
-        <Button variant="contained" onClick={handleLoadData}>
+      <Box sx={{ display: "flex", gap: 2, my: 2 }}>
+        {/* <Button variant="contained" onClick={handleLoadData}>
           Load Data
-        </Button>
-        <Button 
-          variant="contained" 
-          onClick={handleEvaluateOneByOne}
-        >
+        </Button> */}
+        <Button variant="contained" onClick={handleEvaluateOneByOne}>
           Evaluate 1-by-1
         </Button>
       </Box>
@@ -218,18 +246,33 @@ function Dashboard({ user }) {
       />
 
       {/* Add the evaluation dialog */}
-      <Dialog 
-        open={dialogOpen} 
+      <Dialog
+        open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         maxWidth="xl"
         fullWidth
       >
-        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography>Evaluate 1-by-1 (Entry {currentIndex + 1} of {tableData.length})</Typography>
-          <Box sx={{ display: 'flex', gap: 1 }}>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography>
+            Evaluate 1-by-1 (Entry {currentIndex + 1} of {tableData.length})
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1 }}>
             <Button onClick={handleSkipTo}>Skip To</Button>
-            <Button onClick={handleBack} disabled={currentIndex === 0}>Back</Button>
-            <Button onClick={handleNext} disabled={currentIndex === tableData.length - 1}>Next</Button>
+            <Button onClick={handleBack} disabled={currentIndex === 0}>
+              Back
+            </Button>
+            <Button
+              onClick={handleNext}
+              disabled={currentIndex === tableData.length - 1}
+            >
+              Next
+            </Button>
             <IconButton onClick={() => setDialogOpen(false)}>
               <CloseIcon />
             </IconButton>
@@ -238,7 +281,8 @@ function Dashboard({ user }) {
         <DialogContent>
           {userFeedback && (
             <Typography color="warning.main" sx={{ mb: 2 }}>
-              You have already provided feedback for this entry: "{userFeedback.comment}"
+              You have already provided feedback for this entry: "
+              {userFeedback.comment}"
             </Typography>
           )}
           {dialogOpen && tableData[currentIndex] && (
@@ -265,12 +309,13 @@ function Dashboard({ user }) {
           open={Boolean(selectedRow)}
           onClose={() => setSelectedRow(null)}
           PaperProps={{
-            sx: { 
-              width: '50%',
-              '& > *': {  // This ensures children take full width
-                width: '100%'
-              }
-            }
+            sx: {
+              width: "50%",
+              "& > *": {
+                // This ensures children take full width
+                width: "100%",
+              },
+            },
           }}
         >
           <FeedbackSidebar
@@ -282,7 +327,7 @@ function Dashboard({ user }) {
           />
         </Drawer>
       )}
-      
+
       <CommentSection refreshFlag={refreshCommentsFlag} />
       <Snackbar
         open={snackbarOpen}

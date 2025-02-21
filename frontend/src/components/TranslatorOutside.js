@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography, IconButton } from "@mui/material";
+import GTranslateIcon from "@mui/icons-material/GTranslate";
 import api from "../services/api"; // Ensure you have this API service
 const Translator = ({ row, taskType }) => {
+  // State to control the visibility of the translation
   const [translationVisible, setTranslationVisible] = useState(false);
+  // State to store the translated text
   const [translatedText, setTranslatedText] = useState("");
+  // State to control the loading state
   const [isLoading, setIsLoading] = useState(false);
+  // State to store any error that occurs during translation
   const [error, setError] = useState(null);
 
+  /**
+   * Constructs the full text to be translated based on the row and task type.
+   * @param {Object} row - The row data containing the fields to be translated.
+   * @param {string} taskType - The type of task (classification, translation, summarization, generation).
+   * @returns {string} - The full text to be translated.
+   */
   const getFullRowText = (row, taskType) => {
     const detailOrder = {
       classification: ["prompt"],
@@ -26,6 +37,9 @@ const Translator = ({ row, taskType }) => {
       .join("\n");
   };
 
+  /**
+   * Handles the translation process.
+   */
   const handleTranslate = async () => {
     setIsLoading(true);
     setError(null);
@@ -58,20 +72,21 @@ const Translator = ({ row, taskType }) => {
       sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}
     >
       <Button
-        variant="contained"
+        size="small"
         onClick={handleTranslate}
         disabled={isLoading}
         sx={{ alignSelf: "flex-start" }}
+        startIcon={<GTranslateIcon />}
       >
-        {isLoading ? "Translating..." : "Translate"}
+        {isLoading ? "Translating..." : "Google Translate"}
       </Button>
 
       {error && <Typography color="error">{error}</Typography>}
       {translationVisible && translatedText && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="subtitle2" gutterBottom>
+        <Box sx={{ mt: 0 }}>
+          {/* <Typography variant="subtitle2" gutterBottom>
             Google translation
-          </Typography>
+          </Typography> */}
           <TextField
             fullWidth
             multiline

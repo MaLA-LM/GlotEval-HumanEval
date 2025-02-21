@@ -3,26 +3,24 @@ import {
   Box,
   Typography,
   Button,
-  Snackbar,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
 } from "@mui/material";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 import DataTable from "./DataTable";
-import FeedbackSidebar from "./FeedbackSidebar";
-import CommentSection from "./CommentSection";
 
 function Dashboard({ user, task, benchmark, model }) {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [tableData, setTableData] = useState([]);
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [refreshCommentsFlag, setRefreshCommentsFlag] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const [availableLanguages, setAvailableLanguages] = useState([]);
+
+  const navigate = useNavigate(); // Hook for navigation
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -49,7 +47,12 @@ function Dashboard({ user, task, benchmark, model }) {
     // Hide the table when any of the dropdown selections change.
     setTableData([]);
   }, [selectedLanguage]);
-
+  // Load data when task, benchmark, model, and language are selected.
+  useEffect(() => {
+    if (selectedLanguage) {
+      handleLoadData();
+    }
+  }, [selectedLanguage]);
   const handleLoadData = async () => {
     if (!selectedLanguage) {
       alert("Please select a language.");
@@ -74,20 +77,20 @@ function Dashboard({ user, task, benchmark, model }) {
     }
   };
 
-  const handleRowSelect = (row) => {
-    if (!user) {
-      setSnackbarOpen(true);
-      return;
-    }
-    setSelectedRow(row);
-    setSidebarOpen(true);
-  };
+  // const handleRowSelect = (row) => {
+  //   if (!user) {
+  //     // setSnackbarOpen(true);
+  //     return;
+  //   }
+  //   setSelectedRow(null);
+  //   // setSidebarOpen(true);
+  // };
 
-  const handleCommentSubmit = () => {
-    setSidebarOpen(false);
-    setSelectedRow(null);
-    setRefreshCommentsFlag((prev) => !prev);
-  };
+  // const handleCommentSubmit = () => {
+  //   // setSidebarOpen(false);
+  //   setSelectedRow(null);
+  //   setRefreshCommentsFlag((prev) => !prev);
+  // };
 
   // Define column order based on task type.
   let columnOrder = [];
@@ -116,61 +119,60 @@ function Dashboard({ user, task, benchmark, model }) {
     columnOrder = Object.keys(tableData[0]);
   }
 
+  const handleNavigateToHumanFeedback = () => {
+    if (!selectedLanguage) {
+      alert("Please select a language before proceeding to Human Feedback.");
+      return;
+    }
+    navigate(
+      `/human-feedback?task=${task}&benchmark=${benchmark}&model=${model}&language=${selectedLanguage}`
+    );
+  };
   return (
     <Box sx={{ position: "relative" }}>
-      {sidebarOpen && (
-        <Box
-          onClick={() => setSidebarOpen(false)}
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backdropFilter: "blur(3px)",
-            zIndex: 1,
-          }}
-        />
-      )}
       <Typography variant="h6" sx={{ my: 2 }}>
         Select a language to view the output results
       </Typography>
-      <FormControl fullWidth sx={{ my: 2 }}>
-        <InputLabel>Language</InputLabel>
-        <Select
-          value={selectedLanguage}
-          onChange={(e) => setSelectedLanguage(e.target.value)}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          my: 2,
+          width: "100%",
+        }}
+      >
+        <FormControl sx={{ flex: 1, minWidth: 200, maxWidth: 800 }}>
+          <InputLabel>Language</InputLabel>
+          <Select
+            value={selectedLanguage}
+            onChange={(e) => setSelectedLanguage(e.target.value)}
+          >
+            {availableLanguages.map((lang) => (
+              <MenuItem key={lang} value={lang}>
+                {lang}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button
+          variant="contained"
+          sx={{ my: 2 }}
+          color="secondary"
+          onClick={handleNavigateToHumanFeedback}
         >
-          {availableLanguages.map((lang) => (
-            <MenuItem key={lang} value={lang}>
-              {lang}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <Button variant="contained" sx={{ my: 2 }} onClick={handleLoadData}>
-        Load Data
-      </Button>
+          Go To Human Feedback
+        </Button>
+      </Box>
+
+      <Box sx={{ display: "flex", gap: 2 }}></Box>
       <DataTable
         data={tableData}
-        onRowSelect={handleRowSelect}
+        onRowSelect={null}
         taskType={taskKey}
         columnOrder={columnOrder}
-      />
-      {sidebarOpen && selectedRow && user && (
-        <FeedbackSidebar
-          row={selectedRow}
-          taskType={task}
-          onClose={() => setSidebarOpen(false)}
-          onCommentSubmit={handleCommentSubmit}
-        />
-      )}
-      {/* <CommentSection refreshFlag={refreshCommentsFlag} /> */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        message="Please login before providing feedback."
+        isViewMode={true}
       />
     </Box>
   );

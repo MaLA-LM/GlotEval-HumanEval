@@ -8,18 +8,27 @@ import {
   TableBody,
   Paper,
   TablePagination,
-  Button,
+  IconButton,
   Collapse,
   Box,
+  Button,
 } from "@mui/material";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import CategoryFilter from "./CategoryFilter";
 import TranslatorOutside from "./TranslatorOutside";
 
-function DataTable({ data, onRowSelect, taskType, columnOrder }) {
+function DataTable({
+  data,
+  onRowSelect,
+  taskType,
+  columnOrder,
+  isViewMode = false,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({ predicted: "", correct: "" });
   const [expandedRow, setExpandedRow] = useState(null);
+
   const headers =
     columnOrder || (data && data.length > 0 ? Object.keys(data[0]) : []);
 
@@ -113,6 +122,7 @@ function DataTable({ data, onRowSelect, taskType, columnOrder }) {
                       </TableCell>
                     ))}
                   </TableRow>
+
                   {/* Expanded Row */}
                   <TableRow>
                     <TableCell
@@ -134,13 +144,18 @@ function DataTable({ data, onRowSelect, taskType, columnOrder }) {
                             flexWrap: "nowrap",
                           }}
                         >
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => onRowSelect(row)}
-                          >
-                            Feedback
-                          </Button>
+                          {!isViewMode && (
+                            <Button
+                              size="small"
+                              color="secondary"
+                              onClick={() => onRowSelect(row)}
+                              disabled={isViewMode}
+                              sx={{ alignSelf: "flex-start" }}
+                              startIcon={<RateReviewIcon />}
+                            >
+                              Feedback
+                            </Button>
+                          )}
 
                           <Box sx={{ width: "100%" }}>
                             <TranslatorOutside
