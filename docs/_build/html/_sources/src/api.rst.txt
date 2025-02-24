@@ -1,53 +1,53 @@
-APIs
+API
 ==========
 
-Authentication Endpoints
+Authentication
 ------------------------
-POST /api/signup: Registers a new user with a username and password.
+* POST /api/signup: Registers a new user with a username and password.
+* POST /api/login: Authenticates a user and starts a session.
+* POST /api/logout: Ends the user session.
 
-POST /api/login: Authenticates a user and starts a session.
-
-POST /api/logout: Ends the user session.
-
-Task Configuration Endpoint
+Task Configuration
 ---------------------------
 
-GET /api/tasks: Retrieves the task configuration from a JSON file.
+* GET /api/tasks: Retrieves the task configuration from a JSON file.
 
-Data Loading Endpoint
+Data Loading
 ---------------------
 
-POST /api/data: Loads data from a JSONL file based on task type, benchmark, model, and language parameters.
+* POST /api/data: 
+  Loads data from a JSONL file based on task type, benchmark, model, and language parameters.
 
-Annotation Endpoint
+Annotation
 -------------------
 
-POST /api/annotation: Saves annotations made by the user. It can handle multiple annotations at once.
+* POST /api/annotation: 
+  Saves annotations made by the user. It can handle multiple annotations at once.
 
-Comments Endpoints
+Comments
 ------------------
 
-GET /api/comments: Retrieves all comments, optionally filtered by entry ID.
+* GET /api/comments: Retrieves all comments, optionally filtered by entry ID.
 
-POST /api/comments: Adds a new comment.
+* POST /api/comments: Adds a new comment.
 
-PUT /api/comments/int:comment_id: Updates an existing comment.
+* PUT /api/comments/int:comment_id: Updates an existing comment.
 
-DELETE /api/comments/int:comment_id: Deletes a comment.
+* DELETE /api/comments/int:comment_id: Deletes a comment.
 
-POST /api/comments/thumbs: Records a thumbs-up or thumbs-down vote for a comment.
+* POST /api/comments/thumbs: Records a thumbs-up or thumbs-down vote for a comment.
 
-Export Endpoint
+Export
 -----------------
 
-GET /api/export: Exports both annotations and comments as a JSON file.
+* GET /api/export: Exports both annotations and comments as a JSON file.
 
-Translation Endpoint
+Translation
 ------------------
 
-POST /api/translate: Translates text to a specified target language using Google Translate.
+* POST /api/translate: Translates text to a specified target language using Google Translate.
 
-Feedback Endpoint
+Feedback
 ------------------
 
-POST /api/feedback: Retrieves feedback for a specific entry ID and username.
+* sPOST /api/feedback: Retrieves feedback for a specific entry ID and username.

@@ -14,6 +14,6 @@ This component is used to select a task from a list of tasks. It displays a list
 ```js
 import TaskSelector from './TaskSelector';
 
-const tasks = [
+const tasks = 
   { id: 1, name: 'Task 1' },
 ```

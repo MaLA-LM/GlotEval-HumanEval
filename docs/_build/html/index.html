@@ -41,15 +41,17 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="src/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="src/architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/components.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src/api.html">APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src/filesystem.html">File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/database.html">Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/whats-next.html">What’s next</a></li>
 </ul>
 
@@ -81,28 +83,46 @@
 <h1>PolyEval documentation<a class="headerlink" href="#polyeval-documentation" title="Link to this heading"></a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>Evaluating large language models, especially for low-resource languages, remains challenging due to fragmented benchmarks focused on high-resource languages. PolyEval addresses this by offering an Automatic Evaluation Toolkit, a suite of tools for standardized LLM performance assessment that supports custom evaluation pipelines across multiple tasks, benchmarks, and metrics, such as:</p>
-<p>Text Classification: SIB-200 and Taxi-1500.
-Machine Translation: Flores200.
-Summarization: XL-Sum
-Open-ended Generation: Aya, PolyWrite
-Machine Comprehension: BELEBELE, arc_multilingual
-Intrinsic Evaluation: glot500, pbc</p>
-<p>The results, products of this toolkit, will be displayed through a user-friendly interface, allowing for horizontal comparisons in charts and providing human evaluations.</p>
+<p>Evaluating large language models, especially for low-resource languages, remains challenging due to fragmented benchmarks focused on high-resource languages. PolyEval addresses this by offering an Automatic Evaluation Toolkit, a suite of tools for standardized LLM performance assessment that supports custom evaluation pipelines across multiple tasks, benchmarks, and metrics.
+The results, products of this toolkit, will be displayed through a user-friendly interface, allowing for horizontal comparisons in charts and providing human evaluations.</p>
+</section>
+<section id="supported-tasks-and-benchmarks">
+<h2>Supported tasks and benchmarks<a class="headerlink" href="#supported-tasks-and-benchmarks" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Text Classification: SIB-200 and Taxi-1500.</p></li>
+<li><p>Machine Translation: Flores200.</p></li>
+<li><p>Summarization: XL-Sum</p></li>
+<li><p>Open-ended Generation: Aya, PolyWrite</p></li>
+<li><p>Machine Comprehension: BELEBELE, arc_multilingual</p></li>
+<li><p>Intrinsic Evaluation: glot500, pbc</p></li>
+</ul>
 </section>
 <section id="key-features">
 <h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>Data Visualization</p></li>
-<li><p>Error Analysis</p></li>
-<li><p>Human Evaluation</p></li>
-</ul>
+<section id="data-visualization">
+<h3>Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading"></a></h3>
+</section>
+<section id="error-analysis">
+<h3>Error Analysis<a class="headerlink" href="#error-analysis" title="Link to this heading"></a></h3>
+</section>
+<section id="human-evaluation">
+<h3>Human Evaluation<a class="headerlink" href="#human-evaluation" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="frameworks">
+<h2>Frameworks<a class="headerlink" href="#frameworks" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="src/installation.html">Installation</a><ul class="simple">
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="src/architecture.html">Architecture</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="src/architecture.html#frontend">Frontend</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/architecture.html#backend">Backend</a></li>
@@ -117,24 +137,22 @@ Intrinsic Evaluation: glot500, pbc</p>
 <li class="toctree-l2"><a class="reference internal" href="src/components/translator.html#translatoroutside">TranslatorOutside</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/api.html">APIs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#authentication-endpoints">Authentication Endpoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#task-configuration-endpoint">Task Configuration Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#data-loading-endpoint">Data Loading Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#annotation-endpoint">Annotation Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#comments-endpoints">Comments Endpoints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#export-endpoint">Export Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#translation-endpoint">Translation Endpoint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#feedback-endpoint">Feedback Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#authentication">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#task-configuration">Task Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#data-loading">Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#annotation">Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#export">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#translation">Translation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#feedback">Feedback</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/filesystem.html">File system</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="src/database.html#structure">Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/database.html#name-conventions">Name Conventions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="src/whats-next.html">What’s next</a></li>
 </ul>
 </div>

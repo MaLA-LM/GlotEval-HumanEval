@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Components" href="components.html" />
-    <link rel="prev" title="Installation" href="installation.html" /> 
+    <link rel="prev" title="Trouble-shooting" href="trouble-shooting.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,19 +42,30 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul class="current">
+              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Trouble-shooting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#frontend">Frontend</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#backend">Backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frontend">Frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ui">UI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#components">Components</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#backend">Backend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#database">Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-system">File system</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filesystem.html">File system</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Trouble-shooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="whats-next.html">What’s next</a></li>
 </ul>
 
@@ -88,25 +99,33 @@
 <section id="frontend">
 <h2>Frontend<a class="headerlink" href="#frontend" title="Link to this heading"></a></h2>
 <p>The frontend is built using React, a popular JavaScript library for building user interfaces. React allows developers to build reusable UI components and manage the state of the application using Redux, a state management library.</p>
-<ul class="simple">
-<li><p>UI</p></li>
-</ul>
+<section id="ui">
+<h3>UI<a class="headerlink" href="#ui" title="Link to this heading"></a></h3>
 <p>The frontend is also built using Material-UI (MUI), a popular React UI framework that provides a set of pre-built components that can be used to build a responsive and modern user interface.</p>
+</section>
+<section id="components">
+<h3>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>Components</p></li>
+<li><p><a class="reference internal" href="components.html"><span class="doc">Components</span></a></p></li>
 </ul>
+</section>
 </section>
 <section id="backend">
 <h2>Backend<a class="headerlink" href="#backend" title="Link to this heading"></a></h2>
 <p>The backend is built using Python Flask. It is responsible for handling API requests and returning responses to the frontend. The backend uses SQLite as the database to store user data and other information.</p>
-<ul class="simple">
-<li><p>Database</p></li>
-</ul>
+<section id="database">
+<h3>Database<a class="headerlink" href="#database" title="Link to this heading"></a></h3>
 <p>The database is SQLit, which is a NoSQL database. It is used to store user data, such as user profiles, preferences, and other information. The database is accessed by the backend through Mongoose, which is an Object Data Modeling (ODM) library for MongoDB and Node.js.</p>
-<ul class="simple">
-<li><p>APIs</p></li>
-</ul>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading"></a></h3>
 <p>The system provides RESTful APIs for the frontend to interact with the backend. The APIs are built using Express and are responsible for handling API requests and returning responses to the frontend. The APIs are secured using JWT (JSON Web Tokens) for authentication and authorization.</p>
+</section>
+<section id="file-system">
+<h3>File system<a class="headerlink" href="#file-system" title="Link to this heading"></a></h3>
+<p>The file system is a key component of the backend. It is responsible for storing and retrieving files from the database. The file system is implemented using the SQLAlchemy ORM and the Flask-Uploads extension.</p>
+<p>The file system is used to store files that are uploaded by users. The files are stored in the database as binary data. The file system also provides a way to retrieve the files from the database and serve them to the user.</p>
+</section>
 </section>
 </section>
 
@@ -114,7 +133,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="trouble-shooting.html" class="btn btn-neutral float-left" title="Trouble-shooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="components.html" class="btn btn-neutral float-right" title="Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
