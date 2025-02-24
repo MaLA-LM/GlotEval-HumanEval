@@ -4,34 +4,34 @@ Installation
 .. toctree::
    :maxdepth: 2
 
-Open your terminal and clone the repo by typing:
+Open your terminal and clone the repo by typing::
 
-``$ git clone {git\@github.com:ananda-sreenidhi/polyeval.git}``
+$ git clone git\@github.com:ananda-sreenidhi/polyeval.git
 
-Then, cd into the new folder by typing:
+Then, cd into the new folder by typing::
 
-``$cd polyeval``
+$cd polyeval
 
-Then, cd into the backend folder by typing:
+Then, cd into the backend folder by typing::
 
-``$cd backend``
+$cd backend
 
-Then, install all the required dependencies by typing:
+Then, install all the required dependencies by typing::
 
-``$pip install -r requirements.txt``
+$pip install -r requirements.txt
 
-Then, start the backend by typing:
+Then, start the backend by typing::
 
-``$ python app.py``
+$ python app.py
 
-Then, in another terminal, cd into the frontend folder by typing:
+Then, in another terminal, cd into the frontend folder by typing::
 
-``$cd ../frontend``
+$cd ../frontend
 
-Then, installs the required dependencies by typing:
+Then, installs the required dependencies by typing::
 
-``$ npm install``
+$ npm install
 
-To run the React project:
+To run the React project::
 
-``$ npm start``
+$ npm start

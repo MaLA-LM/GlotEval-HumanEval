@@ -15,7 +15,7 @@ The frontend is also built using Material-UI (MUI), a popular React UI framework
 
 Components
 ~~~~~~~~~~~
-* :doc:`components`
+For details about the components used in the frontend, please refer to the :doc:`components` section.
 
 
 Backend
@@ -26,12 +26,14 @@ The backend is built using Python Flask. It is responsible for handling API requ
 Database
 ~~~~~~~~~~~
 
-The database is SQLit, which is a NoSQL database. It is used to store user data, such as user profiles, preferences, and other information. The database is accessed by the backend through Mongoose, which is an Object Data Modeling (ODM) library for MongoDB and Node.js.
+The database is built using SQLite for its lightweight, serverless, and file-based architecture, making it ideal for development and small-scale applications. To enhance database management, we adopted SQLAlchemy as our ORM, enabling Pythonic interaction with the database. This combination ensures a robust, maintainable, and scalable data management solution.
 
 API
 ~~~~~~~~~~~
 
 The system provides RESTful APIs for the frontend to interact with the backend. The APIs are built using Express and are responsible for handling API requests and returning responses to the frontend. The APIs are secured using JWT (JSON Web Tokens) for authentication and authorization.
+
+For details about the api used in the backend, please refer to the :doc:`api` section.
 
 File system
 ~~~~~~~~~~~

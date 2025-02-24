@@ -7,8 +7,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API &mdash; PolyEval  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e005c604" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -45,21 +46,51 @@
               <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Trouble-shooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Troubleshooting</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#authentication">Authentication</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#task-configuration">Task Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data-loading">Data Loading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#annotation">Annotation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#export">Export</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#translation">Translation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#feedback">Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#base-information">Base Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-authentication">User Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-signup">User Signup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-login">User Login</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-logout">User Logout</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#task-configuration">Task Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-task-configuration">Get Task Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-loading">Data Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-data">Get Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#annotations">Annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#save-annotation">Save Annotation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#comments">Comments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-comments">Get Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-comment">Add Comment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#edit-comment">Edit Comment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delete-comment">Delete Comment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#translation">Translation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#translate-text">Translate Text</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-export">Data Export</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#export-data">Export Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#feedback">Feedback</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-feedback">Get Feedback</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
@@ -92,61 +123,380 @@
              
   <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Link to this heading"></a></h1>
-<section id="authentication">
-<h2>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h2>
+<section id="base-information">
+<h2>Base Information<a class="headerlink" href="#base-information" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>POST /api/signup: Registers a new user with a username and password.</p></li>
-<li><p>POST /api/login: Authenticates a user and starts a session.</p></li>
-<li><p>POST /api/logout: Ends the user session.</p></li>
+<li><p><strong>Base URL</strong>: <code class="docutils literal notranslate"><span class="pre">http://&lt;your-server-address&gt;/api</span></code></p></li>
+<li><p><strong>Data Format</strong>: JSON</p></li>
+<li><p><strong>Authentication</strong>: JWT (user login state is managed via <code class="docutils literal notranslate"><span class="pre">session</span></code>)</p></li>
 </ul>
 </section>
+<hr class="docutils" />
+<section id="user-authentication">
+<h2>User Authentication<a class="headerlink" href="#user-authentication" title="Link to this heading"></a></h2>
+<section id="user-signup">
+<h3>User Signup<a class="headerlink" href="#user-signup" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/signup</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_username&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_password&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User created&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_username&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Missing username or password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Username already exists</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="user-login">
+<h3>User Login<a class="headerlink" href="#user-login" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/login</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_username&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_password&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Logged in&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_username&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Missing username or password</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">401</span></code>: Invalid username or password</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="user-logout">
+<h3>User Logout<a class="headerlink" href="#user-logout" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/logout</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Logged out&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
 <section id="task-configuration">
 <h2>Task Configuration<a class="headerlink" href="#task-configuration" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>GET /api/tasks: Retrieves the task configuration from a JSON file.</p></li>
+<section id="get-task-configuration">
+<h3>Get Task Configuration<a class="headerlink" href="#get-task-configuration" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/tasks</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">GET</span></code></p></li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;task_type_1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;benchmark_1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;model_1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;language_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;language_2&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Response</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span></code>: Failed to load task configuration</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
+</section>
+<hr class="docutils" />
 <section id="data-loading">
 <h2>Data Loading<a class="headerlink" href="#data-loading" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>POST /api/data:
-Loads data from a JSONL file based on task type, benchmark, model, and language parameters.</p></li>
+<section id="get-data">
+<h3>Get Data<a class="headerlink" href="#get-data" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/data</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;task&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task_type&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;benchmark&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;benchmark_name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model_name&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;language_code&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;field_1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;value_1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;field_2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;value_2&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Missing parameters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">404</span></code>: Data file not found</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span></code>: Failed to read file</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
-<section id="annotation">
-<h2>Annotation<a class="headerlink" href="#annotation" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>POST /api/annotation:
-Saves annotations made by the user. It can handle multiple annotations at once.</p></li>
+</section>
+<hr class="docutils" />
+<section id="annotations">
+<h2>Annotations<a class="headerlink" href="#annotations" title="Link to this heading"></a></h2>
+<section id="save-annotation">
+<h3>Save Annotation<a class="headerlink" href="#save-annotation" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/annotation</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;row_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;annotations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;errorType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error_type&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;start&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;end&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;X annotations saved.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">401</span></code>: Unauthenticated</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span></code>: Database error</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
+</section>
+<hr class="docutils" />
 <section id="comments">
 <h2>Comments<a class="headerlink" href="#comments" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>GET /api/comments: Retrieves all comments, optionally filtered by entry ID.</p></li>
-<li><p>POST /api/comments: Adds a new comment.</p></li>
-<li><p>PUT /api/comments/int:comment_id: Updates an existing comment.</p></li>
-<li><p>DELETE /api/comments/int:comment_id: Deletes a comment.</p></li>
-<li><p>POST /api/comments/thumbs: Records a thumbs-up or thumbs-down vote for a comment.</p></li>
+<section id="get-comments">
+<h3>Get Comments<a class="headerlink" href="#get-comments" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/comments</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">GET</span></code></p></li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is this?&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;feedback&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is a comment.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;rating&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-10-01T12:00:00Z&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </section>
-<section id="export">
-<h2>Export<a class="headerlink" href="#export" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>GET /api/export: Exports both annotations and comments as a JSON file.</p></li>
+<section id="add-comment">
+<h3>Add Comment<a class="headerlink" href="#add-comment" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/comments</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;row_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is this?&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;feedback&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is a comment.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rating&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment added&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </section>
+<section id="edit-comment">
+<h3>Edit Comment<a class="headerlink" href="#edit-comment" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/comments/&lt;comment_id&gt;</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">PUT</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Updated question&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;feedback&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Updated feedback&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rating&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment updated&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="delete-comment">
+<h3>Delete Comment<a class="headerlink" href="#delete-comment" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/comments/&lt;comment_id&gt;</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">DELETE</span></code></p></li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment deleted&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
 <section id="translation">
 <h2>Translation<a class="headerlink" href="#translation" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>POST /api/translate: Translates text to a specified target language using Google Translate.</p></li>
+<section id="translate-text">
+<h3>Translate Text<a class="headerlink" href="#translate-text" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/translate</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Text to translate&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;target_lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;translated_text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Translated text&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;target_lang&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;es&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Missing text or unsupported target language</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span></code>: Translation failed</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
+</section>
+<hr class="docutils" />
+<section id="data-export">
+<h2>Data Export<a class="headerlink" href="#data-export" title="Link to this heading"></a></h2>
+<section id="export-data">
+<h3>Export Data<a class="headerlink" href="#export-data" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/export</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">GET</span></code></p></li>
+<li><p><strong>Response</strong>: Returns a JSON file containing all annotations and comments.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
 <section id="feedback">
 <h2>Feedback<a class="headerlink" href="#feedback" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>sPOST /api/feedback: Retrieves feedback for a specific entry ID and username.</p></li>
+<section id="get-feedback">
+<h3>Get Feedback<a class="headerlink" href="#get-feedback" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>URL</strong>: <code class="docutils literal notranslate"><span class="pre">/api/feedback</span></code></p></li>
+<li><p><strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p></li>
+<li><p><strong>Request Body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Success Response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;entry_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;task-benchmark-model-language-0001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is this?&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is a comment.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rating&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2023-10-01T12:00:00Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt><strong>Error Responses</strong>:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">400</span></code>: Missing parameters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">404</span></code>: Feedback not found</p></li>
 </ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
 </section>
 </section>
 

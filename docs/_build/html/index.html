@@ -7,8 +7,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PolyEval documentation &mdash; PolyEval  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=e005c604" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -44,7 +45,7 @@
               <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="src/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Troubleshooting</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul>
@@ -99,25 +100,54 @@ The results, products of this toolkit, will be displayed through a user-friendly
 </section>
 <section id="key-features">
 <h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
-<section id="data-visualization">
-<h3>Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading"></a></h3>
-</section>
-<section id="error-analysis">
-<h3>Error Analysis<a class="headerlink" href="#error-analysis" title="Link to this heading"></a></h3>
-</section>
-<section id="human-evaluation">
-<h3>Human Evaluation<a class="headerlink" href="#human-evaluation" title="Link to this heading"></a></h3>
-</section>
+<div class="admonition-container docutils container">
+<div class="admonition-compare-the-results-across-benchmarks-and-languages admonition">
+<p class="admonition-title">Compare the results across benchmarks and languages</p>
+<p>Compare cross the languages and models</p>
+</div>
+<div class="admonition-view-the-output-results admonition">
+<p class="admonition-title">View the output results</p>
+<img alt="_images/selectedRow.png" src="_images/selectedRow.png" />
+</div>
+</div>
+<div class="admonition-container docutils container">
+<div class="admonition-give-the-feedback admonition">
+<p class="admonition-title">Give the feedback</p>
+<p>Insightful feedback for the results</p>
+</div>
+<div class="admonition-import-and-export-the-feedback admonition">
+<p class="admonition-title">Import and export the feedback</p>
+<p>Get feedback from human evaluators</p>
+</div>
+</div>
 </section>
 <section id="frameworks">
 <h2>Frameworks<a class="headerlink" href="#frameworks" title="Link to this heading"></a></h2>
-<div class="toctree-wrapper compound">
+<p>We are using the following frameworks and libraries:</p>
+<div style="display: flex;" >
+  <div style="text-align: center; margin: 10px;">
+    <img src="_static/react-icon.png" style="width:200px; margin-bottom: 5px;" alt="React">
+    <p>React</p>
+  </div>
+  <div style="text-align: center; margin: 10px;">
+    <img src="_static/ui-logo.svg" style="width:200px; margin-bottom: 5px;" alt="Material UI">
+    <p>Material UI</p>
+  </div>
+  <div style="text-align: center; margin: 10px;">
+    <img src="_static/Flask_logo.svg" style="width:200px; margin-bottom: 5px;" alt="Python Flask">
+    <p>Python Flask</p>
+  </div>
+  <div style="text-align: center; margin: 10px;">
+    <img src="_static/SQLite.png" style="width:200px; margin-bottom: 5px;" alt="Sqlite">
+    <p>SQLite</p>
+  </div>
+</div><div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="src/installation.html">Installation</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Trouble-shooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/trouble-shooting.html">Troubleshooting</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -138,13 +168,14 @@ The results, products of this toolkit, will be displayed through a user-friendly
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src/api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#authentication">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#base-information">Base Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#user-authentication">User Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/api.html#task-configuration">Task Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/api.html#data-loading">Data Loading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#annotation">Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#annotations">Annotations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/api.html#comments">Comments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src/api.html#export">Export</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/api.html#translation">Translation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src/api.html#data-export">Data Export</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src/api.html#feedback">Feedback</a></li>
 </ul>
 </li>

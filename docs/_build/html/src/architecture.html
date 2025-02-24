@@ -7,8 +7,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Architecture &mdash; PolyEval  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e005c604" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -20,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Components" href="components.html" />
-    <link rel="prev" title="Trouble-shooting" href="trouble-shooting.html" /> 
+    <link rel="prev" title="Troubleshooting" href="trouble-shooting.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,7 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Trouble-shooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Troubleshooting</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
@@ -64,7 +65,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="whats-next.html">What’s next</a></li>
 </ul>
@@ -105,9 +106,7 @@
 </section>
 <section id="components">
 <h3>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><a class="reference internal" href="components.html"><span class="doc">Components</span></a></p></li>
-</ul>
+<p>For details about the components used in the frontend, please refer to the <a class="reference internal" href="components.html"><span class="doc">Components</span></a> section.</p>
 </section>
 </section>
 <section id="backend">
@@ -115,11 +114,12 @@
 <p>The backend is built using Python Flask. It is responsible for handling API requests and returning responses to the frontend. The backend uses SQLite as the database to store user data and other information.</p>
 <section id="database">
 <h3>Database<a class="headerlink" href="#database" title="Link to this heading"></a></h3>
-<p>The database is SQLit, which is a NoSQL database. It is used to store user data, such as user profiles, preferences, and other information. The database is accessed by the backend through Mongoose, which is an Object Data Modeling (ODM) library for MongoDB and Node.js.</p>
+<p>The database is built using SQLite for its lightweight, serverless, and file-based architecture, making it ideal for development and small-scale applications. To enhance database management, we adopted SQLAlchemy as our ORM, enabling Pythonic interaction with the database. This combination ensures a robust, maintainable, and scalable data management solution.</p>
 </section>
 <section id="api">
 <h3>API<a class="headerlink" href="#api" title="Link to this heading"></a></h3>
 <p>The system provides RESTful APIs for the frontend to interact with the backend. The APIs are built using Express and are responsible for handling API requests and returning responses to the frontend. The APIs are secured using JWT (JSON Web Tokens) for authentication and authorization.</p>
+<p>For details about the api used in the backend, please refer to the <a class="reference internal" href="api.html"><span class="doc">API</span></a> section.</p>
 </section>
 <section id="file-system">
 <h3>File system<a class="headerlink" href="#file-system" title="Link to this heading"></a></h3>
@@ -133,7 +133,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="trouble-shooting.html" class="btn btn-neutral float-left" title="Trouble-shooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="trouble-shooting.html" class="btn btn-neutral float-left" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="components.html" class="btn btn-neutral float-right" title="Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
