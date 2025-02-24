@@ -14,6 +14,7 @@ import Dashboard from "./components/Dashboard";
 import api from "./services/api";
 import DataVisualisation from "./components/DataVisualisation/DataVisualisation";
 import AnnotationGuidelines from "./components/AnnotationGuideline";
+import Metrics from "./components/Metrics/Metrics";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,6 +44,11 @@ function App() {
             <Button color="inherit" component={Link} to="/data-visualisation">
               Data Visualisation
             </Button>
+
+            <Button color="inherit" component={Link} to="/metrics">
+              Comparative Metrics View
+            </Button>
+
             <Button color="inherit" component={Link} to="/human-feedback">
               Human Feedback
             </Button>
@@ -75,6 +81,7 @@ function App() {
             path="/data-visualisation"
             element={<DataVisualisation user={user} />}
           />
+          <Route path="/metrics" element={<Metrics user={user} />} />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
