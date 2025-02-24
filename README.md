@@ -27,6 +27,33 @@ This installs the required dependencies.\
 To run the React project:\
 $ `npm start` 
 
+# Documentation
+## To see the doc:
+Open the docs folder\
+`$ cd docs`\
+Then\
+`$ make html`\
+Then\
+`$ ./_build/html/index.html`
+
+## To edit the doc:
+
+Documentation files are written in reStructuredText (.rst).
+Open and edit these files with your text editor.\
+The main page entry is located in the `index.rst` file within the docs folder.
+
+Common reStructuredText directives include:
+
+`.. image:: path/image.png` to add images\
+`.. code-block::` to include code snippets\
+`.. note::` to add notes or warnings
+
+After making edits, simply run `make html` again to update the documentation with your changes.
+
+More details to see: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
+
+
+
 ## 4.1
 
 ## 4.2 Human Feedback
