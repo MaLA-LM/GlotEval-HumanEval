@@ -48,7 +48,7 @@ All output files will be organized in a structure following **root_directory - b
 Synchronizes the database with the directory structure by generating an index of tasks, benchmarks, models, 
 and available language data. 
 
-The function ``generate_index_json(root_dir)`` in ``app.py`` scans a specified root directory and saves the structure to a JSON file.
+The function ``generate_index_json(root_dir)`` in ``app.py`` scans a specified root directory and saves the structure to ``tasks.json`` file.
 
 .. function:: generate_index_json(root_dir)
 

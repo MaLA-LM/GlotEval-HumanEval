@@ -35,3 +35,8 @@ $ npm install
 To run the React project::
 
 $ npm start
+
+---------------------------------------------
+
+Dependencies
+--------------
