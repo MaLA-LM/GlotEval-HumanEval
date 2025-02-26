@@ -25,22 +25,23 @@ Key Features
 
    .. admonition:: Compare the results across benchmarks and languages
 
-      Compare cross the languages and models
+      .. image:: _static/data-visualization.png
 
-   .. admonition:: View the output results
+   .. admonition:: Comparative Metrics
 
-      .. image:: _static/selectedRow.png
+      .. image:: _static/Praneeth.png
 
 .. container:: admonition-container
 
-   .. admonition:: Give the feedback
+   .. admonition:: View the output results 
 
-      Insightful feedback for the results
+      .. image:: _static/datatable-translated.png
 
-   .. admonition:: Import and export the feedback
+   .. admonition:: Give feedback on the output results
 
-      Get feedback from human evaluators
+      .. image:: _static/Eval1by1.png
 
+   
 
 Frameworks
 ------------
@@ -70,10 +71,11 @@ We are using the following frameworks and libraries:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Guidelines
+   :caption: User Guide
 
    src/installation
    src/trouble-shooting
+   src/features
    
 
 .. toctree::

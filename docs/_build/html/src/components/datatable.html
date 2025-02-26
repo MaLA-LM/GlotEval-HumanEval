@@ -43,21 +43,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../trouble-shooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../components.html">Components</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html">dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html#dashboardsection">dashboardSection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputboard.html">Output Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="taskselector.html">Task Selector</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Data table</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#DataTable"><code class="docutils literal notranslate"><span class="pre">DataTable()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="translator.html">Translator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="translator.html#translatoroutside">TranslatorOutside</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
@@ -92,9 +94,85 @@
              
   <section id="data-table">
 <h1>Data table<a class="headerlink" href="#data-table" title="Link to this heading"></a></h1>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataTable</span></code> component displays structured data in a table format,
+supports pagination, filtering, and provides an expandable row for additional actions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="DataTable">
+<span class="sig-name descname"><span class="pre">DataTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">{</span> <span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">onRowSelect</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnOrder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isViewMode</span> <span class="pre">}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DataTable" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array</em><em> of </em><em>objects</em>) – The dataset to be displayed.</p></li>
+<li><p><strong>onRowSelect</strong> (<em>function</em>) – Function to handle row selection for feedback submission.</p></li>
+<li><p><strong>taskType</strong> (<em>str</em>) – The type of task (e.g., classification, translation).</p></li>
+<li><p><strong>columnOrder</strong> (<em>array</em><em> of </em><em>str</em>) – The order of columns to display.</p></li>
+<li><p><strong>isViewMode</strong> (<em>bool</em>) – Whether the table is in read-only mode (default: False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A React component rendering a dynamic table.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSX.Element</p>
+</dd>
+</dl>
+<p><strong>Features:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Column Ordering</strong>
+- If <cite>columnOrder</cite> is provided, it defines the display order of columns.
+- If not, it automatically derives column headers from <cite>data</cite>.</p></li>
+<li><p><strong>Pagination</strong>
+- Uses <cite>TablePagination</cite> to handle large datasets efficiently.
+- Supports <cite>rowsPerPage</cite> selection.</p></li>
+<li><p><strong>Filtering (Classification Task Only)</strong>
+- Uses <cite>CategoryFilter</cite> to filter by <strong>predicted</strong> and <strong>correct</strong> categories.
+- Filters apply dynamically without page reload.</p></li>
+<li><p><strong>Row Expansion</strong>
+- Clicking a row expands additional information.
+- Displays a <strong>translation tool</strong> (<cite>TranslatorOutside</cite>).
+- Provides a <strong>feedback button</strong> when <cite>isViewMode</cite> is <cite>False</cite>.</p></li>
+</ol>
+<p><strong>Component Structure:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>DataTable.js
+├── CategoryFilter.js (Handles classification filtering)
+├── TranslatorOutside.js (Handles inline translations)
+├── API Calls (/api/data)
+├── Pagination and Filtering
 </pre></div>
 </div>
+<p><strong>Example Usage:</strong></p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">DataTable</span>
+<span class="w">   </span><span class="na">data</span><span class="o">=</span><span class="p">{</span><span class="nx">tableData</span><span class="p">}</span>
+<span class="w">   </span><span class="na">onRowSelect</span><span class="o">=</span><span class="p">{</span><span class="nx">handleRowSelection</span><span class="p">}</span>
+<span class="w">   </span><span class="na">taskType</span><span class="o">=</span><span class="s">&quot;classification&quot;</span>
+<span class="w">   </span><span class="na">columnOrder</span><span class="o">=</span><span class="p">{[</span><span class="s2">&quot;model_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;test_lang&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;predicted_category&quot;</span><span class="p">]}</span>
+<span class="w">   </span><span class="na">isViewMode</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
+<span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p><strong>State Variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">page</span></code>: The current pagination page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rowsPerPage</span></code>: The number of rows displayed per page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filters</span></code>: Stores selected filtering options.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expandedRow</span></code>: Tracks the row currently expanded.</p></li>
+</ul>
+<p><strong>User Actions:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">handleChangePage(event,</span> <span class="pre">newPage)</span></code>: Updates the pagination page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handleChangeRowsPerPage(event)</span></code>: Changes the number of displayed rows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handleExpandClick(row)</span></code>: Expands or collapses additional row details.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">onRowSelect(row)</span></code>: Triggers the feedback function.</p></li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">react</span></code> (Component state management)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;mui/material</span></code> (Table UI components)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CategoryFilter</span></code> (Filters classification results)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TranslatorOutside</span></code> (Inline translation functionality)</p></li>
+</ul>
+</dd></dl>
+
 </section>
 
 

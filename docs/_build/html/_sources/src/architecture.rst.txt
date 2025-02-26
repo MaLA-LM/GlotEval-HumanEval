@@ -3,6 +3,8 @@ Architecture
 
 The architecture of the system is as follows:
 
+.. image:: ../_static/Architecture.png
+
 Frontend
 ------
 
@@ -15,6 +17,10 @@ The frontend is also built using Material-UI (MUI), a popular React UI framework
 
 Components
 ~~~~~~~~~~~
+The architecture of the frontend components is as follows:
+
+.. image:: ../_static/Components.svg
+
 For details about the components used in the frontend, please refer to the :doc:`components` section.
 
 
@@ -35,8 +41,54 @@ The system provides RESTful APIs for the frontend to interact with the backend. 
 
 For details about the api used in the backend, please refer to the :doc:`api` section.
 
-File system
+File System
 ~~~~~~~~~~~
-The file system is a key component of the backend. It is responsible for storing and retrieving files from the database. The file system is implemented using the SQLAlchemy ORM and the Flask-Uploads extension.
+All output files will be organized in a structure following **root_directory - benchmark - model - language**. 
 
-The file system is used to store files that are uploaded by users. The files are stored in the database as binary data. The file system also provides a way to retrieve the files from the database and serve them to the user.
+Synchronizes the database with the directory structure by generating an index of tasks, benchmarks, models, 
+and available language data. 
+
+The function ``generate_index_json(root_dir)`` in ``app.py`` scans a specified root directory and saves the structure to a JSON file.
+
+.. function:: generate_index_json(root_dir)
+
+   :param root_dir: The root directory containing benchmark subdirectories.
+   :type root_dir: str
+   :returns: None (Writes output to a JSON file)
+   :rtype: None
+
+.. note:: Each **task type** and its corresponding **benchmarks** are predefined in ``TASK_BENCHMARK_MAP``.
+
+**Example Usage:**
+
+.. code-block:: python
+
+  generate_index_json("/path/to/root_directory")
+
+**JSON Output Structure Example:**
+
+.. code-block:: json
+
+  {
+      "text_classification": {
+          "benchmark1": {
+              "model1": ["language1", "language2",...],
+              "model2": ["language1",...]
+              ...
+          },
+          "benchmark2": {
+              "model3": ["language3", "language4"]
+              ...
+          }
+          ...
+      },
+      "translation": {
+          "benchmarkX": {
+              "modelA": ["EN-language5", "EN-language6"],
+              "modelB": ["language7-EN"]
+              ...
+          }
+          ...
+      }
+      ...
+  }

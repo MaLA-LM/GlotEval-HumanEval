@@ -3,7 +3,7 @@ Components
 .. toctree::
    :maxdepth: 2
    
-   components/dashboard
+   components/outputboard
    components/taskselector
    components/datatable
    components/translator

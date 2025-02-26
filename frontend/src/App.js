@@ -10,7 +10,7 @@ import {
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/OutputBoard";
 import api from "./services/api";
 import DataVisualisation from "./components/DataVisualisation/DataVisualisation";
 import AnnotationGuidelines from "./components/AnnotationGuideline";
@@ -77,10 +77,7 @@ function App() {
       </AppBar>
       <Box sx={{ p: 2 }}>
         <Routes>
-          <Route
-            path="/data-visualisation"
-            element={<DataVisualisation user={user} />}
-          />
+          <Route path="/data-visualisation" element={<DataVisualisation />} />
           <Route path="/metrics" element={<Metrics user={user} />} />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
           <Route path="/human-feedback" element={<Dashboard user={user} />} />

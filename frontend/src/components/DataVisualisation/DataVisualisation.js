@@ -4,9 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextClassification from "./TextClassification";
 import Sidebar from "./Sidebar";
-import DashboardSection from "../DashboardSection";
+import DashboardSection from "../OutputBoardSection";
 
-const DataVisualisation = ({ user }) => {
+const DataVisualisation = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [filters, setFilters] = useState(null);
 
@@ -92,7 +92,6 @@ const DataVisualisation = ({ user }) => {
           {/* Error analysis section (include human evaluation) */}
           {filters && filters.filterType === "model" && (
             <DashboardSection
-              user={user}
               task={task[selectedTab]}
               benchmark={filters.dataset}
               model={filters.filterValue}

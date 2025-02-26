@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Components" href="components.html" />
-    <link rel="prev" title="Troubleshooting" href="trouble-shooting.html" /> 
+    <link rel="prev" title="Features" href="features.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,10 +43,11 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="trouble-shooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
@@ -59,7 +60,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#backend">Backend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#database">Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#api">API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#file-system">File system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-system">File System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generate_index_json"><code class="docutils literal notranslate"><span class="pre">generate_index_json()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,6 +101,7 @@
   <section id="architecture">
 <h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h1>
 <p>The architecture of the system is as follows:</p>
+<img alt="../_images/Architecture.png" src="../_images/Architecture.png" />
 <section id="frontend">
 <h2>Frontend<a class="headerlink" href="#frontend" title="Link to this heading"></a></h2>
 <p>The frontend is built using React, a popular JavaScript library for building user interfaces. React allows developers to build reusable UI components and manage the state of the application using Redux, a state management library.</p>
@@ -106,6 +111,8 @@
 </section>
 <section id="components">
 <h3>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h3>
+<p>The architecture of the frontend components is as follows:</p>
+<img alt="../_images/Components.svg" src="../_images/Components.svg" />
 <p>For details about the components used in the frontend, please refer to the <a class="reference internal" href="components.html"><span class="doc">Components</span></a> section.</p>
 </section>
 </section>
@@ -122,9 +129,61 @@
 <p>For details about the api used in the backend, please refer to the <a class="reference internal" href="api.html"><span class="doc">API</span></a> section.</p>
 </section>
 <section id="file-system">
-<h3>File system<a class="headerlink" href="#file-system" title="Link to this heading"></a></h3>
-<p>The file system is a key component of the backend. It is responsible for storing and retrieving files from the database. The file system is implemented using the SQLAlchemy ORM and the Flask-Uploads extension.</p>
-<p>The file system is used to store files that are uploaded by users. The files are stored in the database as binary data. The file system also provides a way to retrieve the files from the database and serve them to the user.</p>
+<h3>File System<a class="headerlink" href="#file-system" title="Link to this heading"></a></h3>
+<p>All output files will be organized in a structure following <strong>root_directory - benchmark - model - language</strong>.</p>
+<p>Synchronizes the database with the directory structure by generating an index of tasks, benchmarks, models,
+and available language data.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">generate_index_json(root_dir)</span></code> in <code class="docutils literal notranslate"><span class="pre">app.py</span></code> scans a specified root directory and saves the structure to a JSON file.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="generate_index_json">
+<span class="sig-name descname"><span class="pre">generate_index_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#generate_index_json" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>root_dir</strong> (<em>str</em>) – The root directory containing benchmark subdirectories.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (Writes output to a JSON file)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each <strong>task type</strong> and its corresponding <strong>benchmarks</strong> are predefined in <code class="docutils literal notranslate"><span class="pre">TASK_BENCHMARK_MAP</span></code>.</p>
+</div>
+<p><strong>Example Usage:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">generate_index_json</span><span class="p">(</span><span class="s2">&quot;/path/to/root_directory&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>JSON Output Structure Example:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;text_classification&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;benchmark1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;model1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;language1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;language2&quot;</span><span class="p">,</span><span class="err">...</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;model2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;language1&quot;</span><span class="p">,</span><span class="err">...</span><span class="p">]</span>
+<span class="w">            </span><span class="err">...</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;benchmark2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;model3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;language3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;language4&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="err">...</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="err">...</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;benchmarkX&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;modelA&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;EN-language5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;EN-language6&quot;</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;modelB&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;language7-EN&quot;</span><span class="p">]</span>
+<span class="w">            </span><span class="err">...</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="err">...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -133,7 +192,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="trouble-shooting.html" class="btn btn-neutral float-left" title="Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="features.html" class="btn btn-neutral float-left" title="Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="components.html" class="btn btn-neutral float-right" title="Components" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

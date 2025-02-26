@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 import DataTable from "./DataTable";
 
-function Dashboard({ user, task, benchmark, model }) {
+function Dashboard({ task, benchmark, model }) {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [tableData, setTableData] = useState([]);
 

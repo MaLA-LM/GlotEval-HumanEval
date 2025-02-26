@@ -16,7 +16,14 @@ import {
   Rating,
   TablePagination,
 } from "@mui/material";
-import { ThumbUp, ThumbDown, Edit, Delete, ExpandMore, ExpandLess } from "@mui/icons-material";
+import {
+  ThumbUp,
+  ThumbDown,
+  Edit,
+  Delete,
+  ExpandMore,
+  ExpandLess,
+} from "@mui/icons-material";
 import api from "../services/api";
 
 function CommentSection({ refreshFlag }) {
@@ -47,7 +54,10 @@ function CommentSection({ refreshFlag }) {
   const handleVote = async (id, voteType) => {
     if (votedComments[id]) return;
     try {
-      await api.post("/api/comments/thumbs", { comment_id: id, vote_type: voteType });
+      await api.post("/api/comments/thumbs", {
+        comment_id: id,
+        vote_type: voteType,
+      });
       setVotedComments((prev) => ({ ...prev, [id]: voteType }));
       fetchComments();
     } catch (error) {
@@ -67,7 +77,7 @@ function CommentSection({ refreshFlag }) {
   const handleEdit = (comment) => {
     setEditCommentData({
       ...comment,
-      rating: comment.rating || 0
+      rating: comment.rating || 0,
     });
     setEditDialogOpen(true);
   };
@@ -76,7 +86,7 @@ function CommentSection({ refreshFlag }) {
     try {
       await api.put(`/api/comments/${editCommentData.id}`, {
         feedback: editCommentData.feedback,
-        rating: editCommentData.rating
+        rating: editCommentData.rating,
       });
       setEditDialogOpen(false);
       setEditCommentData(null);
@@ -119,68 +129,77 @@ function CommentSection({ refreshFlag }) {
 
   const renderComment = (comment) => (
     <Grid item xs={12} sm={6} md={4} key={comment.id}>
-      <Paper 
+      <Paper
         elevation={2}
-        sx={{ 
+        sx={{
           p: 2,
-          height: '100%', // Ensure consistent height
+          height: "100%", // Ensure consistent height
           borderRadius: 2,
-          transition: 'all 0.2s ease-in-out',
-          '&:hover': {
-            transform: 'translateY(-2px)',
-            boxShadow: 3
+          transition: "all 0.2s ease-in-out",
+          "&:hover": {
+            transform: "translateY(-2px)",
+            boxShadow: 3,
           },
-          display: 'flex',
-          flexDirection: 'column'
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {/* Header section */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-          <Avatar sx={{ 
-            bgcolor: 'primary.main',
-            width: 32,
-            height: 32,
-            fontSize: '0.9rem'
-          }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+          <Avatar
+            sx={{
+              bgcolor: "primary.main",
+              width: 32,
+              height: 32,
+              fontSize: "0.9rem",
+            }}
+          >
             {comment.username.charAt(0).toUpperCase()}
           </Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography variant="subtitle2" noWrap>
               {comment.username}
             </Typography>
-            <Typography variant="caption" color="text.secondary" display="block" noWrap>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+              noWrap
+            >
               {new Date(comment.timestamp).toLocaleString()}
             </Typography>
           </Box>
-          <Rating 
-            value={comment.rating} 
-            readOnly 
+          <Rating
+            value={comment.rating}
+            readOnly
             size="small"
-            sx={{ color: 'primary.main' }}
+            sx={{ color: "primary.main" }}
           />
         </Box>
 
         {/* Content section */}
-        <Box sx={{ 
-          flex: 1,
-          p: 1.5, 
-          bgcolor: 'grey.50',
-          borderRadius: 1,
-          mb: 1.5,
-          overflow: 'auto'
-        }}>
+        <Box
+          sx={{
+            flex: 1,
+            p: 1.5,
+            bgcolor: "grey.50",
+            borderRadius: 1,
+            mb: 1.5,
+            overflow: "auto",
+          }}
+        >
           <Typography variant="caption" color="text.secondary" display="block">
             <strong>Entry ID:</strong> {comment.entry_id}
           </Typography>
           <Typography variant="body2" sx={{ mt: 0.5 }}>
             <strong>Q:</strong> {comment.question}
           </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ 
+          <Typography
+            variant="body2"
+            sx={{
               mt: 1,
-              maxHeight: '100px',
-              overflow: 'auto'
+              maxHeight: "100px",
+              overflow: "auto",
             }}
           >
             {comment.feedback}
@@ -188,14 +207,16 @@ function CommentSection({ refreshFlag }) {
         </Box>
 
         {/* Actions section */}
-        <Box sx={{ 
-          display: "flex", 
-          alignItems: "center",
-          gap: 0.5,
-          pt: 1,
-          borderTop: '1px solid',
-          borderColor: 'grey.100'
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 0.5,
+            pt: 1,
+            borderTop: "1px solid",
+            borderColor: "grey.100",
+          }}
+        >
           <IconButton
             onClick={() => handleVote(comment.id, "up")}
             disabled={votedComments[comment.id] !== undefined}
@@ -223,46 +244,54 @@ function CommentSection({ refreshFlag }) {
           {comment.username === currentUser && (
             <>
               <Box sx={{ flexGrow: 1 }} />
-              <IconButton 
+              <IconButton
                 onClick={() => handleEdit(comment)}
                 size="small"
-                sx={{ color: 'info.main' }}
+                sx={{ color: "info.main" }}
               >
                 <Edit fontSize="small" />
               </IconButton>
-              <IconButton 
+              <IconButton
                 onClick={() => handleDeleteClick(comment)}
                 size="small"
-                sx={{ color: 'error.main' }}
+                sx={{ color: "error.main" }}
               >
                 <Delete fontSize="small" />
               </IconButton>
             </>
           )}
-          
-          <IconButton 
+
+          <IconButton
             onClick={() => toggleExpand(comment.id)}
             size="small"
-            sx={{ ml: 'auto' }}
+            sx={{ ml: "auto" }}
           >
             {expandedCommentIds[comment.id] ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </Box>
 
-        <Collapse in={expandedCommentIds[comment.id]} timeout="auto" unmountOnExit>
-          <Box sx={{ 
-            mt: 1.5, 
-            p: 1.5, 
-            bgcolor: 'grey.50',
-            borderRadius: 1,
-            border: '1px dashed grey.300',
-            fontSize: '0.75rem'
-          }}>
-            <pre style={{ 
-              margin: 0,
-              overflow: 'auto',
-              maxHeight: '100px'
-            }}>
+        <Collapse
+          in={expandedCommentIds[comment.id]}
+          timeout="auto"
+          unmountOnExit
+        >
+          <Box
+            sx={{
+              mt: 1.5,
+              p: 1.5,
+              bgcolor: "grey.50",
+              borderRadius: 1,
+              border: "1px dashed grey.300",
+              fontSize: "0.75rem",
+            }}
+          >
+            <pre
+              style={{
+                margin: 0,
+                overflow: "auto",
+                maxHeight: "100px",
+              }}
+            >
               {JSON.stringify(comment.row_data, null, 2)}
             </pre>
           </Box>
@@ -272,18 +301,26 @@ function CommentSection({ refreshFlag }) {
   );
 
   // Calculate pagination
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, comments.length - page * rowsPerPage);
-  const paginatedComments = comments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, comments.length - page * rowsPerPage);
+  const paginatedComments = comments.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   return (
     <Box sx={{ my: 2 }}>
-      <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        mb: 2,
-        px: 1
-      }}>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>Comments</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mb: 2,
+          px: 1,
+        }}
+      >
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Comments
+        </Typography>
         <Typography variant="body2" color="text.secondary">
           Total: {comments.length}
         </Typography>
@@ -301,36 +338,38 @@ function CommentSection({ refreshFlag }) {
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[6, 9, 12]} // Adjusted for grid layout
-        sx={{ 
+        sx={{
           mt: 2,
-          '.MuiTablePagination-select': { 
-            minHeight: 'unset' 
-          }
+          ".MuiTablePagination-select": {
+            minHeight: "unset",
+          },
         }}
       />
 
-      <Dialog 
-        open={editDialogOpen} 
+      <Dialog
+        open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
         maxWidth="sm"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: 2,
-            p: 2
-          }
+            p: 2,
+          },
         }}
       >
-        <DialogTitle sx={{ 
-          pb: 1,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1
-        }}>
+        <DialogTitle
+          sx={{
+            pb: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
           <Edit fontSize="small" color="primary" />
           Edit Comment
         </DialogTitle>
-        
+
         <DialogContent>
           <Box sx={{ mt: 2, mb: 3 }}>
             <Typography variant="subtitle2" gutterBottom>
@@ -339,13 +378,13 @@ function CommentSection({ refreshFlag }) {
             <Rating
               value={editCommentData?.rating || 0}
               onChange={(event, newValue) => {
-                setEditCommentData(prev => ({
+                setEditCommentData((prev) => ({
                   ...prev,
-                  rating: newValue
+                  rating: newValue,
                 }));
               }}
               size="large"
-              sx={{ color: 'primary.main' }}
+              sx={{ color: "primary.main" }}
             />
           </Box>
 
@@ -356,9 +395,9 @@ function CommentSection({ refreshFlag }) {
             rows={4}
             value={editCommentData?.feedback || ""}
             onChange={(e) =>
-              setEditCommentData(prev => ({
+              setEditCommentData((prev) => ({
                 ...prev,
-                feedback: e.target.value
+                feedback: e.target.value,
               }))
             }
             variant="outlined"
@@ -367,21 +406,21 @@ function CommentSection({ refreshFlag }) {
         </DialogContent>
 
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button 
+          <Button
             onClick={() => setEditDialogOpen(false)}
-            sx={{ 
-              color: 'text.secondary',
-              '&:hover': { bgcolor: 'grey.100' }
+            sx={{
+              color: "text.secondary",
+              "&:hover": { bgcolor: "grey.100" },
             }}
           >
             Cancel
           </Button>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={handleEditSubmit}
-            sx={{ 
+            sx={{
               px: 3,
-              borderRadius: 2
+              borderRadius: 2,
             }}
           >
             Save Changes
@@ -398,17 +437,15 @@ function CommentSection({ refreshFlag }) {
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this comment? This action cannot be undone.
+            Are you sure you want to delete this comment? This action cannot be
+            undone.
           </Typography>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button 
-            onClick={() => setDeleteDialogOpen(false)}
-            color="inherit"
-          >
+          <Button onClick={() => setDeleteDialogOpen(false)} color="inherit">
             Cancel
           </Button>
-          <Button 
+          <Button
             onClick={handleDeleteConfirm}
             color="error"
             variant="contained"

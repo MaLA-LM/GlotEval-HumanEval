@@ -43,21 +43,27 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../trouble-shooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../components.html">Components</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html">dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html#dashboardsection">dashboardSection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputboard.html">Output Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="taskselector.html">Task Selector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="datatable.html">Data table</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Translator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#translatoroutside">TranslatorOutside</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Translator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Translator.Translator"><code class="docutils literal notranslate"><span class="pre">Translator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variant-translator-outside">Variant: Translator Outside</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Translator.TranslatorOutside"><code class="docutils literal notranslate"><span class="pre">TranslatorOutside()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
@@ -92,26 +98,175 @@
              
   <section id="translator">
 <h1>Translator<a class="headerlink" href="#translator" title="Link to this heading"></a></h1>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Translator</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-translation&#39;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">Translator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">textToTranslate</span><span class="p">,</span><span class="w"> </span><span class="nx">row</span><span class="p">,</span><span class="w"> </span><span class="nx">taskType</span><span class="p">,</span><span class="w"> </span><span class="nx">showTextField</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">Translator</span></code> component provides text translation functionality. It allows users
+to translate either selected text or an entire dataset entry into a target language.</p>
+<dl class="py function" id="module-Translator">
+<dt class="sig sig-object py" id="Translator.Translator">
+<span class="sig-prename descclassname"><span class="pre">Translator.</span></span><span class="sig-name descname"><span class="pre">Translator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">{</span> <span class="pre">textToTranslate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showTextField</span> <span class="pre">}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Translator.Translator" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>textToTranslate</strong> (<em>str</em>) – The text selected for translation.</p></li>
+<li><p><strong>row</strong> (<em>object</em>) – The full dataset entry containing multiple text fields.</p></li>
+<li><p><strong>taskType</strong> (<em>str</em>) – The type of task (e.g., classification, translation, summarization).</p></li>
+<li><p><strong>showTextField</strong> (<em>bool</em>) – Whether to display an editable text field (default: False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A React component providing translation functionality.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSX.Element</p>
+</dd>
+</dl>
+<p><strong>Features:</strong></p>
+<ol class="arabic">
+<li><p><strong>Translation Scope Selection</strong>
+- Users can choose between translating:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Selected Text</strong> (default behavior)</p></li>
+<li><p><strong>Entire Entry</strong> (all fields in a dataset row)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Multi-Language Support</strong>
+- Provides translation to multiple languages:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>English (<cite>en</cite>)</p></li>
+<li><p>Spanish (<cite>es</cite>)</p></li>
+<li><p>French (<cite>fr</cite>)</p></li>
+<li><p>German (<cite>de</cite>)</p></li>
+<li><p>Chinese (<cite>zh-CN</cite>)</p></li>
+<li><p>Japanese (<cite>ja</cite>)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Selection is handled via a dropdown (<cite>&lt;Select&gt;</cite> component).</p></li>
+</ul>
+</li>
+<li><p><strong>Integration with External Translation API</strong>
+- Sends a request to <cite>/api/translate</cite> for translation.
+- Displays translated text in a <strong>readonly text field</strong>.</p></li>
+</ol>
+<p><strong>Component Structure:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Translator.js
+├── API Calls (/api/translate)
+├── Multi-language Dropdown
+├── Translate Entire Entry or Selected Text
+├── Translation Result Display
 </pre></div>
 </div>
+<p><strong>Example Usage:</strong></p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">Translator</span>
+<span class="w">   </span><span class="na">textToTranslate</span><span class="o">=</span><span class="s">&quot;Hello, world!&quot;</span>
+<span class="w">   </span><span class="na">row</span><span class="o">=</span><span class="p">{</span><span class="nx">dataRow</span><span class="p">}</span>
+<span class="w">   </span><span class="na">taskType</span><span class="o">=</span><span class="s">&quot;translation&quot;</span>
+<span class="w">   </span><span class="na">showTextField</span><span class="o">=</span><span class="p">{</span><span class="kc">true</span><span class="p">}</span>
+<span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p><strong>State Variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">translationVisible</span></code>: Whether the translation result is visible.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">translatedText</span></code>: Stores the translated output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">targetLanguage</span></code>: Selected language for translation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">translationScope</span></code>: Determines whether to translate the full entry or selected text.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isLoading</span></code>: Indicates if translation is in progress.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>: Stores any errors encountered during translation.</p></li>
+</ul>
+<p><strong>User Actions:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">handleTranslate()</span></code>: Sends the selected text or full row for translation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setTargetLanguage(value)</span></code>: Updates the selected target language.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setTranslationScope(value)</span></code>: Switches between translating selected text or the entire entry.</p></li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">react</span></code> (Component state management)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;mui/material</span></code> (UI components: dropdowns, buttons, text fields)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">api</span></code> (Handles API calls to the backend translation service)</p></li>
+</ul>
+</dd></dl>
+
+<hr class="docutils" />
+<section id="variant-translator-outside">
+<h2>Variant: Translator Outside<a class="headerlink" href="#variant-translator-outside" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">TranslatorOutside</span></code> component is a simplified version of the <code class="docutils literal notranslate"><span class="pre">Translator</span></code> component,
+used to translate the selected row while viewing the output data table.
+It provides the fastest English translation service.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Translator.TranslatorOutside">
+<span class="sig-prename descclassname"><span class="pre">Translator.</span></span><span class="sig-name descname"><span class="pre">TranslatorOutside</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">{</span> <span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taskType</span> <span class="pre">}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Translator.TranslatorOutside" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>row</strong> (<em>object</em>) – The dataset entry containing fields to be translated.</p></li>
+<li><p><strong>taskType</strong> (<em>str</em>) – The type of task (classification, translation, summarization, generation).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A React component rendering translation functionality.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSX.Element</p>
+</dd>
+</dl>
+<p><strong>Features:</strong></p>
+<ol class="arabic">
+<li><p><strong>Automatic Full-Row Translation</strong>
+- Extracts text fields dynamically based on <cite>taskType</cite>.
+- Supports the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Classification</strong> → <cite>prompt</cite></p></li>
+<li><p><strong>Translation</strong> → <cite>src_text</cite>, <cite>ref_text</cite>, <cite>hyp_text</cite>, <cite>prompt</cite></p></li>
+<li><p><strong>Summarization</strong> → <cite>input</cite>, <cite>target</cite>, <cite>output</cite></p></li>
+<li><p><strong>Generation</strong> → <cite>input</cite>, <cite>target</cite>, <cite>output</cite></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Constructs a structured text string for translation.</p></li>
+</ul>
+</li>
+<li><p><strong>Integration with External Translation API</strong>
+- Sends a request to <cite>/api/translate</cite> with the extracted text.
+- Displays the translated text in a <strong>readonly text field</strong>.</p></li>
+<li><p><strong>Loading and Error Handling</strong>
+- Shows a loading indicator while translation is in progress.
+- Displays error messages in case of API failures.</p></li>
+</ol>
+<p><strong>Component Structure:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TranslatorOutside.js
+├── API Calls (/api/translate)
+├── Full Dataset Entry Translation
+├── Google Translate Button
+├── Translation Result Display
+</pre></div>
+</div>
+<p><strong>Example Usage:</strong></p>
+<div class="highlight-jsx notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">TranslatorOutside</span>
+<span class="w">   </span><span class="na">row</span><span class="o">=</span><span class="p">{</span><span class="nx">dataRow</span><span class="p">}</span>
+<span class="w">   </span><span class="na">taskType</span><span class="o">=</span><span class="s">&quot;translation&quot;</span>
+<span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p><strong>State Variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">translationVisible</span></code>: Whether the translated text is visible.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">translatedText</span></code>: Stores the translated text output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isLoading</span></code>: Indicates if translation is in progress.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error</span></code>: Stores any errors encountered during translation.</p></li>
+</ul>
+<p><strong>User Actions:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">handleTranslate()</span></code>: Extracts the text and sends a translation request.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getFullRowText(row,</span> <span class="pre">taskType)</span></code>: Extracts task-specific fields for translation.</p></li>
+</ul>
+</dd></dl>
+
 </section>
-<section id="translatoroutside">
-<h1>TranslatorOutside<a class="headerlink" href="#translatoroutside" title="Link to this heading"></a></h1>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="nx">React</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Translator</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react-translation&#39;</span><span class="p">;</span>
-
-<span class="kd">const</span><span class="w"> </span><span class="nx">TranslatorOutside</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">row</span><span class="p">,</span><span class="w"> </span><span class="nx">taskType</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="o">&lt;</span><span class="nx">Translator</span>
-<span class="w">            </span><span class="nx">row</span><span class="o">=</span><span class="p">{</span><span class="nx">row</span><span class="p">}</span>
-<span class="w">            </span><span class="nx">taskType</span><span class="o">=</span><span class="p">{</span><span class="nx">taskType</span><span class="p">}</span>
-</pre></div>
-</div>
 </section>
 
 

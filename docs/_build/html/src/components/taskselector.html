@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Data table" href="datatable.html" />
-    <link rel="prev" title="dashboard" href="dashboard.html" /> 
+    <link rel="prev" title="Output Board" href="outputboard.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,21 +43,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Guidelines</span></p>
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../trouble-shooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Features</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../components.html">Components</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html">dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dashboard.html#dashboardsection">dashboardSection</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Task Selector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="outputboard.html">Output Board</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Task Selector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#TaskSelector"><code class="docutils literal notranslate"><span class="pre">TaskSelector()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="datatable.html">Data table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="translator.html">Translator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="translator.html#translatoroutside">TranslatorOutside</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
@@ -92,28 +94,96 @@
              
   <section id="task-selector">
 <h1>Task Selector<a class="headerlink" href="#task-selector" title="Link to this heading"></a></h1>
-<p>This component is used to select a task from a list of tasks. It displays a list of tasks and allows the user to select one by clicking on it. The selected task is then passed to the parent component as a prop.</p>
-<p>## Props</p>
-<ul class="simple">
-<li><p><cite>tasks</cite>: An array of tasks to display in the selector.</p></li>
-<li><p><cite>selectedTask</cite>: The currently selected task.</p></li>
-<li><p><cite>onTaskSelect</cite>: A function to call when a task is selected.</p></li>
+<p>The <code class="docutils literal notranslate"><span class="pre">TaskSelector</span></code> component provides a dropdown-based interface for users to select
+a task, benchmark, model, and language. It dynamically updates available options based
+on user selection and the provided <code class="docutils literal notranslate"><span class="pre">tasksConfig</span></code> data.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="TaskSelector">
+<span class="sig-name descname"><span class="pre">TaskSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">{</span> <span class="pre">tasksConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectedTask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setSelectedTask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectedBenchmark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setSelectedBenchmark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectedModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setSelectedModel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectedLanguage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setSelectedLanguage</span> <span class="pre">}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TaskSelector" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tasksConfig</strong> (<em>object</em>) – The available tasks, benchmarks, models, and languages.</p></li>
+<li><p><strong>selectedTask</strong> (<em>str</em>) – The currently selected task.</p></li>
+<li><p><strong>setSelectedTask</strong> (<em>function</em>) – Function to update the selected task.</p></li>
+<li><p><strong>selectedBenchmark</strong> (<em>str</em>) – The currently selected benchmark.</p></li>
+<li><p><strong>setSelectedBenchmark</strong> (<em>function</em>) – Function to update the selected benchmark.</p></li>
+<li><p><strong>selectedModel</strong> (<em>str</em>) – The currently selected model.</p></li>
+<li><p><strong>setSelectedModel</strong> (<em>function</em>) – Function to update the selected model.</p></li>
+<li><p><strong>selectedLanguage</strong> (<em>str</em>) – The currently selected language.</p></li>
+<li><p><strong>setSelectedLanguage</strong> (<em>function</em>) – Function to update the selected language.</p></li>
 </ul>
-<p>## Usage</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>js
-import TaskSelector from ‘./TaskSelector’;</p>
-<dl class="simple">
-<dt>const tasks =</dt><dd><p>{ id: 1, name: ‘Task 1’ },</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A React component rendering the task selection interface.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSX.Element</p>
 </dd>
 </dl>
-<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<p><strong>Features:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Task Selection</strong>
+- Users select a <strong>task</strong> from a dropdown (<cite>&lt;Select&gt;</cite>).
+- Selecting a task resets the benchmark, model, and language.</p></li>
+<li><p><strong>Benchmark Selection</strong>
+- Users choose a benchmark dataset from the available options for the selected task.
+- Selecting a benchmark resets the model and language.</p></li>
+<li><p><strong>Model Selection</strong>
+- Users select a model from the available models for the chosen benchmark.
+- Selecting a model resets the language.</p></li>
+<li><p><strong>Language Selection</strong>
+- Users select a language from the available options for the selected model.</p></li>
+</ol>
+<p><strong>Component Structure:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>TaskSelector.js
+├── API Calls (/api/tasks)
+├── Dynamic Selection (Task → Benchmark → Model → Language)
+</pre></div>
+</div>
+<p><strong>Example Usage:</strong></p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">TaskSelector</span>
+<span class="w">   </span><span class="nx">tasksConfig</span><span class="o">=</span><span class="p">{</span><span class="nx">tasksData</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">selectedTask</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedTask</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">setSelectedTask</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedTask</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">selectedBenchmark</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedBenchmark</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">setSelectedBenchmark</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedBenchmark</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">selectedModel</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedModel</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">setSelectedModel</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedModel</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">selectedLanguage</span><span class="o">=</span><span class="p">{</span><span class="nx">selectedLanguage</span><span class="p">}</span>
+<span class="w">   </span><span class="nx">setSelectedLanguage</span><span class="o">=</span><span class="p">{</span><span class="nx">setSelectedLanguage</span><span class="p">}</span>
+<span class="err">/&gt;</span>
+</pre></div>
+</div>
+<p><strong>State Variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">selectedTask</span></code>: The currently selected task.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">selectedBenchmark</span></code>: The selected benchmark dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">selectedModel</span></code>: The selected model for evaluation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">selectedLanguage</span></code>: The language selected for evaluation.</p></li>
+</ul>
+<p><strong>Navigation &amp; User Actions:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">handleTaskChange(e)</span></code>: Updates task selection and resets dependent selections.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handleBenchmarkChange(e)</span></code>: Updates benchmark selection and resets dependent selections.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handleModelChange(e)</span></code>: Updates model selection and resets language selection.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">handleLanguageChange(e)</span></code>: Updates the selected language.</p></li>
+</ul>
+<p><strong>Dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">react</span></code> (Component state management)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;mui/material</span></code> (UI components for dropdowns)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tasksConfig</span></code> (Dynamic configuration for available selections)</p></li>
+</ul>
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="dashboard.html" class="btn btn-neutral float-left" title="dashboard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="outputboard.html" class="btn btn-neutral float-left" title="Output Board" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="datatable.html" class="btn btn-neutral float-right" title="Data table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -1,4 +1,4 @@
-OutputBoard
+Output Board
 ============
 
 The ``OutputBoard`` component serves as the main interface for human evaluation and feedback collection.
@@ -84,7 +84,8 @@ provide feedback, and navigate through entries for assessment.
    - ``CommentSection`` (Displays previous user comments)
 
 ---------------------------------------------------------------------------------------
-Variant: OutputBoardSection
+
+Variant: Output Board Section
 ----------------------------
 ``OutputBoardSection`` is a variant of ``OutputBoard``, primarily used in **Data Visualization** to display results below the selected model chart. 
 Therefore, the task, benchmark, and model are selected in previous steps and passed as parameters to this component. 
