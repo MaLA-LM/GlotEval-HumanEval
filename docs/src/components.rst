@@ -12,6 +12,7 @@ Components
    components/taskselector
    components/datatable
    components/translator
+   components/filter
 
 .. toctree::
    :maxdepth: 2
