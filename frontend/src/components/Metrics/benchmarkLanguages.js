@@ -1,18 +1,17 @@
 export const benchmarkLanguages = {
   "SIB-200": {
-    languages: [""], 
     ResourcesMALA: {
-      High: ["Avg","tgk_Cyrl", "guj_Gujr", "afr_Latn", "bel_Cyrl", "cat_Latn", "deu_Latn", "eng_Latn", "fon_Latn", "glg_Latn", "hye_Armn", "ind_Latn", "isl_Latn", "kan_Knda", "kat_Geor", "kaz_Cyrl", "mal_Mlym", "mkd_Cyrl", "mlt_Latn", "pan_Guru", "rus_Cyrl", "slv_Latn", "urd_Arab"], //    High        // tgk_Cyrl has a high resource
+      High: ["Avg","tgk_Cyrl", "guj_Gujr", "afr_Latn", "bel_Cyrl", "cat_Latn", "deu_Latn", "eng_Latn", "fon_Latn", "glg_Latn", "hye_Armn", "ind_Latn", "isl_Latn", "kan_Knda", "kat_Geor", "kaz_Cyrl", "mal_Mlym", "mkd_Cyrl", "mlt_Latn", "pan_Guru", "rus_Cyrl", "slv_Latn", "urd_Arab"], //    High        
       "Medium-High": ["Avg","amh_Ethi", "ast_Latn", "bak_Cyrl", "bos_Latn", "bul_Cyrl", "ceb_Latn", "ces_Latn", "ckb_Arab", "cym_Latn", "dan_Latn", "ell_Grek", "epo_Latn", "est_Latn", "eus_Latn", "fin_Latn", "gla_Latn", "gle_Latn", "hat_Latn", "hau_Latn", "heb_Hebr", "hun_Latn", "ibo_Latn", "ita_Latn", "jav_Latn", "khm_Khmr", "kin_Latn", "kir_Cyrl", "kor_Hang", "lit_Latn", "ltz_Latn", "mar_Deva", "mri_Latn", "mya_Mymr", "nld_Latn", "nno_Latn", "nob_Latn", "nya_Latn", "pol_Latn", "por_Latn", "ron_Latn", "sin_Sinh", "smo_Latn", "sna_Latn", "snd_Arab", "som_Latn", "sot_Latn", "spa_Latn", "srp_Cyrl", "sun_Latn", "swe_Latn", "tam_Taml", "tat_Cyrl", "tel_Telu", "tur_Latn", "uig_Arab", "ukr_Cyrl", "vie_Latn", "zul_Latn"],   //Medium High
-      Medium: ["Avg","fra_Latn", "glg_Latn", "als_Latn", "arz_Arab", "asm_Beng", "azb_Arab", "azj_Latn", "ben_Beng", "bod_Tibt", "fao_Latn", "hin_Deva", "hrv_Latn", "ilo_Latn", "lao_Laoo", "lim_Latn", "lmo_Latn", "lug_Latn", "lus_Latn", "oci_Latn", "ory_Orya", "pap_Latn", "san_Deva", "slk_Latn", "tgl_Latn", "tha_Thai", "tir_Ethi", "tsn_Latn", "tuk_Latn", "vec_Latn", "war_Latn", "xho_Latn", "yor_Latn", "yue_Hant", "zsm_Latn"], // Medium        // fra_Latn and glg_Latn have a medium resource
-      "Medium-Low": ["Avg","fra_Latn", "ace_Latn", "aka_Latn", "ary_Arab", "bam_Latn", "ban_Latn", "bjn_Latn", "dzo_Tibt", "ewe_Latn", "fij_Latn", "fon_Latn", "fur_Latn", "gaz_Latn", "grn_Latn", "kab_Latn", "kac_Latn", "kbp_Latn", "lij_Latn", "lin_Latn", "ltg_Latn", "lvs_Latn", "mai_Deva", "min_Latn", "nso_Latn", "pag_Latn", "plt_Latn", "run_Latn", "sag_Latn", "sat_Olck", "scn_Latn", "srd_Latn", "ssw_Latn", "szl_Latn", "tpi_Latn", "tso_Latn", "tum_Latn", "twi_Latn", "wol_Latn"], // Medium Low   // fra_Latn also has a Medium-High resource
+      Medium: ["Avg","fra_Latn", "glg_Latn", "als_Latn", "arz_Arab", "asm_Beng", "azb_Arab", "azj_Latn", "ben_Beng", "bod_Tibt", "fao_Latn", "hin_Deva", "hrv_Latn", "ilo_Latn", "lao_Laoo", "lim_Latn", "lmo_Latn", "lug_Latn", "lus_Latn", "oci_Latn", "ory_Orya", "pap_Latn", "san_Deva", "slk_Latn", "tgl_Latn", "tha_Thai", "tir_Ethi", "tsn_Latn", "tuk_Latn", "vec_Latn", "war_Latn", "xho_Latn", "yor_Latn", "yue_Hant", "zsm_Latn"], // Medium        
+      "Medium-Low": ["Avg","fra_Latn", "ace_Latn", "aka_Latn", "ary_Arab", "bam_Latn", "ban_Latn", "bjn_Latn", "dzo_Tibt", "ewe_Latn", "fij_Latn", "fon_Latn", "fur_Latn", "gaz_Latn", "grn_Latn", "kab_Latn", "kac_Latn", "kbp_Latn", "lij_Latn", "lin_Latn", "ltg_Latn", "lvs_Latn", "mai_Deva", "min_Latn", "nso_Latn", "pag_Latn", "plt_Latn", "run_Latn", "sag_Latn", "sat_Olck", "scn_Latn", "srd_Latn", "ssw_Latn", "szl_Latn", "tpi_Latn", "tso_Latn", "tum_Latn", "twi_Latn", "wol_Latn"], // Medium Low   
       Low: ["Avg","acm_Arab", "ajp_Arab", "apc_Arab", "arb_Arab", "awa_Deva", "bho_Deva", "crh_Latn", "dyu_Latn", "hne_Deva", "kas_Arab", "kik_Latn", "kmb_Latn", "kon_Latn", "luo_Latn", "mag_Deva", "mni_Beng", "mos_Latn", "npi_Deva", "nqo_Nkoo", "prs_Arab", "shn_Mymr", "swh_Latn"], //Low
       Unseen: ["Avg","ace_Arab", "acq_Arab", "aeb_Arab", "arb_Latn", "ars_Arab", "ayr_Latn", "bem_Latn", "bjn_Arab", "bug_Latn", "cjk_Latn", "dik_Latn", "fuv_Latn", "jpn_Jpan", "kam_Latn", "kas_Deva", "kea_Latn", "khk_Cyrl", "kmr_Latn", "knc_Arab", "knc_Latn", "lua_Latn", "min_Arab", "nus_Latn", "pbt_Arab", "pes_Arab", "quy_Latn", "taq_Latn", "taq_Tfng", "tzm_Tfng", "umb_Latn", "uzn_Latn", "ydd_Hebr", "zho_Hans", "zho_Hant"]    //Unseen
     },
     writingSystems: {
       Arabic: ["ace_Arab", "acm_Arab", "acq_Arab", "aeb_Arab", "ajp_Arab", "apc_Arab", "arb_Arab", "ars_Arab", "ary_Arab", "arz_Arab", "azb_Arab", "bjn_Arab", "ckb_Arab", "kas_Arab", "knc_Arab", "min_Arab", "pbt_Arab", "pes_Arab", "prs_Arab", "snd_Arab", "uig_Arab", "urd_Arab"],
       Latin: ["ace_Latn", "glg_Latn", "afr_Latn", "aka_Latn", "als_Latn", "arb_Latn", "ast_Latn", "ayr_Latn", "azj_Latn", "bam_Latn", "ban_Latn", "bem_Latn", "bjn_Latn", "bos_Latn", "bug_Latn", "cat_Latn", "ceb_Latn", "ces_Latn", "cjk_Latn", "crh_Latn", "cym_Latn", "dan_Latn", "deu_Latn", "dik_Latn", "dyu_Latn", "eng_Latn", "epo_Latn", "est_Latn", "eus_Latn", "ewe_Latn", "fao_Latn", "fij_Latn", "fin_Latn", "fon_Latn", "fon_Latn", "fur_Latn", "fuv_Latn", "gaz_Latn", "gla_Latn", "gle_Latn", "grn_Latn", "hat_Latn", "hau_Latn", "hrv_Latn", "hun_Latn", "ibo_Latn", "ilo_Latn", "ind_Latn", "isl_Latn", "ita_Latn", "jav_Latn", "kab_Latn", "kac_Latn", "kam_Latn", "kbp_Latn", "kea_Latn", "kik_Latn", "kin_Latn", "kmb_Latn", "kmr_Latn", "knc_Latn", "kon_Latn", "lij_Latn", "lim_Latn", "lin_Latn", "lit_Latn", "lmo_Latn", "ltg_Latn", "ltz_Latn", "lua_Latn", "lug_Latn", "luo_Latn", "lus_Latn", "lvs_Latn", "min_Latn", "mlt_Latn", "mos_Latn", "mri_Latn", "nld_Latn", "nno_Latn", "nob_Latn", "nso_Latn", "nus_Latn", "nya_Latn", "oci_Latn", "pag_Latn", "pap_Latn", "plt_Latn", "pol_Latn", "por_Latn", "quy_Latn", "ron_Latn", "run_Latn", "sag_Latn", "scn_Latn", "slk_Latn", "slv_Latn", "smo_Latn", "sna_Latn", "som_Latn", "sot_Latn", "spa_Latn", "srd_Latn", "sun_Latn", "swe_Latn", "swh_Latn", "szl_Latn", "taq_Latn", "tgl_Latn", "tpi_Latn", "tsn_Latn", "tuk_Latn", "tum_Latn", "tur_Latn", "twi_Latn", "umb_Latn", "uzn_Latn", "vec_Latn", "vie_Latn", "war_Latn", "wol_Latn", "xho_Latn", "yor_Latn", "zsm_Latn", "zul_Latn"],
-      Cyrillic: ["tgk_Cyrl", "bak_Cyrl", "bel_Cyrl", "bul_Cyrl", "kaz_Cyrl", "khk_Cyrl", "kir_Cyrl", "mkd_Cyrl", "rus_Cyrl", "srp_Cyrl", "tat_Cyrl", "tgk_Cyrl", "ukr_Cyrl"], // tgk_Cyrl has a Cyrillic writing system
+      Cyrillic: ["tgk_Cyrl", "bak_Cyrl", "bel_Cyrl", "bul_Cyrl", "kaz_Cyrl", "khk_Cyrl", "kir_Cyrl", "mkd_Cyrl", "rus_Cyrl", "srp_Cyrl", "tat_Cyrl", "tgk_Cyrl", "ukr_Cyrl"], 
       Ethiopic: ["amh_Ethi", "tir_Ethi"],
       Bengali: ["asm_Beng", "ben_Beng", "mni_Beng"],
       Devanagari: ["awa_Deva", "bho_Deva", "hin_Deva", "hne_Deva", "kas_Deva", "mag_Deva", "mai_Deva", "mar_Deva", "npi_Deva", "san_Deva"],
@@ -42,9 +41,7 @@ export const benchmarkLanguages = {
       "Han (Simplified)": ["zho_Hans"]
 
     },
-    performance: {
-      
-    },
+    
 
     ResourcesJoshi: {
 
@@ -58,7 +55,6 @@ export const benchmarkLanguages = {
     }
   },
   "Taxi-1500": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg", "tgk_Cyrl","slv_Latn","rus_Cyrl","pan_Guru","nep_Deva","mlt_Latn","mkd_Cyrl","kaz_Cyrl","kat_Geor","kan_Knda","isl_Latn","ind_Latn","hye_Armn","guj_Gujr","fra_Latn","fil_Latn","eng_Latn","deu_Latn","afr_Latn", "aze_Latn", "bel_Cyrl", "cat_Latn"],   //High
       "Medium-High": ["Avg", "zul_Latn","vie_Latn","uzb_Latn","ukr_Cyrl","tur_Latn","tel_Telu","tat_Cyrl","tam_Taml","swe_Latn","sun_Latn","sqi_Latn","spa_Latn","sot_Latn","som_Latn","snd_Arab","sna_Latn","smo_Latn","sin_Sinh","ron_Latn","por_Latn","pol_Latn","ori_Orya","nya_Latn","nor_Latn","nob_Latn","nno_Latn","nld_Latn","mya_Mymr","msa_Latn","mri_Latn","mlg_Latn","mar_Deva","ltz_Latn","lit_Latn","lat_Latn","kor_Hang","kir_Cyrl","kin_Latn","khm_Khmr","jav_Latn","ita_Latn","ibo_Latn","hun_Latn","heb_Hebr","hau_Latn","hat_Latn","gle_Latn","gla_Latn","fry_Latn","fin_Latn","fas_Arab","eus_Latn","est_Latn","epo_Latn","ell_Grek","dan_Latn","cym_Latn","bak_Cyrl", "bul_Cyrl", "ceb_Latn", "ces_Latn", "ckb_Arab"],       //Medium High
@@ -99,13 +95,7 @@ export const benchmarkLanguages = {
       Tamil: ["tam_Taml","san_Taml"],
       Sinhala: ["sin_Sinh"]
     },
-    performance: {
-     
-
-
-
-    },
-
+    
     ResourcesJoshi: {
 
       "Category 0": ["yva_Latn","yua_Latn","yss_Latn","yrb_Latn","yml_Latn","yka_Latn","ycn_Latn","yap_Latn","yan_Latn","yam_Latn","yad_Latn","yaa_Latn","xsu_Latn","xsr_Deva","xsm_Latn","xsi_Latn","xon_Latn","xbr_Latn","xav_Latn","wwa_Latn","wsk_Latn","wnu_Latn","wnc_Latn","wmw_Latn","wim_Latn","whk_Latn","wba_Latn","way_Latn","wap_Latn","wal_Latn","vap_Latn","vag_Latn","usa_Latn","ury_Latn","urt_Latn","urk_Thai","urb_Latn","ubu_Latn","tzo_Latn","txu_Latn","twu_Latn","tvk_Latn","tui_Latn","tuf_Latn","tue_Latn","ttc_Latn","tsg_Latn","trp_Latn","tro_Latn","ton_Latn","toj_Latn","toh_Latn","tob_Latn","tnn_Latn","tnk_Latn","tna_Latn","tmd_Latn","tmc_Latn","tlj_Latn","tlf_Latn","tlb_Latn","tiy_Latn","tim_Latn","tih_Latn","tif_Latn","thk_Latn","tgo_Latn","tfr_Latn","teo_Latn","tdt_Latn","tca_Latn","tby_Latn","tbw_Latn","tbo_Latn","tbl_Latn","tbg_Latn","tav_Latn","taq_Latn","tac_Latn","tab_Cyrl","sxn_Latn","sus_Latn","suk_Latn","sua_Latn","ssd_Latn","srq_Latn","srn_Latn","srm_Latn","sri_Latn","spp_Latn","sot_Latn","soq_Latn","sop_Latn","snp_Latn","snn_Latn","snc_Latn","sin_Sinh","shp_Latn","shn_Mymr","shk_Latn","sgz_Latn","sey_Latn","sdq_Latn","sda_Latn","sba_Latn","sah_Cyrl","sab_Latn","run_Latn","rug_Latn","rro_Latn","rop_Latn","roo_Latn","rkb_Latn","rel_Latn","rej_Latn","raw_Latn","rap_Latn","rad_Latn","pui_Latn","ptu_Latn","ptp_Latn","pss_Latn","prs_Arab","prk_Latn","ppo_Latn","ppk_Latn","pon_Latn","pmf_Latn","plg_Latn","pjt_Latn","pir_Latn","pio_Latn","pcm_Latn","pbc_Latn","pau_Latn","pao_Latn","pad_Latn","oym_Latn","otm_Latn","ote_Latn","ood_Latn","ons_Latn","ong_Latn","omw_Latn","omb_Latn","okv_Latn","oji_Latn","ojb_Cans","nuy_Latn","nus_Latn","ntu_Latn","ntp_Latn","nsn_Latn","npy_Latn","not_Latn","nnw_Latn","nnb_Latn","nlg_Latn","nko_Latn","njz_Latn","njo_Latn","njm_Latn","njb_Latn","niy_Latn","niq_Latn","ngc_Latn","ndz_Latn","nds_Latn","ndo_Latn","ndj_Latn","ncu_Latn","nbl_Latn","nbc_Latn","nan_Latn","nak_Latn","naf_Latn","nab_Latn","myy_Latn","myw_Latn","myu_Latn","myb_Latn","mww_Latn","mwv_Latn","mwq_Latn","mva_Latn","muy_Latn","mux_Latn","mur_Latn","muh_Latn","mua_Latn","mto_Latn","mtj_Latn","mtg_Latn","msy_Latn","mrw_Latn","mqy_Latn","mqj_Latn","mpt_Latn","mps_Latn","mor_Latn","mop_Latn","mog_Latn","moc_Latn","mnk_Latn","mnh_Latn","mnf_Latn","mmn_Latn","mlh_Latn","mkl_Latn","miq_Latn","mif_Latn","mhx_Latn","mhi_Latn","mgr_Latn","mfy_Latn","meu_Latn","men_Latn","mek_Latn","mej_Latn","mda_Latn","mcu_Latn","mcp_Latn","mca_Latn","mbs_Latn","mbl_Latn","mbj_Latn","mbd_Latn","mbc_Latn","mbb_Latn","maz_Latn","maw_Latn","mau_Latn","mam_Latn","mak_Latn","maj_Latn","mah_Latn","mag_Deva","mad_Latn","lww_Latn","lus_Latn","lsi_Latn","loz_Latn","lom_Latn","lol_Latn","lok_Latn","lob_Latn","lln_Latn","ljp_Latn","lis_Lisu","lif_Deva","lhu_Latn","lhm_Latn","lhi_Latn","lgg_Latn","lew_Latn","leu_Latn","lef_Latn","lbk_Latn","law_Latn","lam_Latn","laj_Latn","kyz_Latn","kyq_Latn","kyc_Latn","kxw_Latn","kwj_Latn","kwd_Latn","kup_Latn","kum_Cyrl","ktu_Latn","kto_Latn","ksw_Mymr","kss_Latn","ksf_Latn","ksb_Latn","kru_Deva","krl_Latn","kri_Latn","kqy_Ethi","kpx_Latn","kpw_Latn","kpv_Cyrl","kpr_Latn","kpg_Latn","knf_Latn","kne_Latn","kmu_Latn","kmr_Cyrl","kmm_Latn","kmh_Latn","kle_Deva","kki_Latn","kjs_Latn","kjh_Cyrl","kje_Latn","kjb_Latn","kij_Latn","khy_Latn","khq_Latn","kha_Latn","kgr_Latn","kgp_Latn","kgk_Latn","kff_Telu","ker_Latn","ken_Latn","kde_Latn","kck_Latn","kbr_Latn","kbq_Latn","kbh_Latn","kbc_Latn","kaq_Latn","kac_Latn","jun_Orya","jic_Latn","jbu_Latn","jam_Latn","jac_Latn","iws_Latn","ivv_Latn","inb_Latn","ilb_Latn","ikk_Latn","ign_Latn","ify_Latn","ifu_Latn","ifk_Latn","ifb_Latn","ifa_Latn","iba_Latn","hwc_Latn","huv_Latn","huu_Latn","hus_Latn","hub_Latn","hop_Latn","hnn_Latn","hnj_Latn","hmr_Latn","hmo_Latn","hla_Latn","hix_Latn","hil_Latn","heh_Latn","hch_Latn","hay_Latn","hat_Latn","gym_Latn","gya_Latn","gvn_Latn","gvf_Latn","gvc_Latn","guz_Latn","guw_Latn","guq_Latn","gum_Latn","guk_Ethi","gui_Latn","guh_Latn","gub_Latn","grt_Beng","gnn_Latn","gkp_Latn","gkn_Latn","gid_Latn","gfk_Latn","gde_Latn","gbr_Latn","gbo_Latn","gaw_Latn","fuv_Latn","fuq_Latn","fuh_Latn","fuf_Latn","fue_Latn","fub_Latn","frd_Latn","fon_Latn","ffm_Latn","fas_Arab","faa_Latn","ewo_Latn","etu_Latn","ese_Latn","enq_Latn","emp_Latn","emi_Latn","efi_Latn","dyu_Latn","dur_Latn","duo_Latn","dts_Latn","dtp_Latn","dru_Latn","dow_Latn","djr_Latn","dis_Latn","did_Latn","dgz_Latn","dga_Latn","des_Latn","dbq_Latn","daa_Latn","cux_Latn","cul_Latn","cui_Latn","cub_Latn","ctu_Latn","ctd_Latn","cta_Latn","csy_Latn","crx_Latn","crt_Latn","crq_Latn","crn_Latn","cop_Copt","con_Latn","coe_Latn","cnl_Latn","cnk_Latn","cmo_Latn","cko_Latn","cjv_Latn","cjp_Latn","chk_Latn","ceg_Latn","cco_Latn","cbv_Latn","cbu_Latn","cbt_Latn","cbs_Latn","cbr_Latn","cbc_Latn","cax_Latn","cav_Latn","cap_Latn","cao_Latn","cak_Latn","cac_Latn","caa_Latn","bzj_Latn","bzi_Thai","bzh_Latn","bzd_Latn","byr_Latn","bwu_Latn","bwq_Latn","bvz_Latn","bvr_Latn","bum_Latn","bru_Latn","bqp_Latn","bqc_Latn","boa_Latn","bmr_Latn","blz_Latn","blw_Latn","bkq_Latn","bkl_Latn","bkd_Latn","bjr_Latn","bim_Latn","bib_Latn","bhw_Latn","bhp_Latn","beq_Latn","bem_Latn","bef_Latn","bdq_Latn","bdh_Latn","bcw_Latn","barai","bao_Latn","ban_Latn","ayo_Latn","awi_Latn","awb_Latn","awa_Deva","avu_Latn","avt_Latn","avn_Latn","auc_Latn","atq_Latn","arn_Latn","arl_Latn","apy_Latn","apu_Latn","apt_Latn","apr_Latn","apn_Latn","ape_Latn","apb_Latn","aom_Latn","aoj_Latn","ann_Latn","amr_Latn","amp_Latn","amn_Latn","amm_Latn","amk_Latn","amf_Latn","alq_Latn","alp_Latn","ald_Latn","ake_Latn","aji_Latn","ain_Latn","aia_Latn","ahk_Latn","agr_Latn","aer_Latn","adl_Latn","adj_Latn","acu_Latn","acn_Latn","abt_Latn","abt_Latn","abi_Latn","aau_Latn","aah_Latn"],
@@ -121,7 +111,6 @@ export const benchmarkLanguages = {
     }
   },
   "Flores-200-Eng-X-BLEU": {
-    languages: [""],
     ResourcesMALA: {
       "High-High": ["Avg","eng_Latn-tgk_Cyrl","eng_Latn-urd_Arab","eng_Latn-isl_Latn","eng_Latn-mkd_Cyrl","eng_Latn-mlt_Latn","eng_Latn-rus_Cyrl","eng_Latn-slv_Latn","eng_Latn-ind_Latn","eng_Latn-glg_Latn","eng_Latn-kaz_Cyrl","eng_Latn-deu_Latn","eng_Latn-bel_Cyrl","eng_Latn-cat_Latn","eng_Latn-afr_Latn","eng_Latn-hye_Armn","eng_Latn-kat_Geor","eng_Latn-mal_Mlym","eng_Latn-kan_Knda","eng_Latn-pan_Guru","eng_Latn-guj_Gujr","eng_Latn-fra_Latn"],
       "High-Medium High": ["Avg","eng_Latn-spa_Latn","eng_Latn-ell_Grek","eng_Latn-sun_Latn","eng_Latn-nno_Latn","eng_Latn-sot_Latn","eng_Latn-amh_Ethi","eng_Latn-mya_Mymr","eng_Latn-eus_Latn","eng_Latn-bul_Cyrl","eng_Latn-uig_Arab","eng_Latn-ukr_Cyrl","eng_Latn-pol_Latn","eng_Latn-dan_Latn","eng_Latn-tur_Latn","eng_Latn-ibo_Latn","eng_Latn-kir_Cyrl","eng_Latn-ces_Latn","eng_Latn-lit_Latn","eng_Latn-snd_Arab","eng_Latn-zul_Latn","eng_Latn-smo_Latn","eng_Latn-ast_Latn","eng_Latn-bos_Latn","eng_Latn-ceb_Latn","eng_Latn-heb_Hebr","eng_Latn-ron_Latn","eng_Latn-ltz_Latn","eng_Latn-mar_Deva","eng_Latn-gla_Latn","eng_Latn-kor_Hang","eng_Latn-srp_Cyrl","eng_Latn-ita_Latn","eng_Latn-hun_Latn","eng_Latn-mri_Latn","eng_Latn-sin_Sinh","eng_Latn-nld_Latn","eng_Latn-som_Latn","eng_Latn-tat_Cyrl","eng_Latn-epo_Latn","eng_Latn-nya_Latn","eng_Latn-bak_Cyrl","eng_Latn-fin_Latn","eng_Latn-swe_Latn","eng_Latn-kin_Latn","eng_Latn-est_Latn","eng_Latn-cym_Latn","eng_Latn-khm_Khmr","eng_Latn-por_Latn","eng_Latn-vie_Latn","eng_Latn-tam_Taml","eng_Latn-nob_Latn","eng_Latn-jav_Latn","eng_Latn-gle_Latn","eng_Latn-tel_Telu","eng_Latn-hau_Latn","eng_Latn-ckb_Arab","eng_Latn-sna_Latn","eng_Latn-hat_Latn"],
@@ -161,11 +150,7 @@ export const benchmarkLanguages = {
       "Latin-Ethiopic": ["eng_Latn-tir_Ethi","eng_Latn-amh_Ethi"],
       "Latin-Greek": ["eng_Latn-ell_Grek"]
     },
-    performance: {
-     
-
-    },
-
+   
     ResourcesJoshi: {
       "Category 5 - Category 0": ["eng_Latn-lua_Latn","eng_Latn-sot_Latn","eng_Latn-bem_Latn","eng_Latn-fuv_Latn","eng_Latn-taq_Latn","eng_Latn-taq_Tfng","eng_Latn-nus_Latn","eng_Latn-dyu_Latn","eng_Latn-fon_Latn","eng_Latn-gla_Latn","eng_Latn-awa_Deva","eng_Latn-run_Latn","eng_Latn-sin_Sinh","eng_Latn-kbp_Latn","eng_Latn-mag_Deva","eng_Latn-ban_Latn","eng_Latn-umb_Latn,","eng_Latn-shn_Mymr","eng_Latn-kam_Latn","eng_Latn-kac_Latn","eng_Latn-prs_Arab"],
       "Category 5 - Category 1": ["eng_Latn-scn_Latn","eng_Latn-min_Arab","eng_Latn-tgk_Cyrl","eng_Latn-sun_Latn","eng_Latn-nno_Latn","eng_Latn-min_Latn","eng_Latn-lim_Latn","eng_Latn-lij_Latn","eng_Latn-mya_Mymr","eng_Latn-ory_Orya","eng_Latn-oci_Latn","eng_Latn-uig_Arab","eng_Latn-asm_Beng","eng_Latn-bam_Latn","eng_Latn-kmr_Latn","eng_Latn-tuk_Latn","eng_Latn-mai_Deva","eng_Latn-lin_Latn","eng_Latn-ibo_Latn","eng_Latn-kon_Latn","eng_Latn-ewe_Latn","eng_Latn-kir_Cyrl","eng_Latn-kik_Latn","bjn_Latn-bjn_Latn","eng_Latn-azj_Latn","eng_Latn-grn_Latn","eng_Latn-tso_Latn","eng_Latn-pap_Latn","eng_Latn-mkd_Cyrl","eng_Latn-sat_Olck","eng_Latn-snd_Arab","eng_Latn-smo_Latn","eng_Latn-ast_Latn","eng_Latn-aka_Latn","eng_Latn-fij_Latn","eng_Latn-tum_Latn","eng_Latn-ltz_Latn","eng_Latn-kas_Arab","eng_Latn-srd_Latn","eng_Latn-war_Latn","eng_Latn-mri_Latn","eng_Latn-azb_Arab","eng_Latn-crh_Latn","eng_Latn-kas_Deva","eng_Latn-som_Latn","eng_Latn-epo_Latn","eng_Latn-tpi_Latn","eng_Latn-mni_Beng","eng_Latn-nya_Latn","eng_Latn-bak_Cyrl","eng_Latn-pag_Latn","eng_Latn-dzo_Tibt","eng_Latn-kin_Latn","eng_Latn-vec_Latn","eng_Latn-sag_Latn","eng_Latn-ltg_Latn","eng_Latn-ssw_Latn","eng_Latn-fao_Latn","eng_Latn-cym_Latn","eng_Latn-fur_Latn","eng_Latn-hye_Armn","eng_Latn-bho_Deva","eng_Latn-twi_Latn","eng_Latn-khm_Khmr","eng_Latn-lug_Latn","eng_Latn-lmo_Latn","eng_Latn-nob_Latn","eng_Latn-szl_Latn","eng_Latn-mal_Mlym","eng_Latn-jav_Latn","eng_Latn-kan_Knda","eng_Latn-kab_Latn","eng_Latn-tel_Telu","eng_Latn-guj_Gujr","eng_Latn-bod_Tibt","eng_Latn-nso_Latn","eng_Latn-bug_Latn","eng_Latn-quy_Latn","eng_Latn-ckb_Arab","eng_Latn-npi_Deva","eng_Latn-sna_Latn","eng_Latn-bjn_Arab"],
@@ -177,7 +162,6 @@ export const benchmarkLanguages = {
     }
   },
   "Flores-200-Eng-X-chrf": {
-    languages: [""],
     ResourcesMALA: {
       "High-High": ["Avg","eng_Latn-tgk_Cyrl","eng_Latn-urd_Arab","eng_Latn-isl_Latn","eng_Latn-mkd_Cyrl","eng_Latn-mlt_Latn","eng_Latn-rus_Cyrl","eng_Latn-slv_Latn","eng_Latn-ind_Latn","eng_Latn-glg_Latn","eng_Latn-kaz_Cyrl","eng_Latn-deu_Latn","eng_Latn-bel_Cyrl","eng_Latn-cat_Latn","eng_Latn-afr_Latn","eng_Latn-hye_Armn","eng_Latn-kat_Geor","eng_Latn-mal_Mlym","eng_Latn-kan_Knda","eng_Latn-pan_Guru","eng_Latn-guj_Gujr","eng_Latn-fra_Latn"],
       "High-Medium High": ["Avg","eng_Latn-spa_Latn","eng_Latn-ell_Grek","eng_Latn-sun_Latn","eng_Latn-nno_Latn","eng_Latn-sot_Latn","eng_Latn-amh_Ethi","eng_Latn-mya_Mymr","eng_Latn-eus_Latn","eng_Latn-bul_Cyrl","eng_Latn-uig_Arab","eng_Latn-ukr_Cyrl","eng_Latn-pol_Latn","eng_Latn-dan_Latn","eng_Latn-tur_Latn","eng_Latn-ibo_Latn","eng_Latn-kir_Cyrl","eng_Latn-ces_Latn","eng_Latn-lit_Latn","eng_Latn-snd_Arab","eng_Latn-zul_Latn","eng_Latn-smo_Latn","eng_Latn-ast_Latn","eng_Latn-bos_Latn","eng_Latn-ceb_Latn","eng_Latn-heb_Hebr","eng_Latn-ron_Latn","eng_Latn-ltz_Latn","eng_Latn-mar_Deva","eng_Latn-gla_Latn","eng_Latn-kor_Hang","eng_Latn-srp_Cyrl","eng_Latn-ita_Latn","eng_Latn-hun_Latn","eng_Latn-mri_Latn","eng_Latn-sin_Sinh","eng_Latn-nld_Latn","eng_Latn-som_Latn","eng_Latn-tat_Cyrl","eng_Latn-epo_Latn","eng_Latn-nya_Latn","eng_Latn-bak_Cyrl","eng_Latn-fin_Latn","eng_Latn-swe_Latn","eng_Latn-kin_Latn","eng_Latn-est_Latn","eng_Latn-cym_Latn","eng_Latn-khm_Khmr","eng_Latn-por_Latn","eng_Latn-vie_Latn","eng_Latn-tam_Taml","eng_Latn-nob_Latn","eng_Latn-jav_Latn","eng_Latn-gle_Latn","eng_Latn-tel_Telu","eng_Latn-hau_Latn","eng_Latn-ckb_Arab","eng_Latn-sna_Latn","eng_Latn-hat_Latn"],
@@ -217,10 +201,7 @@ export const benchmarkLanguages = {
       "Latin-Ethiopic": ["eng_Latn-tir_Ethi","eng_Latn-amh_Ethi"],
       "Latin-Greek": ["eng_Latn-ell_Grek"]
     },
-    performance: {
-     
-    },
-
+    
     ResourcesJoshi: {
       "Category 5 - Category 0": ["eng_Latn-lua_Latn","eng_Latn-sot_Latn","eng_Latn-bem_Latn","eng_Latn-fuv_Latn","eng_Latn-taq_Latn","eng_Latn-taq_Tfng","eng_Latn-nus_Latn","eng_Latn-dyu_Latn","eng_Latn-fon_Latn","eng_Latn-gla_Latn","eng_Latn-awa_Deva","eng_Latn-run_Latn","eng_Latn-sin_Sinh","eng_Latn-kbp_Latn","eng_Latn-mag_Deva","eng_Latn-ban_Latn","eng_Latn-umb_Latn,","eng_Latn-shn_Mymr","eng_Latn-kam_Latn","eng_Latn-kac_Latn","eng_Latn-prs_Arab"],
       "Category 5 - Category 1": ["eng_Latn-scn_Latn","eng_Latn-min_Arab","eng_Latn-tgk_Cyrl","eng_Latn-sun_Latn","eng_Latn-nno_Latn","eng_Latn-min_Latn","eng_Latn-lim_Latn","eng_Latn-lij_Latn","eng_Latn-mya_Mymr","eng_Latn-ory_Orya","eng_Latn-oci_Latn","eng_Latn-uig_Arab","eng_Latn-asm_Beng","eng_Latn-bam_Latn","eng_Latn-kmr_Latn","eng_Latn-tuk_Latn","eng_Latn-mai_Deva","eng_Latn-lin_Latn","eng_Latn-ibo_Latn","eng_Latn-kon_Latn","eng_Latn-ewe_Latn","eng_Latn-kir_Cyrl","eng_Latn-kik_Latn","bjn_Latn-bjn_Latn","eng_Latn-azj_Latn","eng_Latn-grn_Latn","eng_Latn-tso_Latn","eng_Latn-pap_Latn","eng_Latn-mkd_Cyrl","eng_Latn-sat_Olck","eng_Latn-snd_Arab","eng_Latn-smo_Latn","eng_Latn-ast_Latn","eng_Latn-aka_Latn","eng_Latn-fij_Latn","eng_Latn-tum_Latn","eng_Latn-ltz_Latn","eng_Latn-kas_Arab","eng_Latn-srd_Latn","eng_Latn-war_Latn","eng_Latn-mri_Latn","eng_Latn-azb_Arab","eng_Latn-crh_Latn","eng_Latn-kas_Deva","eng_Latn-som_Latn","eng_Latn-epo_Latn","eng_Latn-tpi_Latn","eng_Latn-mni_Beng","eng_Latn-nya_Latn","eng_Latn-bak_Cyrl","eng_Latn-pag_Latn","eng_Latn-dzo_Tibt","eng_Latn-kin_Latn","eng_Latn-vec_Latn","eng_Latn-sag_Latn","eng_Latn-ltg_Latn","eng_Latn-ssw_Latn","eng_Latn-fao_Latn","eng_Latn-cym_Latn","eng_Latn-fur_Latn","eng_Latn-hye_Armn","eng_Latn-bho_Deva","eng_Latn-twi_Latn","eng_Latn-khm_Khmr","eng_Latn-lug_Latn","eng_Latn-lmo_Latn","eng_Latn-nob_Latn","eng_Latn-szl_Latn","eng_Latn-mal_Mlym","eng_Latn-jav_Latn","eng_Latn-kan_Knda","eng_Latn-kab_Latn","eng_Latn-tel_Telu","eng_Latn-guj_Gujr","eng_Latn-bod_Tibt","eng_Latn-nso_Latn","eng_Latn-bug_Latn","eng_Latn-quy_Latn","eng_Latn-ckb_Arab","eng_Latn-npi_Deva","eng_Latn-sna_Latn","eng_Latn-bjn_Arab"],
@@ -233,7 +214,6 @@ export const benchmarkLanguages = {
   },
 
   "Flores-200-X-Eng-BLEU": {
-    languages: [""],
     ResourcesMALA: {
       "High-High": ["Avg","mkd_Cyrl-eng_Latn","slv_Latn-eng_Latn","cat_Latn-eng_Latn","isl_Latn-eng_Latn","tgk_Cyrl-eng_Latn","afr_Latn-eng_Latn","pan_Guru-eng_Latn","kaz_Cyrl-eng_Latn","ind_Latn-eng_Latn","mal_Mlym-eng_Latn","kan_Knda-eng_Latn","glg_Latn-eng_Latn","urd_Arab-eng_Latn","fra_Latn-eng_Latn","kat_Geor-eng_Latn","mlt_Latn-eng_Latn","hye_Armn-eng_Latn","rus_Cyrl-eng_Latn","guj_Gujr-eng_Latn","bel_Cyrl-eng_Latn","deu_Latn-eng_Latn"],
       "Medium High-High": ["Avg","fin_Latn-eng_Latn","ceb_Latn-eng_Latn","lit_Latn-eng_Latn","bul_Cyrl-eng_Latn","tat_Cyrl-eng_Latn","ibo_Latn-eng_Latn","ita_Latn-eng_Latn","ron_Latn-eng_Latn","mya_Mymr-eng_Latn","kin_Latn-eng_Latn","kir_Cyrl-eng_Latn","heb_Hebr-eng_Latn","vie_Latn-eng_Latn","sna_Latn-eng_Latn","bos_Latn-eng_Latn","kor_Hang-eng_Latn","tam_Taml-eng_Latn","jav_Latn-eng_Latn","zul_Latn-eng_Latn","est_Latn-eng_Latn","spa_Latn-eng_Latn","eus_Latn-eng_Latn","cym_Latn-eng_Latn","tur_Latn-eng_Latn","srp_Cyrl-eng_Latn","gle_Latn-eng_Latn","uig_Arab-eng_Latn","pol_Latn-eng_Latn","ell_Grek-eng_Latn","ast_Latn-eng_Latn","bak_Cyrl-eng_Latn","mar_Deva-eng_Latn","ckb_Arab-eng_Latn","epo_Latn-eng_Latn","swe_Latn-eng_Latn","smo_Latn-eng_Latn","tel_Telu-eng_Latn","dan_Latn-eng_Latn","sun_Latn-eng_Latn","hat_Latn-eng_Latn","hun_Latn-eng_Latn","nya_Latn-eng_Latn","khm_Khmr-eng_Latn","nno_Latn-eng_Latn","nld_Latn-eng_Latn","sot_Latn-eng_Latn","som_Latn-eng_Latn","ces_Latn-eng_Latn","ltz_Latn-eng_Latn","por_Latn-eng_Latn","gla_Latn-eng_Latn","hau_Latn-eng_Latn"],
@@ -275,9 +255,7 @@ export const benchmarkLanguages = {
 
     },
 
-    performance: {
-
-    },
+    
 
     ResourcesJoshi: {
 
@@ -287,17 +265,12 @@ export const benchmarkLanguages = {
       "Category 3 - Category 5": ["zsm_Latn-eng_Latn","ceb_Latn-eng_Latn","slv_Latn-eng_Latn","lit_Latn-eng_Latn","bul_Cyrl-eng_Latn","ron_Latn-eng_Latn","heb_Hebr-eng_Latn","afr_Latn-eng_Latn","bos_Latn-eng_Latn","tam_Taml-eng_Latn","est_Latn-eng_Latn","kaz_Cyrl-eng_Latn","ind_Latn-eng_Latn","ben_Beng-eng_Latn","tha_Thai-eng_Latn","glg_Latn-eng_Latn","arz_Arab-eng_Latn","tgl_Latn-eng_Latn","slk_Latn-eng_Latn","ell_Grek-eng_Latn","urd_Arab-eng_Latn","kat_Geor-eng_Latn","bel_Cyrl-eng_Latn","dan_Latn-eng_Latn","ukr_Cyrl-eng_Latn"],
       "Category 4 - Category 5": ["fin_Latn-eng_Latn","ita_Latn-eng_Latn","cat_Latn-eng_Latn","vie_Latn-eng_Latn","kor_Hang-eng_Latn","eus_Latn-eng_Latn","hin_Deva-eng_Latn","tur_Latn-eng_Latn","srp_Cyrl-eng_Latn","pol_Latn-eng_Latn","swe_Latn-eng_Latn","pes_Arab-eng_Latn","rus_Cyrl-eng_Latn","hun_Latn-eng-Latn","nld_Latn-eng_Latn","hrv_Latn-eng_Latn","ces_Latn-eng_Latn","por_Latn-eng_Latn"],
       "Category 5 - Category 5": ["spa_Latn-eng_Latn","arb_Arab-eng_Latn","jpn_Jpan-eng_Latn","fra_Latn-eng_Latn","arb_Latn-eng_Latn","deu_Latn-eng_Latn"]
-
-
-
-
 
     }
   },
 
 
   "Flores-200-X-Eng-chrf": {
-    languages: [""],
     ResourcesMALA: {
       "High-High": ["Avg","mkd_Cyrl-eng_Latn","slv_Latn-eng_Latn","cat_Latn-eng_Latn","isl_Latn-eng_Latn","tgk_Cyrl-eng_Latn","afr_Latn-eng_Latn","pan_Guru-eng_Latn","kaz_Cyrl-eng_Latn","ind_Latn-eng_Latn","mal_Mlym-eng_Latn","kan_Knda-eng_Latn","glg_Latn-eng_Latn","urd_Arab-eng_Latn","fra_Latn-eng_Latn","kat_Geor-eng_Latn","mlt_Latn-eng_Latn","hye_Armn-eng_Latn","rus_Cyrl-eng_Latn","guj_Gujr-eng_Latn","bel_Cyrl-eng_Latn","deu_Latn-eng_Latn"],
       "Medium High-High": ["Avg","fin_Latn-eng_Latn","ceb_Latn-eng_Latn","lit_Latn-eng_Latn","bul_Cyrl-eng_Latn","tat_Cyrl-eng_Latn","ibo_Latn-eng_Latn","ita_Latn-eng_Latn","ron_Latn-eng_Latn","mya_Mymr-eng_Latn","kin_Latn-eng_Latn","kir_Cyrl-eng_Latn","heb_Hebr-eng_Latn","vie_Latn-eng_Latn","sna_Latn-eng_Latn","bos_Latn-eng_Latn","kor_Hang-eng_Latn","tam_Taml-eng_Latn","jav_Latn-eng_Latn","zul_Latn-eng_Latn","est_Latn-eng_Latn","spa_Latn-eng_Latn","eus_Latn-eng_Latn","cym_Latn-eng_Latn","tur_Latn-eng_Latn","srp_Cyrl-eng_Latn","gle_Latn-eng_Latn","uig_Arab-eng_Latn","pol_Latn-eng_Latn","ell_Grek-eng_Latn","ast_Latn-eng_Latn","bak_Cyrl-eng_Latn","mar_Deva-eng_Latn","ckb_Arab-eng_Latn","epo_Latn-eng_Latn","swe_Latn-eng_Latn","smo_Latn-eng_Latn","tel_Telu-eng_Latn","dan_Latn-eng_Latn","sun_Latn-eng_Latn","hat_Latn-eng_Latn","hun_Latn-eng_Latn","nya_Latn-eng_Latn","khm_Khmr-eng_Latn","nno_Latn-eng_Latn","nld_Latn-eng_Latn","sot_Latn-eng_Latn","som_Latn-eng_Latn","ces_Latn-eng_Latn","ltz_Latn-eng_Latn","por_Latn-eng_Latn","gla_Latn-eng_Latn","hau_Latn-eng_Latn"],
@@ -339,11 +312,7 @@ export const benchmarkLanguages = {
 
     },
 
-    performance: {
-
-
-    },
-
+   
     ResourcesJoshi: {
 
       "Category 0 - Category 5": ["bem_Latn-eng_Latn","fuv_Latn-eng_Latn","kbp_Latn-eng_Latn","prs_Arab-eng_Latn","mag_Deva-eng_Latn","kac_Latn-eng_Latn","ban_Latn-eng_Latn","run_Latn-eng_Latn","fon_Latn-eng_Latn","nus_Latn-eng_Latn","dyu_Latn-eng_Latn","srd_Latn-eng_Latn","taq_Tfng-eng_Latn","awa_Deva-eng_Latn","kam_Latn-eng_Latn","taq_Latn-eng_Latn","umb_Latn-eng_Latn","shn_Mymr-eng_Latn","sot_Latn-eng_Latn","sin_Sinh-eng_Latn","gla_Latn-eng_Latn"],
@@ -353,15 +322,11 @@ export const benchmarkLanguages = {
       "Category 4 - Category 5": ["fin_Latn-eng_Latn","ita_Latn-eng_Latn","cat_Latn-eng_Latn","vie_Latn-eng_Latn","kor_Hang-eng_Latn","eus_Latn-eng_Latn","hin_Deva-eng_Latn","tur_Latn-eng_Latn","srp_Cyrl-eng_Latn","pol_Latn-eng_Latn","swe_Latn-eng_Latn","pes_Arab-eng_Latn","rus_Cyrl-eng_Latn","hun_Latn-eng-Latn","nld_Latn-eng_Latn","hrv_Latn-eng_Latn","ces_Latn-eng_Latn","por_Latn-eng_Latn"],
       "Category 5 - Category 5": ["spa_Latn-eng_Latn","arb_Arab-eng_Latn","jpn_Jpan-eng_Latn","fra_Latn-eng_Latn","arb_Latn-eng_Latn","deu_Latn-eng_Latn"]
 
-
-
-
-
     }
 
   },
+
   "XL-Sum-BERTScore": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg","fra_Latn", "guj_Gujr", "pan_Guru","ind_Latn","urd_Arab","eng_Latn"],
       "Medium-High": ["Avg","vie_Latn","som_Latn", "tur_Latn","mya_Mymr", "sin_Sinh","mar_Deva","tel_Telu","gla_Latn","srp_Cyrl","amh_Ethi","cym_Latn","kir_Cyrl","ibo_Latn","ukr_Cyrl","por_Latn","hau_Latn","rus_Cyrl","kor_Hang","tam_Taml","spa_Latn"],
@@ -391,9 +356,7 @@ export const benchmarkLanguages = {
       Tamil: ["tam_Taml"],
 
     },
-    performance: {
-      
-    },
+   
 
     ResourcesJoshi: {
 
@@ -404,15 +367,12 @@ export const benchmarkLanguages = {
       "Category 4":["kor_Hang","rus_Cyrl","por_Latn","pes_Arab","srp_Cyrl","hin_Deva","tur_Latn","srp_Latn","vie_Latn"],
       "Category 5":["spa_Latn","eng_Latn","jpn_Jpan","fra_Latn","arb_Arab"],
 
-
-
     }
   },
 
 
 
   "XL-Sum-ROUGE": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg","fra_Latn", "guj_Gujr", "pan_Guru","ind_Latn","urd_Arab","eng_Latn"],
       "Medium-High": ["Avg","vie_Latn","som_Latn", "tur_Latn","mya_Mymr", "sin_Sinh","mar_Deva","tel_Telu","gla_Latn","srp_Cyrl","amh_Ethi","cym_Latn","kir_Cyrl","ibo_Latn","ukr_Cyrl","por_Latn","hau_Latn","rus_Cyrl","kor_Hang","tam_Taml","spa_Latn"],
@@ -442,10 +402,7 @@ export const benchmarkLanguages = {
       Tamil: ["tam_Taml"],
 
     },
-    performance: {
-      
-    },
-
+    
 
     ResourcesJoshi: {
 
@@ -466,7 +423,6 @@ export const benchmarkLanguages = {
 
 
   "Aya-BLEU": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg","tgk_Cyrl", "fra_Latn", "glg_Latn", "kaz_Cyrl", "guj_Gujr", "mal_Mlym", "cat_Latn", "afr_Latn", "slv_Latn", "bel_Cyrl", "kan_Knda", "rus_Cyrl", "mkd_Cyrl", "kat_Geor", "ind_Latn", "urd_Arab", "mlt_Latn", "deu_Latn", "isl_Latn", "hye_Armn"],
       "Medium High": ["Avg","vie_Latn", "som_Latn", "heb_Hebr", "tur_Latn", "mya_Mymr", "ita_Latn", "hun_Latn", "hat_Latn", "eus_Latn", "smo_Latn", "ckb_Latn", "gle_Latn", "pol_Latn", "nob_Latn", "ltz_Latn", "sin_Sinh", "jav_Latn", "sot_Latn", "sna_Latn", "dan_Latn", "mar_Deva", "tel_Telu", "snd_Arab", "ces-Latn","gla_Latn", "srp_Cyrl", "ell_Grek", "epo_Latn", "amh_Ethi", "cym_Latn", "swe_Latn", "nld_Latn", "kir_cyrl", "ibo_Latn", "ukr_Cyrl", "por_Latn", "khm_Khmr", "ron_Latn", "hau_Latn", "lit_Latn", "ceb_Latn", "mri_Latn", "bul_Cyrl", "zul_Cyrl", "fin_Latn", "est_Latn", "kor_Hang", "tam_Tamil", "sun_Latn", "nno_Latn", "eng_Latn", "spa_Latn"],
@@ -501,11 +457,7 @@ export const benchmarkLanguages = {
       Telugu: ["tel_Telu"],
       Thai: ["tha_Thai"],
     },
-    performance: {
-     
-
-    },
-
+    
     ResourcesJoshi: { 
       
       "Catgeory 0": ["kmr_Latn","knc_Latn","knc_Arab","gla_Latn","sot_Latn","sin_Sinh","taq_Latn"],
@@ -519,8 +471,8 @@ export const benchmarkLanguages = {
 
     }
   },
+
   "Aya-Self-BLEU": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg","tgk_Cyrl", "fra_Latn", "glg_Latn", "kaz_Cyrl", "guj_Gujr", "mal_Mlym", "cat_Latn", "afr_Latn", "slv_Latn", "bel_Cyrl", "kan_Knda", "rus_Cyrl", "mkd_Cyrl", "kat_Geor", "ind_Latn", "urd_Arab", "mlt_Latn", "deu_Latn", "isl_Latn", "hye_Armn"],
       "Medium High": ["Avg","vie_Latn", "som_Latn", "heb_Hebr", "tur_Latn", "mya_Mymr", "ita_Latn", "hun_Latn", "hat_Latn", "eus_Latn", "smo_Latn", "ckb_Latn", "gle_Latn", "pol_Latn", "nob_Latn", "ltz_Latn", "sin_Sinh", "jav_Latn", "sot_Latn", "sna_Latn", "dan_Latn", "mar_Deva", "tel_Telu", "snd_Arab", "ces-Latn","gla_Latn", "srp_Cyrl", "ell_Grek", "epo_Latn", "amh_Ethi", "cym_Latn", "swe_Latn", "nld_Latn", "kir_cyrl", "ibo_Latn", "ukr_Cyrl", "por_Latn", "khm_Khmr", "ron_Latn", "hau_Latn", "lit_Latn", "ceb_Latn", "mri_Latn", "bul_Cyrl", "zul_Cyrl", "fin_Latn", "est_Latn", "kor_Hang", "tam_Tamil", "sun_Latn", "nno_Latn", "eng_Latn", "spa_Latn"],
@@ -555,10 +507,7 @@ export const benchmarkLanguages = {
       Telugu: ["tel_Telu"],
       Thai: ["tha_Thai"],
     },
-    performance: {
-     
-    },
-
+   
     ResourcesJoshi: { 
       
       "Catgeory 0": ["kmr_Latn","knc_Latn","knc_Arab","gla_Latn","sot_Latn","sin_Sinh","taq_Latn"],
@@ -574,7 +523,6 @@ export const benchmarkLanguages = {
   },
 
   "PolyWrite": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg", "tgk_Cyrl", "fra_Latin", "glg_Latin", "mon_Cyrl", "kaz_Cyrl", "guj_Gujr", "mal_Mlym", "cat_Latn", "afr_Latn", "slv_Latn", "pan_Guru", "bel_Cyrl", "aze_Latn", "kan_Knda", "rus_Cyrl", "fil_Latn", "mkd_Cyrl", "kat_Geor", "ind_Latn", "nep_Deva", "urd_Arab", "mlt_Latn", "deu_Latn", "eng_Latin", "isl_Latn", "hye_Armn"],
       "Medium High": ["Avg","vie_Latn", "fry_Latn", "som_Latn", "heb_Hebr", "div_Thaa", "fas_Arab", "kin_Latn", "yid_Hebr", "tur_Latn", "mya_Mymr", "ita_Latn", "hun_Latn", "hat_Latn", "eus_Latn", "smo_Latn", "ckb_Arab", "lat_Arab", "nor_Latn", "cos_Latn", "gle_Latn", "pol_Latn", "ltz_Latn", "sin_Sinh", "jav_Latn", "bos_Latn", "sot_Latn", "sna_Latn", "dan_Latn", "mar-Deva", "tel_Telu", "mlg_Latn", "nya_Latn", "snd_Arab", "ces_Latn", "ori_Orya", "gla_Latn", "srp_Cyrl", "swa_Latn", "ell_Grek", "epo_Latn", "amh_Ethi", "bak_Cyrl", "tat_Cyrl", "cym_Latn", "swe_Latn", "nld_Latn", "kir_Cyrl", "ara_Arab", "msa_Latn", "ibo_Latn", "ukr_Cyrl", "por_Latn", "khm_Khmr", "ron_Latn", "hau_Latn", "lit_Latn", "uig_Latn", "pus_Arab", "ceb_Latn", "hmn_Latn", "mri_Latn", "uzb_Latn", "bul_Cyrl", "zul_Latn", "fin_Latn", "sqi_Latn", "est_Latn", "kor_Hang", "kur_Latn", "tam_Taml", "sun_Latn", "spa_Latn"],
@@ -616,13 +564,9 @@ export const benchmarkLanguages = {
       Tibt: ["bod_Tibt,dzo_Tibt"]
 
 
-
     },
 
-    performance: {
-      
-    },
-
+   
     ResourcesJoshi: {
       
       "Category 0": ["kac_Latn","bem_Latn","kau_Latn","kur_Latn","doi_Deva","mad_Latn","bbc_Batk","bik_Latn","new_Deva","gaa_Latn","aar_Latn","btx_Latn","kha_Latn","awa_Deva","dyu_Latn","shn_Mymr","bua_Cyrl","chk_Latn","fon_Latn","ktu_Latn","ban_Latn","mam_Latn","bew_Latn","iba_Latn","bal_Arab","yua_Latn","gla_Latn","run_Latn","mah_Latn","sah_Cyrl","sot_Latn","sin_Sinh","ber_Latn","chm_Cyrl","crs_Latn","trp_Latn","jam_Latn","ber_Tfng","nus_Latn","zap_Latn","hil_Latn","tiv_Latn","sus_Latn","ton_Latn","cnh_Latn","div_Thaa","bts_Batk"],
@@ -635,7 +579,6 @@ export const benchmarkLanguages = {
     }
   },
   "BELEBELE": {
-    languages: [""],
     ResourcesMALA: {
       High: ["Avg","acc_norm","acc_norm_stderr","acc","acc_stderr","urd_Latn-acc","urd_Latn-acc_stderr","urd_Latn-acc_norm","urd_Latn-acc_norm_stderr","urd_Arab-acc","urd_Arab-acc_stderr","urd_Arab-acc_norm","urd_Arab-acc_norm_stderr","slv_Latn-acc","slv_Latn-acc_stderr","slv_Latn-acc_norm","slv_Latn-acc_norm_stderr","rus_Cyrl-acc","rus_Cyrl-acc_stderr","rus_Cyrl-acc_norm","rus_Cyrl-acc_norm_stderr","pan_Guru-acc","pan_Guru-acc_stderr","pan_Guru-acc_norm","pan_Guru-acc_norm_stderr","mlt_Latn-acc","mlt_Latn-acc_stderr","mlt_Latn-acc_norm","mlt_Latn-acc_norm_stderr","mkd_Cyrl-acc","mkd_Cyrl-acc_stderr","mkd_Cyrl-acc_norm","mkd_Cyrl-acc_norm_stderr","mal_Mlym-acc","mal_Mlym-acc_stderr","mal_Mlym-acc_norm","mal_Mlym-acc_norm_stderr","kaz_Cyrl-acc","kaz_Cyrl-acc_stderr","kaz_Cyrl-acc_norm","kaz_Cyrl-acc_norm_stderr","kan_Knda-acc","kan_Knda-acc_stderr","kan_Knda-acc_norm","kan_Knda-acc_norm_stderr","isl_Latn-acc","isl_Latn-acc_stderr","isl_Latn-acc_norm","isl_Latn-acc_norm_stderr","ind_Latn-acc","ind_Latn-acc_stderr","ind_Latn-acc_norm","ind_Latn-acc_norm_stderr","hye_Armn-acc","hye_Armn-acc_stderr","hye_Armn-acc_norm","hye_Armn-acc_norm_stderr","guj_Gujr-acc","guj_Gujr-acc_stderr","guj_Gujr-acc_norm","guj_Gujr-acc_norm_stderr","fra_Latn-acc_norm_stderr","fra_Latn-acc_norm","fra_Latn-acc_stderr","fra_Latn-acc","eng_Latn-acc_norm_stderr","eng_Latn-acc_norm","eng_Latn-acc_stderr","eng_Latn-acc","deu_Latn-acc_norm_stderr","deu_Latn-acc_norm","deu_Latn-acc_stderr","deu_Latn-acc","cat_Latn-acc_norm_stderr","cat_Latn-acc_norm","cat_Latn-acc_stderr","cat_Latn-acc","afr_Latn-acc_norm_stderr","afr_Latn-acc_norm","afr_Latn-acc_stderr","afr_Latn-acc"],
       "Medium High": ["Avg","acc_norm","acc_norm_stderr","acc","acc_stderr","zul_Latn-acc","zul_Latn-acc_stderr","zul_Latn-acc_norm","zul_Latn-acc_norm_stderr","vie_Latn-acc","vie_Latn-acc_stderr","vie_Latn-acc_norm","vie_Latn-acc_norm_stderr","ukr_Cyrl-acc","ukr_Cyrl-acc_stderr","ukr_Cyrl-acc_norm","ukr_Cyrl-acc_norm_stderr","tur_Latn-acc","tur_Latn-acc_stderr","tur_Latn-acc_norm","tur_Latn-acc_norm_stderr","tam_Taml-acc","tam_Taml-acc_stderr","tam_Taml-acc_norm","tam_Taml-acc_norm_stderr","swh_Latn-acc","swh_Latn-acc_stderr","swh_Latn-acc_norm","swh_Latn-acc_norm_stderr","swe_Latn-acc","swe_Latn-acc_stderr","swe_Latn-acc_norm","swe_Latn-acc_norm_stderr","sun_Latn-acc","sun_Latn-acc_stderr","sun_Latn-acc_norm","sun_Latn-acc_norm_stderr","srp_Cyrl-acc","srp_Cyrl-acc_stderr","srp_Cyrl-acc_norm","srp_Cyrl-acc_norm_stderr","spa_Latn-acc","spa_Latn-acc_stderr","spa_Latn-acc_norm","spa_Latn-acc_norm_stderr","sot_Latn-acc","sot_Latn-acc_stderr","sot_Latn-acc_norm","sot_Latn-acc_norm_stderr","snd_Arab-acc","snd_Arab-acc_stderr","snd_Arab-acc_norm","snd_Arab-acc_norm_stderr","sna_Latn-acc","sna_Latn-acc_stderr","sna_Latn-acc_norm","sna_Latn-acc_norm_stderr","sin_Sinh-acc","sin_Sinh-acc_stderr","sin_Sinh-acc_norm","sin_Sinh-acc_norm_stderr","sin_Latn-acc","sin_Latn-acc_stderr","sin_Latn-acc_norm","sin_Latn-acc_norm_stderr","ron_Latn-acc","ron_Latn-acc_stderr","ron_Latn-acc_norm","ron_Latn-acc_norm_stderr","por_Latn-acc","por_Latn-acc_stderr","por_Latn-acc_norm","por_Latn-acc_norm_stderr","pol_Latn-acc","pol_Latn-acc_stderr","pol_Latn-acc_norm","pol_Latn-acc_norm_stderr","nya_Latn-acc","nya_Latn-acc_stderr","nya_Latn-acc_norm","nya_Latn-acc_norm_stderr","nob_Latn-acc","nob_Latn-acc_stderr","nob_Latn-acc_norm","nob_Latn-acc_norm_stderr","nld_Latn-acc","nld_Latn-acc_stderr","nld_Latn-acc_norm","nld_Latn-acc_norm_stderr","mya_Mymr-acc","mya_Mymr-acc_stderr","mya_Mymr-acc_norm","mya_Mymr-acc_norm_stderr","mri_Latn-acc","mri_Latn-acc_stderr","mri_Latn-acc_norm","mri_Latn-acc_norm_stderr","mar_Deva-acc","mar_Deva-acc_stderr","mar_Deva-acc_norm","mar_Deva-acc_norm_stderr","lit_Latn-acc","lit_Latn-acc_stderr","lit_Latn-acc_norm","lit_Latn-acc_norm_stderr","kor_Hang-acc","kor_Hang-acc_stderr","kor_Hang-acc_norm","kor_Hang-acc_norm_stderr","kir_Cyrl-acc","kir_Cyrl-acc_stderr","kir_Cyrl-acc_norm","kir_Cyrl-acc_norm_stderr","kin_Latn-acc","kin_Latn-acc_stderr","kin_Latn-acc_norm","kin_Latn-acc_norm_stderr","khm_Khmr-acc","khm_Khmr-acc_stderr","khm_Khmr-acc_norm","khm_Khmr-acc_norm_stderr","jpn_Jpan-acc","jpn_Jpan-acc_stderr","jpn_Jpan-acc_norm","jpn_Jpan-acc_norm_stderr","jav_Latn-acc","jav_Latn-acc_stderr","jav_Latn-acc_norm","jav_Latn-acc_norm_stderr","ita_Latn-acc","ita_Latn-acc_stderr","ita_Latn-acc_norm","ita_Latn-acc_norm_stderr","ibo_Latn-acc","ibo_Latn-acc_stderr","ibo_Latn-acc_norm","ibo_Latn-acc_norm_stderr","hun_Latn-acc","hun_Latn-acc_stderr","hun_Latn-acc_norm","hun_Latn-acc_norm_stderr","heb_Hebr-acc","heb_Hebr-acc_stderr","heb_Hebr-acc_norm","heb_Hebr-acc_norm_stderr","hat_Latn-acc","hat_Latn-acc_stderr","hat_Latn-acc_norm","hat_Latn-acc_norm_stderr","fin_Latn-acc_norm_stderr","fin_Latn-acc_norm","fin_Latn-acc_stderr","fin_Latn-acc","eus_Latn-acc_norm_stderr","eus_Latn-acc_norm","eus_Latn-acc_stderr","eus_Latn-acc","est_Latn-acc_norm_stderr","est_Latn-acc_norm","est_Latn-acc_stderr","est_Latn-acc","ell_Grek-acc_norm_stderr","ell_Grek-acc_norm","ell_Grek-acc_stderr","ell_Grek-acc","dan_Latn-acc_norm_stderr","dan_Latn-acc_norm","dan_Latn-acc_stderr","dan_Latn-acc","ckb_Arab-acc_norm_stderr","ckb_Arab-acc_norm","ckb_Arab-acc_stderr","ckb_Arab-acc","ces_Latn-acc_norm_stderr","ces_Latn-acc_norm","ces_Latn-acc_stderr","ces_Latn-acc","ceb_Latn-acc_norm_stderr","ceb_Latn-acc_norm","ceb_Latn-acc_stderr","ceb_Latn-acc","bul_Cyrl-acc_norm_stderr","bul_Cyrl-acc_norm","bul_Cyrl-acc_stderr","bul_Cyrl-acc","amh_Ethi-acc_norm_stderr","amh_Ethi-acc_norm","amh_Ethi-acc_stderr","amh_Ethi-acc"],
@@ -674,10 +617,6 @@ export const benchmarkLanguages = {
       "Han (Traditional": ["zho_Hant-acc","zho_Hant-acc_stderr","zho_Hant-acc_norm","zho_Hant-acc_norm_stderr"]
     },
 
-    performance: {
-
-     
-    },
 
     ResourcesJoshi: {
       "Category 0": ["sot_Latn-acc","sot_Latn-acc_stderr","sot_Latn-acc_norm","sot_Latn-acc_norm_stderr","sin_Sinh-acc","sin_Sinh-acc_stderr","sin_Sinh-acc_norm","sin_Sinh-acc_norm_stderr","sin_Latn-acc","sin_Latn-acc_stderr","sin_Latn-acc_norm","sin_Latn-acc_norm_stderr","shn_Mymr-acc","shn_Mymr-acc_stderr","shn_Mymr-acc_norm","shn_Mymr-acc_norm_stderr","ory_Orya-acc","ory_Orya-acc_stderr","ory_Orya-acc_norm","ory_Orya-acc_norm_stderr","kac_Latn-acc","kac_Latn-acc_stderr","kac_Latn-acc_norm","kac_Latn-acc_norm_stderr","fuv_Latn-acc_norm_stderr","fuv_Latn-acc_norm","fuv_Latn-acc_stderr","fuv_Latn-acc"],
@@ -691,7 +630,6 @@ export const benchmarkLanguages = {
     }
   },
   "arc_multilingual": {
-    languages: [""],
     ResourcesMALA: {
     
       /*  acc: ["Avg","zh-acc","vi-acc","uk-acc","te-acc","ta-acc","sv-acc","sr-acc","sk-acc","ru-acc","ro-acc","pt-acc","nl-acc","ne-acc","mr-acc","ml-acc","kn-acc_norm_stderr","kn-acc_norm","kn-acc_stderr","kn-acc","it-acc","id-acc","hy-acc","hu-acc","hr-acc","hi-acc","gu-acc","fr-acc","eu-acc","es-acc","de-acc","da-acc","ca-acc","bn-acc","ar-acc"],
@@ -721,12 +659,7 @@ export const benchmarkLanguages = {
       Tamil: ["ta-acc_norm_stderr","ta-acc_norm","ta-acc_stderr","ta-acc"],
       Telugu: ["te-acc_norm_stderr","te-acc_norm","te-acc_stderr","te-acc"]
     },
-    performance: {
-     
-
-
-
-    },
+    
 
     ResourcesJoshi: {
 
@@ -738,12 +671,9 @@ export const benchmarkLanguages = {
       "Category 5": ["zh-acc","zh-acc_stderr","zh-acc_norm","zh-acc_norm_stderr","fr-acc","fr-acc_stderr","fr-acc_norm","fr-acc_norm_stderr","es-acc","es-acc_stderr","es-acc_norm","es-acc_norm_stderr","de-acc","de-acc_stderr","de-acc_norm","de-acc_norm_stderr","ar-acc","ar-acc_stderr","ar-acc_norm","ar-acc_norm_stderr"],
 
 
-
-
     }
   },
   "glot500": {
-    languages: [""],
     ResourcesMALA: {
       High: ["all", "urd_Arab","tgk_Cyrl","slv_Latn","rus_Cyrl","pan_Guru","nep_Deva","mon_Cyrl","mlt_Latn","mkd_Cyrl","mal_Mlym","kaz_Cyrl","kat_Geor","kan_Knda","isl_Latn","ind_Latn","hye_Armn","hbs_Latn","guj_Gujr","glg_Latn","fra_Latn","fil_Latn","eng_Latn","deu_Latn","cat_Latn","bel_Cyrl","aze_Latn","afr_Latn"],
       "Medium High": ["all","zul_Latn","yid_Hebr","vie_Latn","uzb_Latn","uzb_Cyrl","ukr_Cyrl","uig_Arab","tur_Latn","tel_Telu","tat_Cyrl","tam_Taml","swe_Latn","swa_Latn","sun_Latn","srp_Cyrl","sqi_Latn","sot_Latn","som_Latn","snd_Arab","sna_Latn","smo_Latn","sin_Sinh","ron_Latn","pus_Arab","por_Latn","pol_Latn","ori_Orya","nya_Latn","nor_Latn","nob_Latn","nno_Latn","nld_Latn","mya_Mymr","msa_Latn","mri_Latn","mlg_Latn","mar_Deva","ltz_Latn","lit_Latn","lat_Latn","kur_Latn","kor_Hang","kir_Cyrl","kin_Latn","khm_Khmr","kaa_Cyrl","jav_Latn","ita_Latn","ibo_Latn","hun_Latn","hmn_Latn","heb_Hebr","hbs_Cyrl","hau_Latn","hat_Latn","gle_Latn","gla_Latn","fry_Latn","fin_Latn","fas_Arab","eus_Latn","est_Latn","epo_Latn","ell_Grek","div_Thaa","dan_Latn","cym_Latn","cos_Latn","ckb_Arab","ces_Latn","ceb_Latn","bul_Cyrl","bos_Latn","bak_Cyrl","ast_Latn","ara_Arab","amh_Ethi"],
@@ -782,11 +712,7 @@ export const benchmarkLanguages = {
       Tamil: ["tam_Taml"],
       Telugu: ["tel_Telu"]
     },
-    performance: {
-      High: ["L28"],
-      Medium: ["L29"],
-      Low: ["L30"],
-    },
+    
 
     ResourcesJoshi: {
 
@@ -797,13 +723,9 @@ export const benchmarkLanguages = {
       "Category 4": ["vie_Latn","tur_Latn","swe_Latn","srp_Latn","srp_Cyrl","rus_Cyrl","por_Latn","pol_Latn","pes_Arab","nld_Latn","kor_Hang","ita_Latn","hun_Latn","hrv_Latn","hin_Latn","hin_Deva","fin_Latn","fas_Arab","eus_Latn","ces_Latn","cat_Latn"],
       "Category 5": ["spa_Latn","jpn_Jpan","fra_Latn","eng_Latn","deu_Latn","cmn_Hani","arb_Arab","ara_Arab"]
 
-
-
-
     }
   },
   "pbc": {
-    languages: [""],
     ResourcesMALA: {
       High: ["all","urd_Arab","tgk_Cyrl","slv_Latn","rus_Cyrl","pan_Guru","nep_Deva","mlt_Latn","mkd_Cyrl","mal_Mlym","kaz_Cyrl","kat_Geor","kan_Knda","isl_Latn","ind_Latn","hye_Armn","guj_Gujr","fra_Latn","fil_Latn","eng_Latn","deu_Latn","cat_Latn","bel_Cyrl","aze_Latn","afr_Latn"],
       "Medium High": ["all","zul_Latn","vie_Latn","uzb_Latn","uzb_Cyrl","ukr_Cyrl","uig_Arab","tur_Latn","tel_Telu","tat_Cyrl","tam_Taml","swe_Latn","sun_Latn","srp_Cyrl","sqi_Latn","spa_Latn","sot_Latn","som_Latn","snd_Arab","sna_Latn","smo_Latn","sin_Sinh","ron_Latn","por_Latn","pol_Latn","ori_Orya","nya_Latn","nor_Latn","nob_Latn","nno_Latn","nld_Latn","mya_Mymr","msa_Latn","mri_Latn","mlg_Latn","mar_Deva","ltz_Latn","lit_Latn","lat_Latn","kor_Hang","kir_Cyrl","kin_Latn","khm_Khmr","kaa_Cyrl","jav_Latn","ita_Latn","ibo_Latn","hun_Latn","heb_Hebr","hau_Latn","hat_Latn","gle_Latn","gla_Latn","fry_Latn","fin_Latn","fas_Arab","eus_Latn","est_Latn","epo_Latn","ell_Grek","dan_Latn","cym_Latn","ckb_Arab","ces_Latn","ceb_Latn","bul_Cyrl","bak_Cyrl","amh_Ethi"],
@@ -840,14 +762,7 @@ export const benchmarkLanguages = {
       Telugu: ["tel_Telu"],
       Thai: ["tha_Thai"]
     },
-    performance: {
-
-
     
-
-    },
-
-
     ResourcesJoshi: {
 
       "Category 0": ["zai_Latn","yua_Latn","yap_Latn","yan_Latn","xav_Latn","wal_Latn","tzo_Latn","tzh_Latn","tui_Latn","tpm_Latn","top_Latn","ton_Latn","toj_Latn","toi_Latn","tob_Latn","tih_Latn","teo_Latn","tdt_Latn","tca_Latn","sxn_Latn","srm_Latn","sop_Latn","sin_Sinh","seh_Latn","sba_Latn","sah_Cyrl","run_Latn","rug_Latn","rop_Latn","rap_Latn","quc_Latn","prs_Arab","prk_Latn","pon_Latn","pcm_Latn","pau_Latn","nse_Latn","nnb_Latn","nia_Latn","nds_Latn","ndo_Latn","nde_Latn","nbl_Latn","naq_Latn","mrw_Latn","mps_Latn","miq_Latn","mgr_Latn","meu_Latn","mbb_Latn","mau_Latn","mam_Latn","mah_Latn","mad_Latn","loz_Latn","lhu_Latn","lam_Latn","kua_Latn","ksw_Mymr","kss_Latn","kri_Latn","kpg_Latn","kmr_Latn","kmr_Cyrl","kmm_Latn","kjh_Cyrl","kjb_Latn","kbp_Latn","kac_Latn","jam_Latn","ixl_Latn","ikk_Latn","ifb_Latn","ifa_Latn","iba_Latn","hus_Latn","hnj_Latn","hmo_Latn","hil_Latn","hat_Latn","gym_Latn","gya_Latn","guw_Latn","gla_Latn","gla_Latn","gkn_Latn","giz_Latn","efi_Latn","dyu_Latn","cuk_Latn","ctu_Latn","cnh_Latn","chk_Latn","cfm_Latn","caq_Latn","cak_Latn","cac_Latn","bzj_Latn","bum_Latn","btx_Latn","bts_Latn","bqc_Latn","bim_Latn","bhw_Latn","bem_Latn","bcl_Latn","bbc_Latn","ban_Latn","arn_Latn","aoj_Latn","alt_Cyrl","ahk_Latn"],
@@ -856,8 +771,6 @@ export const benchmarkLanguages = {
       "Category 3": ["zsm_Latn","zlm_Latn","uzb_Latn","uzb_Cyrl","urd_Arab","ukr_Cyrl","tha_Thai","tgl_Latn","tam_Taml","slv_Latn","slk_Latn","ron_Latn","msa_Latn","lit_Latn","lav_Latn","lat_Latn","kaz_Cyrl","kat_Geor","ind_Latn","heb_Hebr","est_Latn","ell_Grek","dan_Latn","ceb_Latn","bul_Cyrl","ben_Beng","bel_Cyrl","arz_Arab","afr_Latn"],
       "Category 4": ["vie_Latn","tur_Latn","swe_Latn","srp_Latn","srp_Cyrl","rus_Cyrl","por_Latn","pol_Latn","pes_Arab","nld_Latn","kor_Hang","ita_Latn","hun_Latn","hrv_Latn","hin_Latn","hin_Deva","fin_Latn","fas_Arab","eus_Latn","ces_Latn","cat_Latn"],
       "Category 5": ["spa_Latn","jpn_Jpan","fra_Latn","eng_Latn","deu_Latn","cmn_Hani","arb_Arab"]
-
-
 
 
     }

@@ -1,6 +1,6 @@
 /* 
 
-Install following libraries:
+Install following libraries if they are not installed:
 
 npm i papaparse
 npm i react-chartjs-2 chart.js
@@ -13,7 +13,6 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import {
   AppBar,
-  Toolbar,
   Typography,
   Box,
   FormControlLabel,
@@ -40,7 +39,6 @@ import TableData from "./Table.jsx";
 import performance from "./performance.js";
 
 // Chart.js
-
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -68,13 +66,13 @@ const Metrics = () => {
 
   const [showTable, setShowTable] = useState(false);
 
-  // Chart
   const [showChart, setShowChart] = useState(false);
 
   const [chartData, setChartData] = useState(null);
 
   const [selectedBenchmark, setSelectedBenchmark] = useState(null);
 
+  // Benchmarks under Tasks are defined below
   const taskBenchmarks = {
     "Text Classification": ["SIB-200", "Taxi-1500"],
     "Machine Translation": [
@@ -89,6 +87,7 @@ const Metrics = () => {
     "Intrinsic Evaluation": ["glot500", "pbc"],
   };
 
+  // Models under each Benchmark are defined below
   const benchmarkModels = {
     "SIB-200": [
       "bloom-7b1",
@@ -511,6 +510,7 @@ const Metrics = () => {
     if (selectedBenchmarks.length) {
       const benchmark = selectedBenchmarks[selectedBenchmarks.length - 1];
       let dataFile;
+      // Conditional Statements
       if (benchmark === "SIB-200") dataFile = "/metrics/SIB-200.csv";
       else if (benchmark === "Taxi-1500") dataFile = "/metrics/Taxi-1500.csv";
       else if (benchmark === "Flores-200-Eng-X-BLEU")
@@ -543,12 +543,11 @@ const Metrics = () => {
             dynamicTyping: true,
           });
           setData(parsedData.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching the CSV file:", error);
         });
     }
   }, [selectedBenchmarks]);
+
+  // Function for selecting Tasks
 
   const handleTaskChange = (task) => {
     const newTasks = selectedTasks.includes(task)
@@ -556,7 +555,7 @@ const Metrics = () => {
       : [...selectedTasks, task];
     setSelectedTasks(newTasks);
 
-    // Change of Tasks after reset
+    // Resetting if tasks are not selected
     if (!newTasks.length) {
       setSelectedBenchmarks([]);
       setSelectedModels([]);
@@ -565,6 +564,8 @@ const Metrics = () => {
       setSelectedLanguages([]);
     }
   };
+
+  // Function for Selecting and Deselecting Benchmarks
 
   const handleBenchmarkChange = (benchmark) => {
     const newBenchmarks = selectedBenchmarks.includes(benchmark)
@@ -584,32 +585,43 @@ const Metrics = () => {
     setSelectedLanguages([]);
   };
 
+  // Function for selecting and deselecting Models
+
   const handleModelChange = (model) => {
     const newModels = selectedModels.includes(model)
       ? selectedModels.filter((m) => m !== model)
       : [...selectedModels, model];
     setSelectedModels(newModels);
+
     setSelectedCategories([]);
     setSelectedValues([]);
     setSelectedLanguages([]);
   };
+
+  // Function for selecting and deselecting Categories
 
   const handleCategoryChange = (category) => {
     const newCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((c) => c !== category)
       : [...selectedCategories, category];
     setSelectedCategories(newCategories);
+
     setSelectedValues([]);
     setSelectedLanguages([]);
   };
+
+  // Function for selecting and deselecting Values
 
   const handleValueChange = (value) => {
     const newValues = selectedValues.includes(value)
       ? selectedValues.filter((v) => v !== value)
       : [...selectedValues, value];
     setSelectedValues(newValues);
+
     setSelectedLanguages([]);
   };
+
+  // Function for selecting and deselecting Languages
 
   const handleLanguageChange = (language) => {
     const newLanguages = selectedLanguages.includes(language)
@@ -618,13 +630,57 @@ const Metrics = () => {
     setSelectedLanguages(newLanguages);
   };
 
-  // Extracts models from the selected benchmark
-  const labels =
-    selectedBenchmark && performance[selectedBenchmark]
-      ? Object.keys(performance[selectedBenchmark]).filter((model) =>
-          selectedModels.includes(model)
-        )
-      : [];
+  // Function for selecting all Languages associated with Resources (MALA)
+  const handleSelectAllResourcesMALA = (benchmark, value) => {
+    setSelectedLanguages((prevSelected) => {
+      const allLanguages =
+        benchmarkLanguages[benchmark]?.ResourcesMALA[value]?.filter(
+          (lang) => lang !== "all"
+        ) || [];
+
+      if (allLanguages.every((lang) => prevSelected.includes(lang))) {
+        return prevSelected.filter((lang) => !allLanguages.includes(lang));
+      } else {
+        return [...new Set([...prevSelected, ...allLanguages])];
+      }
+    });
+  };
+
+  // Function for selecting all Languages associated with Writing Systems
+
+  const handleSelectAllWritingSystems = (benchmark, value) => {
+    setSelectedLanguages((prevSelected) => {
+      const allLanguages =
+        benchmarkLanguages[benchmark]?.writingSystems[value]?.filter(
+          (lang) => lang !== "all"
+        ) || [];
+
+      if (allLanguages.every((lang) => prevSelected.includes(lang))) {
+        return prevSelected.filter((lang) => !allLanguages.includes(lang));
+      } else {
+        return [...new Set([...prevSelected, ...allLanguages])];
+      }
+    });
+  };
+
+  // Function for selecting all Languages associated with Resources (Joshi)
+
+  const handleSelectAllResourcesJoshi = (benchmark, value) => {
+    setSelectedLanguages((prevSelected) => {
+      const allLanguages =
+        benchmarkLanguages[benchmark]?.ResourcesJoshi[value]?.filter(
+          (lang) => lang !== "all"
+        ) || [];
+
+      if (allLanguages.every((lang) => prevSelected.includes(lang))) {
+        return prevSelected.filter((lang) => !allLanguages.includes(lang));
+      } else {
+        return [...new Set([...prevSelected, ...allLanguages])];
+      }
+    });
+  };
+
+  // Function for handling Submit button
 
   const handleSubmit = () => {
     if (
@@ -635,8 +691,8 @@ const Metrics = () => {
       const benchmarkData = performance?.[selectedBenchmark];
 
       if (!benchmarkData) {
-        console.error(`Benchmark "${selectedBenchmark}" does not exist.`);
-        alert(`Benchmark "${selectedBenchmark}" does not exist.`);
+        console.error(`Benchmark "${selectedBenchmark}" does not exist`);
+        alert(`Benchmark "${selectedBenchmark}" does not exist`);
         return;
       }
 
@@ -645,8 +701,8 @@ const Metrics = () => {
       );
 
       if (filteredModels.length === 0) {
-        console.error("No valid models in the selected benchmark.");
-        alert("No valid models found in the selected benchmark.");
+        console.error("No valid models in the selected benchmark");
+        alert("No valid models found in the selected benchmark");
         return;
       }
 
@@ -667,20 +723,19 @@ const Metrics = () => {
         stack: "Stack 0",
       }));
 
-      // Validates dataset before setting the state
       if (
         !Array.isArray(labels) ||
         labels.length === 0 ||
         datasets.some((d) => !Array.isArray(d.data))
       ) {
-        console.error("Chart labels or datasets are not valid arrays.");
+        console.error("Chart labels or datasets are not a valid arrays");
         return;
       }
 
       // Updated Chart
       setChartData({ labels, datasets });
       setShowChart(true);
-      setShowTable(false); // Hides the table while chart is being shown.
+      setShowTable(false);
     } else {
       const filteredData = data.filter(
         (item) =>
@@ -728,12 +783,14 @@ const Metrics = () => {
     return Array.from(new Set([...languages, ...allLanguages]));
   };
 
+  console.log(getLanguagesCategoryValue);
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <AppBar position="static" sx={{ bgcolor: "#333" }}></AppBar>
 
       <Box sx={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
-        <Box sx={{ width: "25%", p: 2, overflowY: "auto" }}>
+        <Box sx={{ width: "40%", p: 2, overflowY: "auto" }}>
           <Box
             sx={{
               bgcolor: "white",
@@ -829,11 +886,13 @@ const Metrics = () => {
                 <Typography variant="h6">Values</Typography>
 
                 {/* Resources (MALA) */}
+
                 {selectedCategories.includes("Resources (MALA)") &&
                   selectedBenchmarks.map((benchmark) => {
                     const ResourcesMALA = Object.keys(
                       benchmarkLanguages[benchmark]?.ResourcesMALA || {}
                     );
+
                     return ResourcesMALA.map((value) => (
                       <Box key={value}>
                         <FormControlLabel
@@ -847,34 +906,60 @@ const Metrics = () => {
                           label={value}
                         />
 
-                        {selectedValues.includes(value) &&
-                          benchmarkLanguages[benchmark]?.ResourcesMALA[
-                            value
-                          ]?.map((lang) => (
-                            <Box ml={4} key={lang}>
-                              {" "}
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={selectedLanguages.includes(lang)}
-                                    onChange={() => handleLanguageChange(lang)}
-                                    color="primary"
-                                  />
-                                }
-                                label={lang}
-                              />
-                            </Box>
-                          ))}
+                        {selectedValues.includes(value) && (
+                          <>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={benchmarkLanguages[
+                                    benchmark
+                                  ]?.ResourcesMALA[value]?.every((lang) =>
+                                    selectedLanguages.includes(lang)
+                                  )}
+                                  onChange={() =>
+                                    handleSelectAllResourcesMALA(
+                                      benchmark,
+                                      value
+                                    )
+                                  }
+                                  color="primary"
+                                />
+                              }
+                              label="Select all"
+                            />
+
+                            {benchmarkLanguages[benchmark]?.ResourcesMALA[
+                              value
+                            ]?.map((lang) => (
+                              <Box ml={4} key={lang}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={selectedLanguages.includes(lang)}
+                                      onChange={() =>
+                                        handleLanguageChange(lang)
+                                      }
+                                      color="primary"
+                                    />
+                                  }
+                                  label={lang}
+                                />
+                              </Box>
+                            ))}
+                          </>
+                        )}
                       </Box>
                     ));
                   })}
 
                 {/* Writing Systems */}
+
                 {selectedCategories.includes("Writing Systems") &&
                   selectedBenchmarks.map((benchmark) => {
                     const writingSystems = Object.keys(
                       benchmarkLanguages[benchmark]?.writingSystems || {}
                     );
+
                     return writingSystems.map((value) => (
                       <Box key={value}>
                         <FormControlLabel
@@ -888,24 +973,48 @@ const Metrics = () => {
                           label={value}
                         />
 
-                        {selectedValues.includes(value) &&
-                          benchmarkLanguages[benchmark]?.writingSystems[
-                            value
-                          ]?.map((lang) => (
-                            <Box ml={4} key={lang}>
-                              {" "}
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={selectedLanguages.includes(lang)}
-                                    onChange={() => handleLanguageChange(lang)}
-                                    color="primary"
-                                  />
-                                }
-                                label={lang}
-                              />
-                            </Box>
-                          ))}
+                        {selectedValues.includes(value) && (
+                          <>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={benchmarkLanguages[
+                                    benchmark
+                                  ]?.writingSystems[value]?.every((lang) =>
+                                    selectedLanguages.includes(lang)
+                                  )}
+                                  onChange={() =>
+                                    handleSelectAllWritingSystems(
+                                      benchmark,
+                                      value
+                                    )
+                                  }
+                                  color="primary"
+                                />
+                              }
+                              label="Select all"
+                            />
+
+                            {benchmarkLanguages[benchmark]?.writingSystems[
+                              value
+                            ]?.map((lang) => (
+                              <Box ml={4} key={lang}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={selectedLanguages.includes(lang)}
+                                      onChange={() =>
+                                        handleLanguageChange(lang)
+                                      }
+                                      color="primary"
+                                    />
+                                  }
+                                  label={lang}
+                                />
+                              </Box>
+                            ))}
+                          </>
+                        )}
                       </Box>
                     ));
                   })}
@@ -930,6 +1039,7 @@ const Metrics = () => {
                     const ResourcesJoshi = Object.keys(
                       benchmarkLanguages[benchmark]?.ResourcesJoshi || {}
                     );
+
                     return ResourcesJoshi.map((value) => (
                       <Box key={value}>
                         <FormControlLabel
@@ -943,28 +1053,51 @@ const Metrics = () => {
                           label={value}
                         />
 
-                        {selectedValues.includes(value) &&
-                          benchmarkLanguages[benchmark]?.ResourcesJoshi[
-                            value
-                          ]?.map((lang) => (
-                            <Box ml={4} key={lang}>
-                              {" "}
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={selectedLanguages.includes(lang)}
-                                    onChange={() => handleLanguageChange(lang)}
-                                    color="primary"
-                                  />
-                                }
-                                label={lang}
-                              />
-                            </Box>
-                          ))}
+                        {selectedValues.includes(value) && (
+                          <>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={benchmarkLanguages[
+                                    benchmark
+                                  ]?.ResourcesJoshi[value]?.every((lang) =>
+                                    selectedLanguages.includes(lang)
+                                  )}
+                                  onChange={() =>
+                                    handleSelectAllResourcesJoshi(
+                                      benchmark,
+                                      value
+                                    )
+                                  }
+                                  color="primary"
+                                />
+                              }
+                              label="Select all"
+                            />
+
+                            {benchmarkLanguages[benchmark]?.ResourcesJoshi[
+                              value
+                            ]?.map((lang) => (
+                              <Box ml={4} key={lang}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={selectedLanguages.includes(lang)}
+                                      onChange={() =>
+                                        handleLanguageChange(lang)
+                                      }
+                                      color="primary"
+                                    />
+                                  }
+                                  label={lang}
+                                />
+                              </Box>
+                            ))}
+                          </>
+                        )}
                       </Box>
                     ));
                   })}
-
                 {selectedCategories.includes("languages") &&
                   selectedBenchmarks.map((benchmark) => {
                     const languagesUnderResourcesMALA = Object.keys(

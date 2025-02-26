@@ -26,7 +26,7 @@ const TableData = ({ results, selectedModels, selectedLanguages }) => {
   };
 
   return (
-    <Box xs={12} md={9} lg={8} sx={{ padding: 2 }}>
+    <Box xs={12} md={9} lg={8} sx={{ padding: 2, maxWidth: "1000px" }}>
       {results && (
         <>
           <Table>
@@ -45,6 +45,7 @@ const TableData = ({ results, selectedModels, selectedLanguages }) => {
                 ))}
               </TableRow>
             </TableHead>
+
             <TableBody>
               {selectedModels
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -76,6 +77,7 @@ const TableData = ({ results, selectedModels, selectedLanguages }) => {
                 })}
             </TableBody>
           </Table>
+
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
             <IconButton
               onClick={() => handleChangePage("back")}
