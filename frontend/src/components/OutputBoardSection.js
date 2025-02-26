@@ -77,22 +77,6 @@ function Dashboard({ task, benchmark, model }) {
     }
   };
 
-  // const handleRowSelect = (row) => {
-  //   if (!user) {
-  //     // setSnackbarOpen(true);
-  //     return;
-  //   }
-  //   setSelectedRow(null);
-  //   // setSidebarOpen(true);
-  // };
-
-  // const handleCommentSubmit = () => {
-  //   // setSidebarOpen(false);
-  //   setSelectedRow(null);
-  //   setRefreshCommentsFlag((prev) => !prev);
-  // };
-
-  // Define column order based on task type.
   let columnOrder = [];
   const taskKey = task.toLowerCase();
   if (taskKey === "classification") {

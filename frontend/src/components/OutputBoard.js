@@ -11,7 +11,7 @@ import {
   Drawer,
 } from "@mui/material";
 import api from "../services/api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TaskSelector from "./TaskSelector";
 import DataTable from "./DataTable";
 import FeedbackSidebar from "./FeedbackSidebar";
@@ -19,6 +19,7 @@ import CommentSection from "./CommentSection";
 import CloseIcon from "@mui/icons-material/Close";
 
 function Dashboard({ user }) {
+  const navigate = useNavigate();
   const location = useLocation(); // Get the current location object
   const searchParams = new URLSearchParams(location.search); // Create a URLSearchParams object from the search string
 
@@ -54,16 +55,16 @@ function Dashboard({ user }) {
     fetchTasks();
 
     // Clear selections on unload.
-    const handleBeforeUnload = () => {
-      setSelectedTask("");
-      setSelectedBenchmark("");
-      setSelectedModel("");
-      setSelectedLanguage("");
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    // const handleBeforeUnload = () => {
+    //   setSelectedTask("");
+    //   setSelectedBenchmark("");
+    //   setSelectedModel("");
+    //   setSelectedLanguage("");
+    // };
+    // window.addEventListener("beforeunload", handleBeforeUnload);
+    // return () => {
+    //   window.removeEventListener("beforeunload", handleBeforeUnload);
+    // };
   }, []);
 
   // Hide table when dropdowns change.
@@ -72,6 +73,7 @@ function Dashboard({ user }) {
   }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
   // Load data when task, benchmark, model, and language are selected.
   useEffect(() => {
+    const params = new URLSearchParams();
     if (
       selectedTask &&
       selectedBenchmark &&
@@ -79,8 +81,20 @@ function Dashboard({ user }) {
       selectedLanguage
     ) {
       handleLoadData();
+      params.set("task", selectedTask);
+      params.set("benchmark", selectedBenchmark);
+      params.set("model", selectedModel);
+      params.set("language", selectedLanguage);
+
+      navigate({ search: params.toString() }, { replace: true });
     }
-  }, [selectedTask, selectedBenchmark, selectedModel, selectedLanguage]);
+  }, [
+    selectedTask,
+    selectedBenchmark,
+    selectedModel,
+    selectedLanguage,
+    navigate,
+  ]);
   const handleLoadData = async () => {
     if (
       !selectedTask ||

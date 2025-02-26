@@ -7,7 +7,14 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/OutputBoard";
@@ -40,39 +47,7 @@ function App() {
           <Typography variant="h6" component="div">
             Polyeval-Visual
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Button color="inherit" component={Link} to="/data-visualisation">
-              Data Visualisation
-            </Button>
-
-            <Button color="inherit" component={Link} to="/metrics">
-              Comparative Metrics View
-            </Button>
-
-            <Button color="inherit" component={Link} to="/human-feedback">
-              Human Feedback
-            </Button>
-            <Button color="inherit" component={Link} to="/guideline">
-              Guidelines
-            </Button>
-          </Box>
-          <Box sx={{ marginLeft: "auto" }}>
-            {user ? (
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Typography variant="body1" sx={{ textAlign: "right" }}>
-                  Welcome, {user}
-                </Typography>
-
-                <Button color="inherit" onClick={handleLogout}>
-                  Logout
-                </Button>
-              </Box>
-            ) : (
-              <Button color="inherit" component={Link} to="/login">
-                Login
-              </Button>
-            )}
-          </Box>
+          <NavigationButtons user={user} handleLogout={handleLogout} />
         </Toolbar>
       </AppBar>
       <Box sx={{ p: 2 }}>
@@ -86,6 +61,62 @@ function App() {
         </Routes>
       </Box>
     </Router>
+  );
+}
+
+function NavigationButtons({ user, handleLogout }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleLoginRedirect = () => {
+    const searchParams = new URLSearchParams(location.search);
+    navigate("/login", {
+      state: {
+        from: location.pathname,
+        outputBoardParams: Object.fromEntries(searchParams),
+      },
+    });
+  };
+
+  return (
+    <>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Button color="inherit" component={Link} to="/data-visualisation">
+          Data Visualisation
+        </Button>
+        <Button color="inherit" component={Link} to="/metrics">
+          Comparative Metrics View
+        </Button>
+        <Button color="inherit" component={Link} to="/human-feedback">
+          Human Feedback
+        </Button>
+        <Button color="inherit" component={Link} to="/guideline">
+          Guidelines
+        </Button>
+      </Box>
+
+      <Box sx={{ marginLeft: "auto" }}>
+        {user ? (
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography variant="body1" sx={{ textAlign: "right" }}>
+              Welcome, {user}
+            </Typography>
+
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Box>
+        ) : (
+          <Button
+            color="inherit"
+            // component={Link}
+            // to="/login"
+            onClick={handleLoginRedirect} // Pass the current path as state, so we can redirect back to it after login
+          >
+            Login
+          </Button>
+        )}
+      </Box>
+    </>
   );
 }
 
