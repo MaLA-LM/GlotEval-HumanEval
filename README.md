@@ -43,7 +43,7 @@ Then\
 ## Alternative way to see the doc:
 
 You can view the full documentation here:  
-👉 [Read the Docs](https://polyeval-test.readthedocs.io/en/latest/index.html)
+👉 [Read the Docs](https://polyeval.readthedocs.io/en/latest/)
 
 ## To edit the doc:
 
