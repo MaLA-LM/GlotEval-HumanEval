@@ -96,8 +96,20 @@ const Translator = ({ textToTranslate, row, taskType, showTextField }) => {
         Translation Options
       </Typography>
 
-      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-        <FormControl size="small" sx={{ minWidth: 120 }}>
+      <Box sx={{ 
+        display: "flex", 
+        gap: 2, 
+        mb: 2, 
+        flexWrap: {
+          xs: "wrap",    // Stack on very small screens
+          sm: "nowrap"   // Single line from small screens and up
+        },
+        alignItems: "center" 
+      }}>
+        <FormControl size="small" sx={{ 
+          minWidth: 120,
+          flex: { xs: "1 1 100%", sm: "0 1 auto" }
+        }}>
           <InputLabel>Language</InputLabel>
           <Select
             value={targetLanguage}
@@ -112,7 +124,10 @@ const Translator = ({ textToTranslate, row, taskType, showTextField }) => {
           </Select>
         </FormControl>
 
-        <FormControl size="small" sx={{ minWidth: 120 }}>
+        <FormControl size="small" sx={{ 
+          minWidth: 120,
+          flex: { xs: "1 1 100%", sm: "0 1 auto" }
+        }}>
           <InputLabel>Translate</InputLabel>
           <Select
             value={translationScope}
@@ -128,6 +143,11 @@ const Translator = ({ textToTranslate, row, taskType, showTextField }) => {
           variant="contained"
           onClick={handleTranslate}
           disabled={isLoading}
+          sx={{ 
+            minWidth: 120, 
+            height: 40,
+            flex: { xs: "1 1 100%", sm: "0 1 auto" }
+          }}
         >
           {isLoading ? "Translating..." : "Translate"}
         </Button>

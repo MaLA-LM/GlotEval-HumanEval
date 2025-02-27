@@ -172,6 +172,7 @@ function CommentSection({ refreshFlag }) {
           <Rating
             value={comment.rating}
             readOnly
+            precision={0.01}
             size="small"
             sx={{ color: "primary.main" }}
           />
@@ -384,6 +385,7 @@ function CommentSection({ refreshFlag }) {
                 }));
               }}
               size="large"
+              precision={0.2}
               sx={{ color: "primary.main" }}
             />
           </Box>

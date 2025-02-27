@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import api from "../services/api";
 import TextHighlighter from "./TextHighlighter";
+import { FeedbackModal } from "./model";
 
 // const errorOptions = [
 //   "Grammar Error",
@@ -103,11 +104,14 @@ function FeedbackSidebar({
   const [question, setQuestion] = useState("");
   const [comment, setComment] = useState("");
   const [commErrorMsg, setCommErrorMsg] = useState("");
+  const [ratingAvg, setRatingAvg]=useState(0);
 
   // For resizing the drawer (optional).
   const [drawerWidth, setDrawerWidth] = useState("800px");
   const [resizerHover, setResizerHover] = useState(false);
   const resizerRef = useRef(null);
+
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   const handleMouseDown = (e) => {
     document.addEventListener("mousemove", handleMouseMove);
@@ -129,17 +133,33 @@ function FeedbackSidebar({
     translation: [
       "Are there specific phrases that seem mistranslated?",
       "Does the translation maintain the original tone?",
+      "Is the translation culturally appropriate?",
+      "Does the translation accurately reflect domain-specific terminology?",
+      "Custom Comment?"
     ],
     classification: [
       "Does the predicted category match the input?",
       "Are there any misclassifications?",
+      "Does the classification cover all relevant aspects?",
+      "Is the categorization consistent with domain standards?",
+      "Custom Comment?"
     ],
     summarization: [
       "Does the summary capture the main points?",
       "Are any crucial details missing?",
+      "Does the summary maintain the original tone and intent?",
+      "Is the summary unbiased and factually accurate?",
+      "Custom Comment?"
     ],
-    generation: ["Is the generated text coherent?", "Is the output relevant?"],
+    generation: [
+      "Is the generated text coherent?",
+      "Is the output relevant?",
+      "Does the generated text maintain consistency in style and tone?",
+      "Is the output factually accurate and free from hallucinations?",
+      "Custom Comment?"
+    ],
   };
+  
 
   // Order for row details.
   const detailOrder = {
@@ -206,7 +226,7 @@ function FeedbackSidebar({
 
   // Submit comment.
   const handleCommentSubmit = async () => {
-    if (!rating || !question || comment.trim() === "") {
+    if (!ratingAvg || !question || comment.trim() === "") {
       setCommErrorMsg(
         "Please provide a rating, select a question, and enter a comment."
       );
@@ -218,7 +238,7 @@ function FeedbackSidebar({
       row_data: row,
       question,
       feedback: comment,
-      rating,
+      rating:ratingAvg,
     };
     try {
       await api.post("/api/comments", commentPayload);
@@ -319,10 +339,23 @@ function FeedbackSidebar({
         <Typography variant="subtitle1">Submit Comment</Typography>
         <Box sx={{ my: 1 }}>
           <Typography component="legend">Rating</Typography>
-          <Rating
-            value={rating}
-            onChange={(e, newValue) => setRating(newValue)}
-          />
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 2 
+          }}>
+            <Rating
+              value={ratingAvg}
+              precision={0.01}
+              disabled
+            />
+            <FeedbackModal 
+              open={feedbackOpen} 
+              setOpen={setFeedbackOpen} 
+              type={taskKey} 
+              setAvg={setRatingAvg}
+            />
+          </Box>
         </Box>
         <FormControl component="fieldset" sx={{ my: 1 }}>
           <Typography variant="body2">Task-specific Question:</Typography>
