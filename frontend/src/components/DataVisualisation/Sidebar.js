@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Stepper,
@@ -9,11 +10,12 @@ import {
   Select,
   MenuItem,
   Button,
+  Radio,
   RadioGroup,
   FormControlLabel,
-  Radio,
-  Typography,
   Chip,
+  Alert,
+  Typography,
 } from "@mui/material";
 import HierarchyCheckboxTree from "./HierarchyCheckboxTree";
 import { getFilename } from './FileName';
@@ -26,6 +28,7 @@ const steps = [
 ];
 
 const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [dataset, setDataset] = useState("");
   const [metric, setMetric] = useState("");
@@ -36,6 +39,8 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
   const [wizardComplete, setWizardComplete] = useState(false);
   const [csvData, setCsvData] = useState(null);
   const [isCsvLoading, setIsCsvLoading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const [newModelData, setNewModelData] = useState(null);
 
   // Get dataset and metric options from taskOptions based on selected tab
   const datasetOptions = taskOptions[selectedTab]?.dataset || [];
@@ -55,7 +60,7 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
   useEffect(() => {
     if (dataset) {
       const filename = getFilename(dataset);
-      fetch(`/${filename}.csv`)
+      fetch(`/metric/${filename}.csv`)
         .then((response) => response.text())
         .then((text) => {
           const lines = text
@@ -96,7 +101,7 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
     if (wizardComplete && filterType === "model" && dataset && filterValue) {
       setIsCsvLoading(true);
       const filename = getFilename(dataset);
-      fetch(`/${filename}.csv`)
+      fetch(`/metric/${filename}.csv`)
         .then((response) => response.text())
         .then((text) => {
           const lines = text
@@ -162,7 +167,8 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
         ? (Array.isArray(filterValue) 
           ? filterValue 
           : Object.values(filterValue).flat()) 
-        : filterValue
+        : filterValue,
+      uploadedModelData: newModelData // Add the uploaded model data to filters
     };
 
     // Ensure dataset and metric are not undefined
@@ -178,6 +184,64 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
     onComplete(finalFilters);
     setWizardComplete(true);
   };
+
+  const handleFileUpload = useCallback((event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Reset any previous errors
+    setUploadError(null);
+
+    // Check file type
+    if (!file.name.endsWith('.csv')) {
+      setUploadError('Please upload a CSV file');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        const headers = lines[0].trim().split(',');
+        
+        // Validate headers
+        if (!headers.includes('Model') || !headers.includes('Avg')) {
+          setUploadError('CSV must include Model and Avg columns');
+          return;
+        }
+
+        // Parse the data
+        const modelData = {};
+        const [modelName] = lines[1].trim().split(',');
+        modelData[modelName] = {};
+
+        headers.forEach((header, index) => {
+          if (header !== 'Model') {
+            const value = lines[1].trim().split(',')[index];
+            modelData[modelName][header] = parseFloat(value);
+          }
+        });
+
+        setNewModelData(modelData);
+        setFilterValue(modelName);
+        
+        // Add the new model to the models list if it's not already there
+        if (!models.includes(modelName)) {
+          setModels([...models, modelName]);
+        }
+      } catch (error) {
+        setUploadError('Error parsing CSV file. Please check the format.');
+        console.error('Error parsing CSV:', error);
+      }
+    };
+
+    reader.onerror = () => {
+      setUploadError('Error reading file');
+    };
+
+    reader.readAsText(file);
+  }, [models]);
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -204,24 +268,34 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
         );
       case 1:
         return (
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel id="metric-label">Metric</InputLabel>
-            <Select
-              label="Metric"
-              labelId="metric-label"
-              value={metric}
-              onChange={(e) => setMetric(e.target.value)}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {metricOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+          <Box>
+            <FormControl variant="outlined" fullWidth sx={{ mb: 2 }}>
+              <InputLabel id="metric-label">Metric</InputLabel>
+              <Select
+                label="Metric"
+                labelId="metric-label"
+                value={metric}
+                onChange={(e) => setMetric(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>None</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+                {metricOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              onClick={() => navigate('/custom-evaluator')}
+            >
+              Upload Your Own Metric
+            </Button>
+          </Box>
         );
       case 2:
         return (
@@ -246,24 +320,55 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
       case 3:
         if (filterType === "model") {
           return (
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel id="model-label">Model</InputLabel>
-              <Select
-                label="Model"
-                labelId="model-label"
-                value={filterValue}
-                onChange={(e) => setFilterValue(e.target.value)}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {models.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+            <Box>
+              <FormControl variant="outlined" fullWidth sx={{ mb: 2 }}>
+                <InputLabel id="model-label">Model</InputLabel>
+                <Select
+                  label="Model"
+                  labelId="model-label"
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {models.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              
+              <Box sx={{ mt: 2 }}>
+                <input
+                  type="file"
+                  accept=".csv"
+                  style={{ display: 'none' }}
+                  id="csv-upload"
+                  onChange={handleFileUpload}
+                />
+                <label htmlFor="csv-upload">
+                  <Button
+                    variant="outlined"
+                    component="span"
+                    fullWidth
+                  >
+                    Upload New Model Data (CSV)
+                  </Button>
+                </label>
+                {uploadError && (
+                  <Alert severity="error" sx={{ mt: 1 }}>
+                    {uploadError}
+                  </Alert>
+                )}
+                {newModelData && (
+                  <Alert severity="success" sx={{ mt: 1 }}>
+                    Successfully loaded new model data
+                  </Alert>
+                )}
+              </Box>
+            </Box>
           );
         } else if (filterType === "language") {
           return (

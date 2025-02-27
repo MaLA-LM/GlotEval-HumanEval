@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextClassification from "./TextClassification";
 import Sidebar from "./Sidebar";
-import DashboardSection from "../OutputBoardSection";
 
 const DataVisualisation = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -24,7 +23,7 @@ const DataVisualisation = () => {
       metric: ["BERTScore", "ROUGE"],
     },
     3: {
-      dataset: ["Aya", "Aya-Self", "PolyWrite"],
+      dataset: ["Aya", "Aya (Self BLEU)", "PolyWrite"],
       metric: ["BLEU"],
     },
     4: {
@@ -39,21 +38,11 @@ const DataVisualisation = () => {
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
-    console.log(selectedTab);
     setFilters(null); // Reset filters when changing tabs
   };
 
   const handleFiltersComplete = (newFilters) => {
     setFilters(newFilters);
-  };
-
-  const task = {
-    0: "Classification",
-    1: "Translation",
-    2: "Summarization",
-    3: "Generation",
-    4: "Comprehension",
-    5: "Evaluation",
   };
 
   return (
@@ -74,8 +63,8 @@ const DataVisualisation = () => {
       <Box sx={{ display: "flex" }}>
         {/* Sidebar */}
         <Box sx={{ width: 300, mr: 2 }}>
-          <Sidebar
-            onComplete={handleFiltersComplete}
+          <Sidebar 
+            onComplete={handleFiltersComplete} 
             selectedTab={selectedTab}
             taskOptions={taskOptions}
           />
@@ -83,20 +72,7 @@ const DataVisualisation = () => {
 
         {/* Main content */}
         <Box sx={{ flex: 1 }}>
-          {filters && (
-            <TextClassification
-              externalTabValue={selectedTab}
-              filters={filters}
-            />
-          )}
-          {/* Error analysis section (include human evaluation) */}
-          {filters && filters.filterType === "model" && (
-            <DashboardSection
-              task={task[selectedTab]}
-              benchmark={filters.dataset}
-              model={filters.filterValue}
-            />
-          )}
+          {filters && <TextClassification externalTabValue={selectedTab} filters={filters} />}
         </Box>
       </Box>
     </Box>

@@ -11,7 +11,7 @@ export const getFilename = (dataset, metric) => {
   
     if (sameName.includes(dataset)) return dataset;
     if (dataset === "Aya") return "Aya-BLEU";
-    if (dataset === "Aya-Self") return "Aya-Self-BLEU";
+    if (dataset === "Aya (Self BLEU)") return "Aya-Self-BLEU";
     if (dataset === "Flores200 Eng-X") {
       return metric === "BLEU" 
         ? "Flores-200-Eng-X-BLEU" 
