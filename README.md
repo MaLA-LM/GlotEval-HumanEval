@@ -25,7 +25,7 @@ addresses this gap by providing an automatic evaluation toolkit that supports di
 1. Clone the repository:
 
 Open your terminal and then type:\
-`$ git clone {git@github.com:ananda-sreenidhi/polyeval.git}` \
+`git clone https://github.com/DASP-Polyeval/polyeval.git` \
 That clones the repo.
 
 Then, cd into the new folder by typing:\
