@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
   Box,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import {
   BrowserRouter as Router,
@@ -67,6 +69,16 @@ function App() {
 function NavigationButtons({ user, handleLogout }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleLoginRedirect = () => {
     const searchParams = new URLSearchParams(location.search);
     navigate("/login", {
@@ -80,12 +92,35 @@ function NavigationButtons({ user, handleLogout }) {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Button color="inherit" component={Link} to="/data-visualisation">
-          Data Visualisation
+        <Button
+          color="inherit"
+          onClick={handleMenuOpen}
+          aria-controls="data-analytics-menu"
+          aria-haspopup="true"
+        >
+          Data Analytics
         </Button>
-        <Button color="inherit" component={Link} to="/metrics">
-          Comparative Metrics View
-        </Button>
+        <Menu
+          id="data-analytics-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem
+            component={Link}
+            to="/data-visualisation"
+            onClick={handleMenuClose}
+          >
+            Analytics
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/metrics"
+            onClick={handleMenuClose}
+          >
+            Comparative Metrics View
+          </MenuItem>
+        </Menu>
         <Button color="inherit" component={Link} to="/human-feedback">
           Human Feedback
         </Button>
