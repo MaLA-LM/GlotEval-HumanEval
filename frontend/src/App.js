@@ -24,6 +24,8 @@ import api from "./services/api";
 import DataVisualisation from "./components/DataVisualisation/DataVisualisation";
 import AnnotationGuidelines from "./components/AnnotationGuideline";
 import Metrics from "./components/Metrics/Metrics";
+import Analytics from "./components/DataVisualisation/Analytics";
+import CustomEvaluator from "./components/DataVisualisation/CustomEvaluator";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,6 +62,8 @@ function App() {
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup setUser={setUser} />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/custom-evaluator" element={<CustomEvaluator />} />
         </Routes>
       </Box>
     </Router>
@@ -98,7 +102,7 @@ function NavigationButtons({ user, handleLogout }) {
           aria-controls="data-analytics-menu"
           aria-haspopup="true"
         >
-          Data Analytics
+          Data Visualisation
         </Button>
         <Menu
           id="data-analytics-menu"
@@ -108,10 +112,17 @@ function NavigationButtons({ user, handleLogout }) {
         >
           <MenuItem
             component={Link}
+            to="/Analytics"
+            onClick={handleMenuClose}
+          >
+            Graphs
+          </MenuItem>
+          <MenuItem
+            component={Link}
             to="/data-visualisation"
             onClick={handleMenuClose}
           >
-            Analytics
+            Data Analytics
           </MenuItem>
           <MenuItem
             component={Link}
