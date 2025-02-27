@@ -43,7 +43,7 @@ Key Features
 
    
 
-Frameworkss
+Frameworks
 ------------
 We are using the following frameworks and libraries:
 
