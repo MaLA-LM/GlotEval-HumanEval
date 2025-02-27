@@ -57,6 +57,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#structure">Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#name-conventions">Name Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-columns">Common Columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-types">Data Types</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="whats-next.html">What’s next</a></li>
@@ -90,15 +92,97 @@
 <h1>Database<a class="headerlink" href="#database" title="Link to this heading"></a></h1>
 <section id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Link to this heading"></a></h2>
+<p>The database uses SQLite with SQLAlchemy ORM and consists of the following core tables:</p>
+<p><strong>Users</strong>
+- Primary table for user authentication
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>id (Integer, Primary Key)</p></li>
+<li><p>username (String, Unique)</p></li>
+<li><p>password (String)</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Annotations</strong>
+- Stores text highlighting and error annotations
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>id (Integer, Primary Key)</p></li>
+<li><p>username (String)</p></li>
+<li><p>entry_id (String)</p></li>
+<li><p>row_data (Text, JSON serialized)</p></li>
+<li><p>error_type (String)</p></li>
+<li><p>span_start (Integer)</p></li>
+<li><p>span_end (Integer)</p></li>
+<li><p>timestamp (DateTime)</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Comments</strong>
+- Stores user feedback and ratings
+- Fields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>id (Integer, Primary Key)</p></li>
+<li><p>username (String)</p></li>
+<li><p>entry_id (String)</p></li>
+<li><p>row_data (Text, JSON serialized)</p></li>
+<li><p>question (String)</p></li>
+<li><p>feedback (Text)</p></li>
+<li><p>rating (Integer)</p></li>
+<li><p>thumbs_up (Integer)</p></li>
+<li><p>thumbs_down (Integer)</p></li>
+<li><p>timestamp (DateTime)</p></li>
+</ul>
+</div></blockquote>
+<p>Database Schema Diagram:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+---------------+</span>     <span class="o">+----------------+</span>     <span class="o">+---------------+</span>
+<span class="o">|</span>    <span class="n">Users</span>      <span class="o">|</span>     <span class="o">|</span>   <span class="n">Comments</span>     <span class="o">|</span>     <span class="o">|</span>  <span class="n">Annotations</span>  <span class="o">|</span>
+<span class="o">+---------------+</span>     <span class="o">+----------------+</span>     <span class="o">+---------------+</span>
+<span class="o">|</span> <span class="nb">id</span>           <span class="o">|</span>     <span class="o">|</span> <span class="nb">id</span>             <span class="o">|</span>     <span class="o">|</span> <span class="nb">id</span>            <span class="o">|</span>
+<span class="o">|</span> <span class="n">username</span>     <span class="o">|</span>     <span class="o">|</span> <span class="n">username</span>       <span class="o">|</span>     <span class="o">|</span> <span class="n">username</span>      <span class="o">|</span>
+<span class="o">|</span> <span class="n">password</span>     <span class="o">|</span>     <span class="o">|</span> <span class="n">entry_id</span>       <span class="o">|</span>     <span class="o">|</span> <span class="n">entry_id</span>      <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">row_data</span>       <span class="o">|</span>     <span class="o">|</span> <span class="n">row_data</span>      <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">question</span>       <span class="o">|</span>     <span class="o">|</span> <span class="n">error_type</span>    <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">feedback</span>       <span class="o">|</span>     <span class="o">|</span> <span class="n">span_start</span>    <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">rating</span>         <span class="o">|</span>     <span class="o">|</span> <span class="n">span_end</span>      <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">thumbs_up</span>      <span class="o">|</span>     <span class="o">|</span> <span class="n">timestamp</span>     <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">thumbs_down</span>    <span class="o">|</span>     <span class="o">|</span>               <span class="o">|</span>
+<span class="o">|</span>             <span class="o">|</span>     <span class="o">|</span> <span class="n">timestamp</span>      <span class="o">|</span>     <span class="o">|</span>               <span class="o">|</span>
+<span class="o">+---------------+</span>     <span class="o">+----------------+</span>     <span class="o">+---------------+</span>
+</pre></div>
+</div>
 </section>
 <section id="name-conventions">
 <h2>Name Conventions<a class="headerlink" href="#name-conventions" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>All table names are in plural form.</p></li>
-<li><p>All column names are in singular form.</p></li>
-<li><p>All column names are in snake_case.</p></li>
-<li><p>All foreign key column names are in singular form and end with <cite>_id</cite>.</p></li>
-<li><p>All primary key column names are in singular form and end with <cite>_id</cite>.</p></li>
+<li><p>All table names are in plural form</p></li>
+<li><p>All column names are in snake_case</p></li>
+<li><p>Primary keys are named ‘id’</p></li>
+<li><p>Timestamp fields end with ‘_timestamp’</p></li>
+<li><p>JSON serialized fields end with ‘_data’</p></li>
+<li><p>Count/metric fields end with ‘_up’ or ‘_down’ for metrics</p></li>
+<li><p>Foreign key references use the original table’s column name</p></li>
+</ul>
+</section>
+<section id="common-columns">
+<h2>Common Columns<a class="headerlink" href="#common-columns" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><cite>id</cite> - Integer Primary Key</p></li>
+<li><p><cite>username</cite> - String reference to Users table</p></li>
+<li><p><cite>entry_id</cite> - String identifier for evaluated entries</p></li>
+<li><p><cite>timestamp</cite> - DateTime of record creation</p></li>
+<li><p><cite>row_data</cite> - JSON serialized data of the evaluated entry</p></li>
+</ul>
+</section>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><cite>Integer</cite> - For IDs and numeric values</p></li>
+<li><p><cite>String</cite> - For short text fields (username, error_type)</p></li>
+<li><p><cite>Text</cite> - For long text content (feedback, row_data)</p></li>
+<li><p><cite>DateTime</cite> - For timestamps</p></li>
+<li><p><cite>Boolean</cite> - For true/false flags</p></li>
 </ul>
 </section>
 </section>

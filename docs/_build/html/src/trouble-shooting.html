@@ -46,7 +46,10 @@
               <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#port-5000-conflict-on-macos">Port 5000 Conflict on macOS</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">System Designs</span></p>
@@ -84,6 +87,21 @@
              
   <section id="troubleshooting">
 <h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<section id="port-5000-conflict-on-macos">
+<h2>Port 5000 Conflict on macOS<a class="headerlink" href="#port-5000-conflict-on-macos" title="Link to this heading"></a></h2>
+<p>On macOS, port 5000 is used by AirPlay Receiver by default. Since the backend server also uses port 5000, you may encounter a port conflict error when trying to start the backend server.</p>
+<p>To resolve this issue, you can either:</p>
+<ol class="arabic simple">
+<li><p>Disable AirPlay Receiver:</p>
+<ul class="simple">
+<li><p>Go to System Preferences/Settings</p></li>
+<li><p>Click on “Sharing”</p></li>
+<li><p>Uncheck “AirPlay Receiver”</p></li>
+</ul>
+</li>
+</ol>
+<p>Note: If you’re using macOS Monterey (macOS 12) or later, AirPlay Receiver is enabled by default and uses port 5000.</p>
+</section>
 </section>
 
 
