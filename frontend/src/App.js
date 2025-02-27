@@ -48,8 +48,19 @@ function App() {
 
       <AppBar position="static">
         <Toolbar sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Typography variant="h6" component="div">
-            Polyeval-Visual
+          <Typography 
+            variant="h4" 
+            component={Link} 
+            to="/"
+            sx={{ 
+              textDecoration: 'none', 
+              color: 'inherit',
+              '&:hover': {
+                cursor: 'pointer'
+              }
+            }}
+          >
+            PolyEval
           </Typography>
           <NavigationButtons user={user} handleLogout={handleLogout} />
         </Toolbar>
