@@ -4,6 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TextClassification from "./TextClassification";
 import Sidebar from "./Sidebar";
+import DashboardSection from "../OutputBoardSection";
 
 const DataVisualisation = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -44,6 +45,14 @@ const DataVisualisation = () => {
   const handleFiltersComplete = (newFilters) => {
     setFilters(newFilters);
   };
+  const task = {
+    0: "Classification",
+    1: "Translation",
+    2: "Summarization",
+    3: "Generation",
+    4: "Comprehension",
+    5: "Evaluation",
+  };
 
   return (
     <Box sx={{ p: 2 }}>
@@ -63,8 +72,8 @@ const DataVisualisation = () => {
       <Box sx={{ display: "flex" }}>
         {/* Sidebar */}
         <Box sx={{ width: 300, mr: 2 }}>
-          <Sidebar 
-            onComplete={handleFiltersComplete} 
+          <Sidebar
+            onComplete={handleFiltersComplete}
             selectedTab={selectedTab}
             taskOptions={taskOptions}
           />
@@ -72,7 +81,21 @@ const DataVisualisation = () => {
 
         {/* Main content */}
         <Box sx={{ flex: 1 }}>
-          {filters && <TextClassification externalTabValue={selectedTab} filters={filters} />}
+          {filters && (
+            <TextClassification
+              externalTabValue={selectedTab}
+              filters={filters}
+            />
+          )}
+
+          {/* Error analysis section (include human evaluation) */}
+          {filters && filters.filterType === "model" && (
+            <DashboardSection
+              task={task[selectedTab]}
+              benchmark={filters.dataset}
+              model={filters.filterValue}
+            />
+          )}
         </Box>
       </Box>
     </Box>
