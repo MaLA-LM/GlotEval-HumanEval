@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import HierarchyCheckboxTree from "./HierarchyCheckboxTree";
-import { getFilename } from './FileName';
+import { getFilename } from "./FileName";
 
 const steps = [
   "Select Benchmark",
@@ -60,7 +60,7 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
   useEffect(() => {
     if (dataset) {
       const filename = getFilename(dataset);
-      fetch(`/metric/${filename}.csv`)
+      fetch(`/metrics/${filename}.csv`)
         .then((response) => response.text())
         .then((text) => {
           const lines = text
@@ -101,7 +101,7 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
     if (wizardComplete && filterType === "model" && dataset && filterValue) {
       setIsCsvLoading(true);
       const filename = getFilename(dataset);
-      fetch(`/metric/${filename}.csv`)
+      fetch(`/metrics/${filename}.csv`)
         .then((response) => response.text())
         .then((text) => {
           const lines = text
@@ -137,11 +137,11 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
   // Log dataset and metric when wizard is completed
   React.useEffect(() => {
     if (wizardComplete) {
-      console.log('Wizard Completed:', {
+      console.log("Wizard Completed:", {
         dataset,
         metric,
         filterType,
-        filterValue
+        filterValue,
       });
     }
   }, [wizardComplete, dataset, metric, filterType, filterValue]);
@@ -163,21 +163,22 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
       dataset,
       metric,
       filterType,
-      filterValue: filterType === 'language' 
-        ? (Array.isArray(filterValue) 
-          ? filterValue 
-          : Object.values(filterValue).flat()) 
-        : filterValue,
-      uploadedModelData: newModelData // Add the uploaded model data to filters
+      filterValue:
+        filterType === "language"
+          ? Array.isArray(filterValue)
+            ? filterValue
+            : Object.values(filterValue).flat()
+          : filterValue,
+      uploadedModelData: newModelData, // Add the uploaded model data to filters
     };
 
     // Ensure dataset and metric are not undefined
     if (!dataset) {
-      console.warn('Dataset is not set');
+      console.warn("Dataset is not set");
       return;
     }
     if (!metric) {
-      console.warn('Metric is not set');
+      console.warn("Metric is not set");
       return;
     }
 
@@ -185,63 +186,66 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
     setWizardComplete(true);
   };
 
-  const handleFileUpload = useCallback((event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  const handleFileUpload = useCallback(
+    (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
 
-    // Reset any previous errors
-    setUploadError(null);
+      // Reset any previous errors
+      setUploadError(null);
 
-    // Check file type
-    if (!file.name.endsWith('.csv')) {
-      setUploadError('Please upload a CSV file');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const text = e.target.result;
-        const lines = text.split('\n');
-        const headers = lines[0].trim().split(',');
-        
-        // Validate headers
-        if (!headers.includes('Model') || !headers.includes('Avg')) {
-          setUploadError('CSV must include Model and Avg columns');
-          return;
-        }
-
-        // Parse the data
-        const modelData = {};
-        const [modelName] = lines[1].trim().split(',');
-        modelData[modelName] = {};
-
-        headers.forEach((header, index) => {
-          if (header !== 'Model') {
-            const value = lines[1].trim().split(',')[index];
-            modelData[modelName][header] = parseFloat(value);
-          }
-        });
-
-        setNewModelData(modelData);
-        setFilterValue(modelName);
-        
-        // Add the new model to the models list if it's not already there
-        if (!models.includes(modelName)) {
-          setModels([...models, modelName]);
-        }
-      } catch (error) {
-        setUploadError('Error parsing CSV file. Please check the format.');
-        console.error('Error parsing CSV:', error);
+      // Check file type
+      if (!file.name.endsWith(".csv")) {
+        setUploadError("Please upload a CSV file");
+        return;
       }
-    };
 
-    reader.onerror = () => {
-      setUploadError('Error reading file');
-    };
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const text = e.target.result;
+          const lines = text.split("\n");
+          const headers = lines[0].trim().split(",");
 
-    reader.readAsText(file);
-  }, [models]);
+          // Validate headers
+          if (!headers.includes("Model") || !headers.includes("Avg")) {
+            setUploadError("CSV must include Model and Avg columns");
+            return;
+          }
+
+          // Parse the data
+          const modelData = {};
+          const [modelName] = lines[1].trim().split(",");
+          modelData[modelName] = {};
+
+          headers.forEach((header, index) => {
+            if (header !== "Model") {
+              const value = lines[1].trim().split(",")[index];
+              modelData[modelName][header] = parseFloat(value);
+            }
+          });
+
+          setNewModelData(modelData);
+          setFilterValue(modelName);
+
+          // Add the new model to the models list if it's not already there
+          if (!models.includes(modelName)) {
+            setModels([...models, modelName]);
+          }
+        } catch (error) {
+          setUploadError("Error parsing CSV file. Please check the format.");
+          console.error("Error parsing CSV:", error);
+        }
+      };
+
+      reader.onerror = () => {
+        setUploadError("Error reading file");
+      };
+
+      reader.readAsText(file);
+    },
+    [models]
+  );
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -291,7 +295,7 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
               variant="outlined"
               color="primary"
               fullWidth
-              onClick={() => navigate('/custom-evaluator')}
+              onClick={() => navigate("/custom-evaluator")}
             >
               Upload Your Own Metric
             </Button>
@@ -339,21 +343,17 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
                   ))}
                 </Select>
               </FormControl>
-              
+
               <Box sx={{ mt: 2 }}>
                 <input
                   type="file"
                   accept=".csv"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   id="csv-upload"
                   onChange={handleFileUpload}
                 />
                 <label htmlFor="csv-upload">
-                  <Button
-                    variant="outlined"
-                    component="span"
-                    fullWidth
-                  >
+                  <Button variant="outlined" component="span" fullWidth>
                     Upload New Model Data (CSV)
                   </Button>
                 </label>
@@ -391,10 +391,10 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
   };
 
   const renderSelectedLanguages = () => {
-    if (filterType !== 'language' || !filterValue) return null;
+    if (filterType !== "language" || !filterValue) return null;
 
     const languages = Array.isArray(filterValue)
-      ? filterValue 
+      ? filterValue
       : Object.values(filterValue).flat();
 
     // If there are too many languages, truncate and show a count
@@ -407,40 +407,40 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
           Selected Languages: {languages.length}
         </Typography>
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            flexWrap: 'wrap', 
-            gap: 1, 
-            maxHeight: '300px', 
-            overflowY: 'auto',
-            alignItems: 'center',
-            border: '1px solid #e0e0e0',
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1,
+            maxHeight: "300px",
+            overflowY: "auto",
+            alignItems: "center",
+            border: "1px solid #e0e0e0",
             borderRadius: 2,
-            p: 1
+            p: 1,
           }}
         >
           {displayLanguages.map((lang) => (
-            <Chip 
-              key={lang} 
-              label={lang} 
-              size="small" 
+            <Chip
+              key={lang}
+              label={lang}
+              size="small"
               variant="outlined"
-              sx={{ 
+              sx={{
                 m: 0.5,
-                maxWidth: '150px',
-                '& .MuiChip-label': {
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis'
-                }
+                maxWidth: "150px",
+                "& .MuiChip-label": {
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                },
               }}
             />
           ))}
           {remainingCount > 0 && (
-            <Chip 
-              label={`+${remainingCount} more`} 
-              size="small" 
-              color="primary" 
+            <Chip
+              label={`+${remainingCount} more`}
+              size="small"
+              color="primary"
               variant="outlined"
             />
           )}
@@ -460,93 +460,102 @@ const Sidebar = ({ onComplete, selectedTab, taskOptions }) => {
       {wizardComplete ? (
         <Box>
           <Typography variant="h6">Filters Applied</Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', minWidth: '80px' }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", minWidth: "80px" }}
+            >
               Dataset:
             </Typography>
-            <Chip 
-              label={dataset || 'No Dataset Selected'} 
-              size="small" 
+            <Chip
+              label={dataset || "No Dataset Selected"}
+              size="small"
               color={dataset ? "primary" : "default"}
-              variant="outlined" 
-              sx={{ 
-                maxWidth: '200px', 
-                '& .MuiChip-label': { 
-                  overflow: 'hidden', 
-                  textOverflow: 'ellipsis' 
-                } 
+              variant="outlined"
+              sx={{
+                maxWidth: "200px",
+                "& .MuiChip-label": {
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                },
               }}
             />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', minWidth: '80px' }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", minWidth: "80px" }}
+            >
               Metric:
             </Typography>
-            <Chip 
-              label={metric || 'No Metric Selected'} 
-              size="small" 
+            <Chip
+              label={metric || "No Metric Selected"}
+              size="small"
               color={metric ? "secondary" : "default"}
-              variant="outlined" 
-              sx={{ 
-                maxWidth: '200px', 
-                '& .MuiChip-label': { 
-                  overflow: 'hidden', 
-                  textOverflow: 'ellipsis' 
-                } 
+              variant="outlined"
+              sx={{
+                maxWidth: "200px",
+                "& .MuiChip-label": {
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                },
               }}
             />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', minWidth: '80px' }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", minWidth: "80px" }}
+            >
               Filter:
             </Typography>
-            <Chip 
-              label={filterType || 'No Filter Selected'} 
-              size="small" 
+            <Chip
+              label={filterType || "No Filter Selected"}
+              size="small"
               color={filterType ? "info" : "default"}
-              variant="outlined" 
+              variant="outlined"
             />
           </Box>
           <Box sx={{ mb: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
               Filter Value:
             </Typography>
             {Array.isArray(filterValue) && filterValue.length > 0 ? (
-              <Box 
-                sx={{ 
-                  display: 'flex', 
-                  flexWrap: 'wrap', 
-                  gap: 1, 
-                  maxHeight: '200px',
-                  overflowY: 'auto',
-                  border: '1px solid #e0e0e0',
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 1,
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  border: "1px solid #e0e0e0",
                   borderRadius: 2,
-                  p: 1
+                  p: 1,
                 }}
               >
                 {filterValue.slice(0, 20).map((value, index) => (
-                  <Chip 
-                    key={index} 
-                    label={value} 
-                    size="small" 
-                    variant="outlined" 
+                  <Chip
+                    key={index}
+                    label={value}
+                    size="small"
+                    variant="outlined"
                   />
                 ))}
                 {filterValue.length > 20 && (
-                  <Chip 
-                    label={`+${filterValue.length - 20} more`} 
-                    size="small" 
-                    color="primary" 
-                    variant="outlined" 
+                  <Chip
+                    label={`+${filterValue.length - 20} more`}
+                    size="small"
+                    color="primary"
+                    variant="outlined"
                   />
                 )}
               </Box>
             ) : (
-              <Chip 
-                label={filterValue || 'No Filter Value Selected'} 
-                size="small" 
+              <Chip
+                label={filterValue || "No Filter Value Selected"}
+                size="small"
                 color={filterValue ? "default" : "default"}
-                variant="outlined" 
+                variant="outlined"
               />
             )}
           </Box>

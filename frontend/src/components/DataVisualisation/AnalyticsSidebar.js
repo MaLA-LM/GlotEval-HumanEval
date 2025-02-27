@@ -16,21 +16,17 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
 } from "@mui/material";
-import { getFilename } from './FileName';
+import { getFilename } from "./FileName";
 
-const steps = [
-  "Select Benchmark",
-  "Select Model",
-  "Select Language",
-];
+const steps = ["Select Benchmark", "Select Model", "Select Language"];
 
-const AnalyticsSidebar = ({ 
-  onComplete, 
-  selectedTab, 
+const AnalyticsSidebar = ({
+  onComplete,
+  selectedTab,
   taskOptions,
-  onMetricsUpdate 
+  onMetricsUpdate,
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [dataset, setDataset] = useState("");
@@ -61,7 +57,7 @@ const AnalyticsSidebar = ({
   useEffect(() => {
     if (dataset) {
       const filename = getFilename(dataset);
-      fetch(`/metric/${filename}.csv`)
+      fetch(`/metrics/${filename}.csv`)
         .then((response) => response.text())
         .then((text) => {
           const lines = text
@@ -69,7 +65,9 @@ const AnalyticsSidebar = ({
             .map((line) => line.trim())
             .filter((line) => line);
           if (lines.length > 1) {
-            const parsedModels = [...new Set(lines.slice(1).map((row) => row.split(",")[0]))];
+            const parsedModels = [
+              ...new Set(lines.slice(1).map((row) => row.split(",")[0])),
+            ];
             setModels(parsedModels);
           } else {
             setModels([]);
@@ -115,8 +113,8 @@ const AnalyticsSidebar = ({
     const normalizeText = (text) => {
       return text
         .toLowerCase()
-        .replace(/[^\w\s]/g, '') // Remove punctuation
-        .replace(/\s+/g, ' ')
+        .replace(/[^\w\s]/g, "") // Remove punctuation
+        .replace(/\s+/g, " ")
         .trim();
     };
 
@@ -129,26 +127,28 @@ const AnalyticsSidebar = ({
 
     // Compute word-level metrics
     const totalWords = new Set([...targetWords, ...outputWords]).size;
-    const commonWords = targetWords.filter(word => outputWords.includes(word));
+    const commonWords = targetWords.filter((word) =>
+      outputWords.includes(word)
+    );
 
     // Semantic similarity scores
     const wordOverlapScore = commonWords.length / totalWords;
-    
+
     // Length similarity
-    const lengthScore = 1 - Math.abs(normTarget.length - normOutput.length) / 
-                        Math.max(normTarget.length, normOutput.length);
+    const lengthScore =
+      1 -
+      Math.abs(normTarget.length - normOutput.length) /
+        Math.max(normTarget.length, normOutput.length);
 
     // Substring matching
-    const substringScore = normTarget.includes(normOutput) || normOutput.includes(normTarget) 
-      ? 0.5 
-      : 0;
+    const substringScore =
+      normTarget.includes(normOutput) || normOutput.includes(normTarget)
+        ? 0.5
+        : 0;
 
     // Combine scores with weighted approach
-    const overallSimilarity = (
-      (wordOverlapScore * 0.4) + 
-      (lengthScore * 0.3) + 
-      (substringScore * 0.3)
-    );
+    const overallSimilarity =
+      wordOverlapScore * 0.4 + lengthScore * 0.3 + substringScore * 0.3;
 
     // Detailed similarity breakdown
     return {
@@ -159,8 +159,8 @@ const AnalyticsSidebar = ({
         lengthScore,
         substringScore,
         commonWordsCount: commonWords.length,
-        totalWordsCount: totalWords
-      }
+        totalWordsCount: totalWords,
+      },
     };
   };
 
@@ -172,7 +172,7 @@ const AnalyticsSidebar = ({
         `Aya/outputs/${selectedModel}/${selectedLanguage}.jsonl`,
         `Aya/outputs/${selectedModel}/${selectedLanguage}`,
         `Aya/outputs/${selectedModel}/${selectedLanguage.toLowerCase()}.jsonl`,
-        `Aya/outputs/${selectedModel}/${selectedLanguage.toUpperCase()}.jsonl`
+        `Aya/outputs/${selectedModel}/${selectedLanguage.toUpperCase()}.jsonl`,
       ];
 
       let response;
@@ -183,7 +183,7 @@ const AnalyticsSidebar = ({
         try {
           console.log(`Attempting to fetch file: ${path}`);
           response = await fetch(path);
-          
+
           if (response.ok) {
             filePath = path;
             break;
@@ -194,12 +194,15 @@ const AnalyticsSidebar = ({
       }
 
       if (!response || !response.ok) {
-        console.error('Failed to fetch file. Attempted paths:', possibleFilePaths);
+        console.error(
+          "Failed to fetch file. Attempted paths:",
+          possibleFilePaths
+        );
         throw new Error(`Could not find JSONL file for ${selectedLanguage}`);
       }
-      
+
       const text = await response.text();
-      const lines = text.split('\n').filter(line => line.trim());
+      const lines = text.split("\n").filter((line) => line.trim());
 
       let similarityResults = [];
       let processedLines = 0;
@@ -207,7 +210,7 @@ const AnalyticsSidebar = ({
       // Process lines with advanced similarity
       lines.forEach((line, index) => {
         try {
-          const cleanLine = line.trim().replace(/^\uFEFF/, '');
+          const cleanLine = line.trim().replace(/^\uFEFF/, "");
           if (!cleanLine) return;
 
           const data = JSON.parse(cleanLine);
@@ -215,12 +218,12 @@ const AnalyticsSidebar = ({
           const output = String(data.output || "").trim();
 
           const similarityResult = calculateTextSimilarity(target, output);
-          
+
           similarityResults.push({
             lineNumber: index + 1,
             target,
             output,
-            ...similarityResult
+            ...similarityResult,
           });
 
           processedLines++;
@@ -230,25 +233,26 @@ const AnalyticsSidebar = ({
       });
 
       // Advanced metric calculation
-      const matchedEntries = similarityResults.filter(entry => entry.isMatch);
-      
+      const matchedEntries = similarityResults.filter((entry) => entry.isMatch);
+
       // Compute metrics with more nuanced approach
-      const precision = matchedEntries.length > 0 
-        ? matchedEntries.reduce((sum, entry) => sum + entry.similarity, 0) / matchedEntries.length
-        : 0;
-      
-      const recall = processedLines > 0
-        ? matchedEntries.length / processedLines
-        : 0;
-      
-      const f1Score = (precision + recall) > 0
-        ? (2 * precision * recall) / (precision + recall)
-        : 0;
+      const precision =
+        matchedEntries.length > 0
+          ? matchedEntries.reduce((sum, entry) => sum + entry.similarity, 0) /
+            matchedEntries.length
+          : 0;
+
+      const recall =
+        processedLines > 0 ? matchedEntries.length / processedLines : 0;
+
+      const f1Score =
+        precision + recall > 0
+          ? (2 * precision * recall) / (precision + recall)
+          : 0;
 
       // Calculate accuracy: proportion of correctly matched entries
-      const accuracy = processedLines > 0
-        ? matchedEntries.length / processedLines
-        : 0;
+      const accuracy =
+        processedLines > 0 ? matchedEntries.length / processedLines : 0;
 
       // Sort and select top entries
       const topSimilarities = similarityResults
@@ -266,30 +270,29 @@ const AnalyticsSidebar = ({
           processedLines,
           matchedLines: matchedEntries.length,
           similarityDetails: similarityResults.slice(0, 20),
-          topSimilarities
-        }
+          topSimilarities,
+        },
       };
 
       setMetrics(calculatedMetrics);
-      
+
       // Call the metrics update callback if provided
       if (onMetricsUpdate) {
         onMetricsUpdate(calculatedMetrics);
       }
-
     } catch (error) {
-      console.error('Comprehensive metrics calculation error:', error);
-      
+      console.error("Comprehensive metrics calculation error:", error);
+
       const errorMetrics = {
-        precision: '0.00',
-        recall: '0.00',
-        f1Score: '0.00',
-        accuracy: '0.00',
-        error: error.message
+        precision: "0.00",
+        recall: "0.00",
+        f1Score: "0.00",
+        accuracy: "0.00",
+        error: error.message,
       };
 
       setMetrics(errorMetrics);
-      
+
       if (onMetricsUpdate) {
         onMetricsUpdate(errorMetrics);
       }
@@ -315,24 +318,24 @@ const AnalyticsSidebar = ({
       dataset,
       model: selectedModel,
       resourceGroup: selectedResourceGroup,
-      language: selectedLanguage
+      language: selectedLanguage,
     };
 
     // Validate inputs
     if (!dataset) {
-      console.warn('Dataset is not set');
+      console.warn("Dataset is not set");
       return;
     }
     if (!selectedModel) {
-      console.warn('Model is not set');
+      console.warn("Model is not set");
       return;
     }
     if (!selectedResourceGroup) {
-      console.warn('Resource Group is not set');
+      console.warn("Resource Group is not set");
       return;
     }
     if (!selectedLanguage) {
-      console.warn('Language is not set');
+      console.warn("Language is not set");
       return;
     }
 
@@ -366,7 +369,7 @@ const AnalyticsSidebar = ({
             </Select>
           </FormControl>
         );
-      
+
       case 1:
         return (
           <FormControl variant="outlined" fullWidth>
@@ -389,10 +392,10 @@ const AnalyticsSidebar = ({
             </Select>
           </FormControl>
         );
-      
+
       case 2:
         return (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {/* Resource Group Selection */}
             <FormControl variant="outlined" fullWidth>
               <InputLabel id="resource-group-label">Resource Group</InputLabel>
@@ -436,14 +439,14 @@ const AnalyticsSidebar = ({
             </FormControl>
           </Box>
         );
-      
+
       default:
         return <Typography>Unknown Step</Typography>;
     }
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       {/* Stepper */}
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
@@ -454,30 +457,28 @@ const AnalyticsSidebar = ({
       </Stepper>
 
       {/* Step Content */}
-      <Box sx={{ mt: 2, mb: 2 }}>
-        {renderStepContent(activeStep)}
-      </Box>
+      <Box sx={{ mt: 2, mb: 2 }}>{renderStepContent(activeStep)}</Box>
 
       {/* Navigation Buttons */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button 
-          color="inherit" 
-          disabled={activeStep === 0} 
+      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+        <Button
+          color="inherit"
+          disabled={activeStep === 0}
           onClick={handleBack}
         >
           Back
         </Button>
-        <Button 
-          variant="contained" 
-          color="primary" 
+        <Button
+          variant="contained"
+          color="primary"
           onClick={handleNext}
           disabled={
-            (activeStep === 0 && !dataset) || 
-            (activeStep === 1 && !selectedModel) || 
+            (activeStep === 0 && !dataset) ||
+            (activeStep === 1 && !selectedModel) ||
             (activeStep === 2 && (!selectedResourceGroup || !selectedLanguage))
           }
         >
-          {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+          {activeStep === steps.length - 1 ? "Finish" : "Next"}
         </Button>
       </Box>
     </Box>
