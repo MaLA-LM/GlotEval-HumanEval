@@ -1,6 +1,28 @@
-# Polyeval
+# PolyEval
 
-# Getting Started
+Large Language Models (LLMs) are widely used, but can generate misleading outputs, posing potential risks. Evaluating LLMs, especially in low-resource languages, remains challenging due to limited benchmarks. PolyEval
+addresses this gap by providing an automatic evaluation toolkit that supports diverse tasks, benchmarks, and metrics. It also integrates human feedback mechanisms, enabling qualitative assessments alongside automated evaluation. By combining both approaches, PolyEval ensures a more comprehensive and reliable assessment of LLM performance across diverse linguistic settings.
+
+## 🌟 Key Features
+
+- **Multi-Task Support**: Evaluate models across text classification, machine translation, summarization, open-ended generation, and machine comprehension
+- **Interactive Visualization**: Compare results across benchmarks and languages with dynamic charts
+- **Human Feedback Collection**: Gather and manage human evaluations with an intuitive interface
+- **Translation Tools**: Built-in translation support for result analysis
+- **Customizable Metrics**: Support for various evaluation metrics and custom evaluation pipelines
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.08 or higher
+- Flask
+- Node.js and npm
+- Git
+
+### Installation
+
+1. Clone the repository:
 
 Open your terminal and then type:\
 `$ git clone {git@github.com:ananda-sreenidhi/polyeval.git}` \
@@ -20,7 +42,7 @@ $ `python app.py`
 This starts the backend\
 
 Then, in another terminal, cd into the frontend folder by typing:\
-$`CD ../frontend`
+$`CD polyeval/frontend`
 
 Then, type:\
 $ `npm install`
@@ -29,38 +51,9 @@ This installs the required dependencies.\
 To run the React project:\
 $ `npm start`
 
+
 # 📖Documentation
-
-## To see the doc:
-
-Open the docs folder\
-`$ cd docs`\
-Then\
-`$ make html`\
-Then\
-`$ ./_build/html/index.html`
-
-## Alternative way to see the doc:
 
 You can view the full documentation here:  
 👉 [Read the Docs](https://polyeval.readthedocs.io/en/latest/)
 
-## To edit the doc:
-
-Documentation files are written in reStructuredText (.rst).
-Open and edit these files with your text editor.\
-The main page entry is located in the `index.rst` file within the docs folder.
-
-Common reStructuredText directives include:
-
-`.. image:: path/image.png` to add images\
-`.. code-block::` to include code snippets\
-`.. note::` to add notes or warnings
-
-After making edits, simply run `make html` again to update the documentation with your changes.
-
-More details to see: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
-
-## 4.1
-
-## 4.2 Human Feedback
