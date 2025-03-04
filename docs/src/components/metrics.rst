@@ -43,12 +43,9 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
    - ``handleCategoryChange(category)``: Function for selecting and deselecting Categories.
    - ``handleValueChange(value)``: Function for selecting and deselecting Values.
    - ``handleLanguageChange(language)``: Function for selecting and deselecting Languages.
-   - ``handleSelectAllResourcesMALA(benchmark, value)``: Function for selecting all Languages 
-       associated with Resources (MALA).
-   - ``handleSelectAllWritingSystems(benchmark, value)``: Function for selecting all Languages 
-       associated with Writing Systems.
-   - ``handleSelectAllResourcesJoshi(benchmark, value)``: Function for selecting all Languages 
-       associated with Resources (Joshi)
+   - ``handleSelectAllResourcesMALA(benchmark, value)``: Function for selecting all Languages associated with Resources (MALA).
+   - ``handleSelectAllWritingSystems(benchmark, value)``: Function for selecting all Languages associated with Writing Systems.
+   - ``handleSelectAllResourcesJoshi(benchmark, value)``: Function for selecting all Languages associated with Resources (Joshi).
    - ``handleSubmit()``: Function for handling Submit button.
 
    **Dependencies:**
