@@ -19,7 +19,7 @@ Supported tasks and benchmarks
 * Machine Comprehension: BELEBELE, arc_multilingual
 * Intrinsic Evaluation: glot500, pbc
 
-Key Featuress
+🌟Key Features
 -----------------
 .. container:: admonition-container
 
