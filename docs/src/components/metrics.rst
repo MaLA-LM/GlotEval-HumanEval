@@ -49,3 +49,7 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
    
    - ``react`` (Component state management)
    - ``@mui/material`` (AppBar, Typography, Box, FormControlLabel, Checkbox, Button UI Components)
+   - ``papaparse`` (CSV parser)
+   - ``react-chartjs-2`` (Bar graph library)
+   - ``chart.js`` (Chart library)
+   - ``chartjs-plugin-datalabels`` - (Labels display library)
