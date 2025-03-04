@@ -5,8 +5,29 @@ Data Visualization
 Data charts
 ~~~~~~~~~~~~~~~
 
-Comparative metrics
+Comparative Metrics View
 ~~~~~~~~~~~~~~~~~~~~~~
+Under Comparative metrics view, users can able to select a Task, Benchmark, Models, Catrgory, Value and Languages. According to the selection made by the users, evaluation scores for different languages are displayed.
+
+Resources (MALA):
+According to MALA classification, languages are divided into High, Medium-High, Medium, Medium-Low, Low, Unseen, etc. according to their resources.
+
+.. image:: ../_static/ResourcesMALA.png
+
+Writing Systems:
+Languages are arranged according to their Writing Systems. For example, English, French and German are placed under Latin.
+
+.. image:: ../_static/WritingSystems.png
+
+Performance:
+Users can able to view results in the form of Bar graphs for Total number of languages that fall under each performance bin of different models according to their evaluation scores.
+
+.. image:: ../_static/Performance.png
+
+ResourcesJoshi:
+According to Joshi classification, languages are divided into Categories such as Catgory 0, Category 1, Category 2, Category 3, Category 4 and Category 5.
+
+.. image:: ../_static/ResourcesJoshi.png
 
 Output Section
 ~~~~~~~~~~~~~~
