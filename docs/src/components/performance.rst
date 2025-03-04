@@ -1,5 +1,4 @@
-
-Benchmark Languages
+Performance
 ================
 
 ``performance`` component contains data of Performance.
