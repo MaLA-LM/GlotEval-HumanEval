@@ -30,8 +30,7 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
    - ``selectedCategories``: Stores selected Categories.
    - ``selectedValues``: Stores selected Values.
    - ``data``: Stores evalaution scores.
-   - ``showTable``: If showTable is true, data from Resources (MALA), Writing Systems and 
-       Resources (Joshi) are displayed.
+   - ``showTable``: If showTable is true, data from Resources (MALA), Writing Systems and Resources (Joshi) are displayed.
 
    **User Actions:**
 
