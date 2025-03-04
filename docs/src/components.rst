@@ -7,11 +7,11 @@ Components
 .. toctree::
    :maxdepth: 2
    :caption: Comparative Metrics View
-
-components/metrics
-components/benchmarklanguages
-components/table
-components/performance
+   
+   components/metrics
+   components/benchmarklanguages
+   components/table
+   components/performance
 
 .. toctree::
    :maxdepth: 2
