@@ -1,10 +1,10 @@
-Table
+TableData
 ================
 
-The ``Table`` component displays structured data in a table format, 
+The ``TableData`` component displays structured data in a table format, 
 supports pagination.
 
-.. function:: Table({ results, selectedModels, selectedLanguages })
+.. function:: TableData({ results, selectedModels, selectedLanguages })
 
    :param results: Evaluation scores will be displayed.
    :type results: array of objects
