@@ -54,4 +54,4 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
    **Dependencies:**
    
    - ``react`` (Component state management)
-   - ``@mui/material`` (AppBar, Typography, Box, FormControlLabel, Checkbox, Button)
+   - ``@mui/material`` (AppBar, Typography, Box, FormControlLabel, Checkbox, Button UI Components)
