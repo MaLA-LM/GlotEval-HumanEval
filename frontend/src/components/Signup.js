@@ -16,7 +16,13 @@ function Signup({ setUser }) {
       localStorage.setItem("username", res.data.username);
       navigate("/");
     } catch (err) {
-      setError(err.response.data.error);
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else if (err.message === "Network Error") {
+        setError("Unable to connect to server. Please check your internet connection.");
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
