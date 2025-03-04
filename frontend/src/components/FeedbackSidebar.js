@@ -14,7 +14,12 @@ import {
   FormControlLabel,
   TextField,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import TextHighlighter from "./TextHighlighter";
 import { FeedbackModal } from "./model";
@@ -37,8 +42,11 @@ function FeedbackSidebar({
   onClose, 
   onCommentSubmit, 
   isDialog, 
-  userFeedback 
+  userFeedback,
+  user 
 }) {
+  const navigate = useNavigate();
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
   // Determine inline field based on task type.
   let inlineField = "";
   const taskKey = taskType.toLowerCase();
@@ -204,6 +212,11 @@ function FeedbackSidebar({
 
   // Submit annotations to backend (each annotation becomes a row).
   const handleAnnotationsSubmit = async () => {
+    if (!user) {
+      setLoginPromptOpen(true);
+      return;
+    }
+
     if (annotations.length === 0) {
       setAnnMsg("No annotations to submit.");
       return;
@@ -226,6 +239,11 @@ function FeedbackSidebar({
 
   // Submit comment.
   const handleCommentSubmit = async () => {
+    if (!user) {
+      setLoginPromptOpen(true);
+      return;
+    }
+
     if (!ratingAvg || !question || comment.trim() === "") {
       setCommErrorMsg(
         "Please provide a rating, select a question, and enter a comment."
@@ -238,7 +256,7 @@ function FeedbackSidebar({
       row_data: row,
       question,
       feedback: comment,
-      rating:ratingAvg,
+      rating: ratingAvg,
     };
     try {
       await api.post("/api/comments", commentPayload);
@@ -248,6 +266,16 @@ function FeedbackSidebar({
         "Error submitting comment: " +
           (error.response?.data?.error || error.message)
       );
+    }
+  };
+
+  const handleLoginPromptResponse = (shouldLogin) => {
+    setLoginPromptOpen(false);
+    if (shouldLogin) {
+      // Navigate to login page with return path
+      navigate("/login", {
+        state: { from: window.location.pathname + window.location.search }
+      });
     }
   };
 
@@ -392,6 +420,27 @@ function FeedbackSidebar({
           </Button>
         </Box>
       </Box>
+
+      {/* Login Prompt Dialog */}
+      <Dialog
+        open={loginPromptOpen}
+        onClose={() => setLoginPromptOpen(false)}
+      >
+        <DialogTitle>Login Required</DialogTitle>
+        <DialogContent>
+          <Typography>
+            You need to be logged in to submit feedback. Would you like to log in now?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleLoginPromptResponse(false)} color="primary">
+            No
+          </Button>
+          <Button onClick={() => handleLoginPromptResponse(true)} color="primary" variant="contained">
+            Yes, Log in
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

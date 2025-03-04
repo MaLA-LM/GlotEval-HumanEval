@@ -9,6 +9,7 @@ import {
   DialogTitle,
   IconButton,
   Drawer,
+  Alert,
 } from "@mui/material";
 import api from "../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -42,6 +43,8 @@ function Dashboard({ user }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userFeedback, setUserFeedback] = useState(null);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("info");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -228,6 +231,25 @@ function Dashboard({ user }) {
     }
   };
 
+  const handleEvaluateClick = () => {
+    if (!tableData || tableData.length === 0) {
+      setSnackbarMessage("Please load table data first by selecting task, benchmark, model, and language.");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
+      return;
+    }
+
+    // Start evaluation from the beginning
+    setCurrentIndex(0);
+    // Only check for existing feedback if user is logged in
+    if (user) {
+      checkExistingFeedback(tableData[0]);
+    } else {
+      setUserFeedback(null);
+    }
+    setDialogOpen(true);
+  };
+
   return (
     <Box sx={{ position: "relative" }}>
       <Typography variant="h4" sx={{ my: 2 }}>
@@ -245,19 +267,22 @@ function Dashboard({ user }) {
         setSelectedLanguage={setSelectedLanguage}
       />
       <Box sx={{ display: "flex", gap: 2, my: 2 }}>
-        {/* <Button variant="contained" onClick={handleLoadData}>
-          Load Data
-        </Button> */}
-        <Button variant="contained" onClick={handleEvaluateOneByOne}>
+        <Button 
+          variant="contained" 
+          onClick={handleEvaluateClick}
+          disabled={!tableData || tableData.length === 0}
+        >
           Evaluate 1-by-1
         </Button>
       </Box>
-      <DataTable
-        data={tableData}
-        onRowSelect={handleRowSelect}
-        taskType={taskKey}
-        columnOrder={columnOrder}
-      />
+      {tableData.length > 0 && (
+        <DataTable
+          data={tableData}
+          onRowSelect={handleRowSelect}
+          taskType={taskKey}
+          columnOrder={columnOrder}
+        />
+      )}
 
       {/* Add the evaluation dialog */}
       <Dialog
@@ -311,6 +336,7 @@ function Dashboard({ user }) {
               isDialog={true}
               key={currentIndex}
               userFeedback={userFeedback}
+              user={user}
             />
           )}
         </DialogContent>
@@ -338,6 +364,7 @@ function Dashboard({ user }) {
             onClose={() => setSelectedRow(null)}
             onCommentSubmit={handleCommentSubmit}
             isDialog={false}
+            user={user}
           />
         </Drawer>
       )}
@@ -347,8 +374,15 @@ function Dashboard({ user }) {
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
-        message="Please login before providing feedback."
-      />
+      >
+        <Alert 
+          onClose={() => setSnackbarOpen(false)} 
+          severity={snackbarSeverity}
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -5,11 +5,26 @@ from config import Config
 from db import db
 from models import User, Annotation, Comment
 from sqlalchemy.exc import IntegrityError
-from datetime import datetime
+from datetime import datetime, timedelta
 from deep_translator import GoogleTranslator
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.config['SESSION_COOKIE_SECURE'] = True  # Only send cookies over HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
+app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'  # CSRF protection
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # Session expires in 1 hour
+
+# Server start timestamp to invalidate old sessions
+SERVER_START_TIME = datetime.utcnow()
+
+# Clear all sessions at server start
+with app.app_context():
+    try:
+        session.clear()
+    except:
+        pass  # Ignore any session errors during startup
+
 CORS(app, supports_credentials=True)
 db.init_app(app)
 
@@ -32,39 +47,112 @@ with app.app_context():
 ### Authentication endpoints ###
 @app.route("/api/signup", methods=["POST"])
 def signup():
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-    if not username or not password:
-        return jsonify({"error": "Missing credentials"}), 400
-    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    new_user = User(username=username, password=hashed.decode("utf-8"))
     try:
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+            
+        username = data.get("username")
+        password = data.get("password")
+        
+        if not username or not password:
+            return jsonify({"error": "Missing credentials"}), 400
+            
+        if len(password) < 6:
+            return jsonify({"error": "Password must be at least 6 characters long"}), 400
+            
+        # Check if username already exists
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return jsonify({"error": "Username already exists"}), 400
+            
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        new_user = User(username=username, password=hashed.decode("utf-8"))
+        
         db.session.add(new_user)
         db.session.commit()
+        
+        # Set new session
+        session.clear()
         session["username"] = username
+        session["login_time"] = datetime.utcnow()
+        session.permanent = True
         return jsonify({"message": "User created", "username": username}), 201
-    except IntegrityError:
+        
+    except Exception as e:
         db.session.rollback()
-        return jsonify({"error": "Username already exists"}), 400
+        app.logger.error(f"Error in signup: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 @app.route("/api/login", methods=["POST"])
 def login():
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-    if not username or not password:
-        return jsonify({"error": "Missing credentials"}), 400
-    user = User.query.filter_by(username=username).first()
-    if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+            
+        username = data.get("username")
+        password = data.get("password")
+        
+        if not username or not password:
+            return jsonify({"error": "Missing credentials"}), 400
+            
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({"error": "Invalid credentials"}), 401
+            
+        if not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+            return jsonify({"error": "Invalid credentials"}), 401
+            
+        # Set new session
+        session.clear()
         session["username"] = username
+        session["login_time"] = datetime.utcnow()
+        session.permanent = True
         return jsonify({"message": "Logged in", "username": username}), 200
-    return jsonify({"error": "Invalid credentials"}), 401
+        
+    except Exception as e:
+        app.logger.error(f"Error in login: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 @app.route("/api/logout", methods=["POST"])
 def logout():
-    session.pop("username", None)
-    return jsonify({"message": "Logged out"}), 200
+    try:
+        session.clear()  # Clear the entire session instead of just removing username
+        return jsonify({"message": "Logged out"}), 200
+    except Exception as e:
+        app.logger.error(f"Error in logout: {str(e)}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+@app.route("/api/verify-session", methods=["GET"])
+def verify_session():
+    try:
+        if "username" not in session or "login_time" not in session:
+            return jsonify({"error": "Not authenticated"}), 401
+            
+        # Check if session was created before server start
+        login_time = session.get("login_time")
+        if isinstance(login_time, str):
+            login_time = datetime.fromisoformat(login_time)
+        if login_time < SERVER_START_TIME:
+            session.clear()
+            return jsonify({"error": "Session expired"}), 401
+            
+        # Verify the user still exists in the database
+        user = User.query.filter_by(username=session["username"]).first()
+        if not user:
+            session.clear()
+            return jsonify({"error": "User not found"}), 401
+            
+        return jsonify({"message": "Session valid", "username": session["username"]}), 200
+        
+    except Exception as e:
+        app.logger.error(f"Error in verify_session: {str(e)}")
+        session.clear()
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
+# Configure session to last for 24 hours
+app.permanent_session_lifetime = timedelta(days=1)
 
 ### Task configuration endpoint ###
 @app.route("/api/tasks", methods=["GET"])

@@ -5,21 +5,43 @@ import {
   Box,
   Typography,
   Link as MuiLink,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import api from "../services/api";
-import { useLocation } from "react-router-dom";
+
 function Login({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || "/"; // pass the previous location to redirect to after login
-  const outputBoardParams = location.state?.outputBoardParams || {}; //store the Params from outputBoard
+  const from = location.state?.from || "/";
+  const outputBoardParams = location.state?.outputBoardParams || {};
 
-  console.log("Received outputBoardParams:", outputBoardParams);
-  const handleSubmit = async () => {
+  const validateForm = () => {
+    if (!username.trim()) {
+      setError("Username is required");
+      return false;
+    }
+    if (!password.trim()) {
+      setError("Password is required");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault(); // Handle both button click and form submit
+    setError("");
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
     try {
       const res = await api.post("/api/login", { username, password });
       setUser(res.data.username);
@@ -28,12 +50,22 @@ function Login({ setUser }) {
       const searchParams = new URLSearchParams(outputBoardParams).toString();
       navigate(from + (searchParams ? `?${searchParams}` : ""));
     } catch (err) {
-      setError(err.response.data.error);
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else if (err.message === "Network Error") {
+        setError("Unable to connect to server. Please check your internet connection.");
+      } else {
+        setError("An unexpected error occurred. Please try again later.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
         minHeight: '100vh',
         display: 'flex',
@@ -62,12 +94,24 @@ function Login({ setUser }) {
         >
           Welcome Back
         </Typography>
+        
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
         <TextField
           label="Username"
           fullWidth
           margin="normal"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            setUsername(e.target.value);
+            setError("");
+          }}
+          disabled={isLoading}
+          error={error === "Username is required"}
           sx={{ 
             '& .MuiOutlinedInput-root': {
               borderRadius: 2,
@@ -80,21 +124,23 @@ function Login({ setUser }) {
           fullWidth
           margin="normal"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError("");
+          }}
+          disabled={isLoading}
+          error={error === "Password is required"}
           sx={{ 
             '& .MuiOutlinedInput-root': {
               borderRadius: 2,
             }
           }}
         />
-        {error && (
-          <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
-            {error}
-          </Typography>
-        )}
+        
         <Button
+          type="submit"
           variant="contained"
-          onClick={handleSubmit}
+          disabled={isLoading}
           sx={{
             mt: 3,
             mb: 2,
@@ -113,8 +159,9 @@ function Login({ setUser }) {
           }}
           fullWidth
         >
-          Login
+          {isLoading ? <CircularProgress size={24} color="inherit" /> : "Login"}
         </Button>
+
         <Typography variant="body1" sx={{ mt: 3, textAlign: "center" }}>
           No account?{" "}
           <MuiLink 

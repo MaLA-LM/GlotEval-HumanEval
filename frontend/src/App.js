@@ -8,6 +8,8 @@ import {
   Box,
   Menu,
   MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   BrowserRouter as Router,
@@ -16,6 +18,7 @@ import {
   Link,
   useLocation,
   useNavigate,
+  Navigate,
 } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -28,19 +31,51 @@ import Analytics from "./components/DataVisualisation/Analytics";
 import CustomEvaluator from "./components/DataVisualisation/CustomEvaluator";
 import Home from "./components/Home";
 
+// Protected Route component
+const ProtectedRoute = ({ children, user }) => {
+  const location = useLocation();
+  
+  if (!user) {
+    // Redirect to login but save the attempted location
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
+  
+  return children;
+};
+
 function App() {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Check for a logged-in user stored in localStorage.
+    // Check for a logged-in user stored in localStorage
     const username = localStorage.getItem("username");
-    if (username) setUser(username);
+    if (username) {
+      // Verify the session is still valid with the backend
+      api.get("/api/verify-session")
+        .then(() => {
+          setUser(username);
+        })
+        .catch((err) => {
+          if (err.response?.status === 401) {
+            // Session expired or invalid
+            localStorage.removeItem("username");
+            setUser(null);
+          }
+        });
+    }
   }, []);
 
   const handleLogout = async () => {
-    await api.post("/api/logout");
-    localStorage.removeItem("username");
-    setUser(null);
+    try {
+      await api.post("/api/logout");
+      localStorage.removeItem("username");
+      setUser(null);
+    } catch (err) {
+      setError("Failed to logout. Please try again.");
+      // Clear error after 3 seconds
+      setTimeout(() => setError(null), 3000);
+    }
   };
 
   return (
@@ -66,11 +101,31 @@ function App() {
           <NavigationButtons user={user} handleLogout={handleLogout} />
         </Toolbar>
       </AppBar>
+
+      {error && (
+        <Snackbar 
+          open={Boolean(error)} 
+          autoHideDuration={3000} 
+          onClose={() => setError(null)}
+        >
+          <Alert severity="error" onClose={() => setError(null)}>
+            {error}
+          </Alert>
+        </Snackbar>
+      )}
+
       <Box>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/data-visualisation" element={<DataVisualisation />} />
-          <Route path="/metrics" element={<Metrics user={user} />} />
+          <Route 
+            path="/metrics" 
+            element={
+              <ProtectedRoute user={user}>
+                <Metrics user={user} />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
@@ -97,11 +152,9 @@ function NavigationButtons({ user, handleLogout }) {
   };
 
   const handleLoginRedirect = () => {
-    const searchParams = new URLSearchParams(location.search);
     navigate("/login", {
       state: {
         from: location.pathname,
-        outputBoardParams: Object.fromEntries(searchParams),
       },
     });
   };
@@ -125,7 +178,7 @@ function NavigationButtons({ user, handleLogout }) {
         >
           <MenuItem
             component={Link}
-            to="/Analytics"
+            to="/analytics"
             onClick={handleMenuClose}
           >
             Graphs
@@ -153,22 +206,18 @@ function NavigationButtons({ user, handleLogout }) {
         </Button>
       </Box>
 
-      <Box>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         {user ? (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <>
             <Typography variant="body1" sx={{ textAlign: "right" }}>
               Welcome, {user}
             </Typography>
-
             <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>
-          </Box>
+          </>
         ) : (
-          <Button
-            color="inherit"
-            onClick={handleLoginRedirect}
-          >
+          <Button color="inherit" onClick={handleLoginRedirect}>
             Login
           </Button>
         )}
