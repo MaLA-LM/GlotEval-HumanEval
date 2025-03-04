@@ -13,7 +13,7 @@ app.config.from_object(Config)
 app.config['SESSION_COOKIE_SECURE'] = True  # Only send cookies over HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
 app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'  # CSRF protection
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)  # Session expires in 1 hour
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=8)  # Session expires in 1 hour
 
 # Server start timestamp to invalidate old sessions
 SERVER_START_TIME = datetime.utcnow()
