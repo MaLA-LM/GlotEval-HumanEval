@@ -26,6 +26,7 @@ import AnnotationGuidelines from "./components/AnnotationGuideline";
 import Metrics from "./components/Metrics/Metrics";
 import Analytics from "./components/DataVisualisation/Analytics";
 import CustomEvaluator from "./components/DataVisualisation/CustomEvaluator";
+import Home from "./components/Home";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -65,8 +66,9 @@ function App() {
           <NavigationButtons user={user} handleLogout={handleLogout} />
         </Toolbar>
       </AppBar>
-      <Box sx={{ p: 2 }}>
+      <Box>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/data-visualisation" element={<DataVisualisation />} />
           <Route path="/metrics" element={<Metrics user={user} />} />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
@@ -106,7 +108,7 @@ function NavigationButtons({ user, handleLogout }) {
 
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexGrow: 1 }}>
         <Button
           color="inherit"
           onClick={handleMenuOpen}
@@ -151,7 +153,7 @@ function NavigationButtons({ user, handleLogout }) {
         </Button>
       </Box>
 
-      <Box sx={{ marginLeft: "auto" }}>
+      <Box>
         {user ? (
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <Typography variant="body1" sx={{ textAlign: "right" }}>
@@ -165,9 +167,7 @@ function NavigationButtons({ user, handleLogout }) {
         ) : (
           <Button
             color="inherit"
-            // component={Link}
-            // to="/login"
-            onClick={handleLoginRedirect} // Pass the current path as state, so we can redirect back to it after login
+            onClick={handleLoginRedirect}
           >
             Login
           </Button>
