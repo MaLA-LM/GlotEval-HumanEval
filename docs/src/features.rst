@@ -9,7 +9,7 @@ Comparative Metrics View
 ~~~~~~~~~~~~~~~~~~~~~~
 Under Comparative metrics view, users can able to select a Task, Benchmark, Models, Catrgory, Value and Languages. According to the selection made by the users, evaluation scores for different languages are displayed.
 
-Resources MALA (MALA):
+Resources (MALA):
 According to MALA classification, languages are divided into High, Medium-High, Medium, Medium-Low, Low, Unseen, etc. according to their resources.
 
 .. image:: ../_static/ResourcesMALA.png
