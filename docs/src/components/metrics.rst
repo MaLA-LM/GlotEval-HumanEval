@@ -9,8 +9,7 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
       - Users can able to select Task, Benchmark, Models, Category, Value, Languages.
 
    2. **Bar Graph**
-      - After Selecting performance in categories and submit, a Bar Graph wil be displayed 
-        with performance bins.
+      - After Selecting performance in categories and submit, a Bar Graph will be displayed with performance bins.
 
   
    **Component Structure:**
