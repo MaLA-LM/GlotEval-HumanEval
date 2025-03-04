@@ -15,7 +15,6 @@ The ``Matrics`` component allows users to select Task, Benchmark, Models, Catego
    **Component Structure:**
 
    .. code-block:: text
-
       Metrics.jsx
       ├── Table.jsx (Handles displaying data in Tabular format)
       ├── benchmarkLanguages.js (Languages of Resources (MALA), Writing Systems, Resources 
