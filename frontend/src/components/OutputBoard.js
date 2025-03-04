@@ -128,10 +128,6 @@ function Dashboard({ user }) {
   };
 
   const handleRowSelect = (row) => {
-    if (!user) {
-      setSnackbarOpen(true);
-      return;
-    }
     setSelectedRow(row);
     setSidebarOpen(true);
   };
@@ -194,13 +190,13 @@ function Dashboard({ user }) {
 
   // Update handleEvaluateOneByOne
   const handleEvaluateOneByOne = () => {
-    if (!user) {
-      setSnackbarOpen(true);
-      return;
-    }
     if (tableData.length > 0) {
       setCurrentIndex(0);
-      checkExistingFeedback(tableData[0]);
+      if (user) {
+        checkExistingFeedback(tableData[0]);
+      } else {
+        setUserFeedback(null);
+      }
       setDialogOpen(true);
     }
   };

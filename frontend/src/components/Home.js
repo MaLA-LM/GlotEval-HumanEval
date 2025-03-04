@@ -141,9 +141,9 @@ const Home = () => {
           </Typography>
           <Grid container spacing={3} justifyContent="center">
             {[
-              { label: 'Supported Languages', value: '200+' },
-              { label: 'Evaluation Tasks', value: '6' },
-              { label: 'Evaluation Metrics', value: '10+' },
+              { label: 'Supported Languages', value: 'x+' },
+              { label: 'Evaluation Tasks', value: 'y' },
+              { label: 'Evaluation Metrics', value: 'z+' },
               { label: 'Model Evaluations', value: '1M+' }
             ].map((stat) => (
               <Grid item xs={6} md={3} key={stat.label}>
