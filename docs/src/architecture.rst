@@ -61,9 +61,13 @@ The function ``generate_index_json(root_dir)`` in ``app.py`` scans a specified r
 
 **Example Usage:**
 
+
 .. code-block:: python
 
   generate_index_json("/path/to/root_directory")
+
+.. note:: When used locally, you can either 1. change the folder path being viewed by  adjusting the ``DATA_DIR`` path in ``config.py`` on backend or 2. place the local folder(name should be "outputs") containing all results into the project folder at ``backend/static/data``.
+
 
 **JSON Output Structure Example:**
 
