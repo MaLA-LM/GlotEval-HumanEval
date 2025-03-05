@@ -34,12 +34,12 @@ import Home from "./components/Home";
 // Protected Route component
 const ProtectedRoute = ({ children, user }) => {
   const location = useLocation();
-  
+
   if (!user) {
     // Redirect to login but save the attempted location
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
-  
+
   return children;
 };
 
@@ -52,7 +52,8 @@ function App() {
     const username = localStorage.getItem("username");
     if (username) {
       // Verify the session is still valid with the backend
-      api.get("/api/verify-session")
+      api
+        .get("/api/verify-session")
         .then(() => {
           setUser(username);
         })
@@ -84,28 +85,28 @@ function App() {
 
       <AppBar position="static">
         <Toolbar sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Typography 
-            variant="h4" 
-            component={Link} 
+          <Typography
+            variant="h4"
+            component={Link}
             to="/"
-            sx={{ 
-              textDecoration: 'none', 
-              color: 'inherit',
-              '&:hover': {
-                cursor: 'pointer'
-              }
+            sx={{
+              textDecoration: "none",
+              color: "inherit",
+              "&:hover": {
+                cursor: "pointer",
+              },
             }}
           >
-            PolyEval
+            GlotEval-HumanEval
           </Typography>
           <NavigationButtons user={user} handleLogout={handleLogout} />
         </Toolbar>
       </AppBar>
 
       {error && (
-        <Snackbar 
-          open={Boolean(error)} 
-          autoHideDuration={3000} 
+        <Snackbar
+          open={Boolean(error)}
+          autoHideDuration={3000}
           onClose={() => setError(null)}
         >
           <Alert severity="error" onClose={() => setError(null)}>
@@ -118,13 +119,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/data-visualisation" element={<DataVisualisation />} />
-          <Route 
-            path="/metrics" 
+          <Route
+            path="/metrics"
             element={
               <ProtectedRoute user={user}>
                 <Metrics user={user} />
               </ProtectedRoute>
-            } 
+            }
           />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
@@ -142,7 +143,7 @@ function NavigationButtons({ user, handleLogout }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  
+
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -176,11 +177,7 @@ function NavigationButtons({ user, handleLogout }) {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem
-            component={Link}
-            to="/analytics"
-            onClick={handleMenuClose}
-          >
+          <MenuItem component={Link} to="/analytics" onClick={handleMenuClose}>
             Graphs
           </MenuItem>
           <MenuItem
@@ -190,11 +187,7 @@ function NavigationButtons({ user, handleLogout }) {
           >
             Data Analytics
           </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/metrics"
-            onClick={handleMenuClose}
-          >
+          <MenuItem component={Link} to="/metrics" onClick={handleMenuClose}>
             Comparative Metrics View
           </MenuItem>
         </Menu>

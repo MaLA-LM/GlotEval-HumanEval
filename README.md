@@ -27,7 +27,7 @@ GlotEval-HumanEval is a part of the GlotEval. In this part, the results, product
 1. Clone the repository:
 
 Open your terminal and then type:\
-`git clone https://github.com/DASP-Polyeval/polyeval.git` \
+`git clone https://github.com/DASP-Polyeval/GlotEval-HumanEval.git` \
 That clones the repo.
 
 Then, cd into the new folder by typing:\
