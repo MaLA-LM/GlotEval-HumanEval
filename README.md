@@ -1,7 +1,9 @@
-# GlotEval
+# GlotEval-HumanEval
 
 Large Language Models (LLMs) are widely used, but can generate misleading outputs, posing potential risks. Evaluating LLMs, especially in low-resource languages, remains challenging due to limited benchmarks. GlotEval
 addresses this gap by providing an automatic evaluation toolkit that supports diverse tasks, benchmarks, and metrics. It also integrates human feedback mechanisms, enabling qualitative assessments alongside automated evaluation. By combining both approaches, GlotEval ensures a more comprehensive and reliable assessment of LLM performance across diverse linguistic settings.
+
+GlotEval-HumanEval is a part of the GlotEval. In this part, the results, products of this toolkit, will be displayed through a user-friendly interface, allowing for horizontal comparisons in charts and providing human evaluations.
 
 ## 🌟 Key Features
 
