@@ -1,7 +1,7 @@
-# PolyEval
+# GlotEval
 
-Large Language Models (LLMs) are widely used, but can generate misleading outputs, posing potential risks. Evaluating LLMs, especially in low-resource languages, remains challenging due to limited benchmarks. PolyEval
-addresses this gap by providing an automatic evaluation toolkit that supports diverse tasks, benchmarks, and metrics. It also integrates human feedback mechanisms, enabling qualitative assessments alongside automated evaluation. By combining both approaches, PolyEval ensures a more comprehensive and reliable assessment of LLM performance across diverse linguistic settings.
+Large Language Models (LLMs) are widely used, but can generate misleading outputs, posing potential risks. Evaluating LLMs, especially in low-resource languages, remains challenging due to limited benchmarks. GlotEval
+addresses this gap by providing an automatic evaluation toolkit that supports diverse tasks, benchmarks, and metrics. It also integrates human feedback mechanisms, enabling qualitative assessments alongside automated evaluation. By combining both approaches, GlotEval ensures a more comprehensive and reliable assessment of LLM performance across diverse linguistic settings.
 
 ## 🌟 Key Features
 
@@ -51,9 +51,7 @@ This installs the required dependencies.\
 To run the React project:\
 $ `npm start`
 
-
 # 📖Documentation
 
 You can view the full documentation here:  
 👉 [Read the Docs](https://polyeval.readthedocs.io/en/latest/)
-
