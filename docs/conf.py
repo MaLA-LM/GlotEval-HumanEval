@@ -8,7 +8,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-project = 'PolyEval'
+project = 'GlotEval-HumanEval'
 copyright = '2025, Ananda Sreenidhi, Praneeth Mantina, Sawal Devkota, Samea Yusofi, Mengjie Wang'
 author = 'Ananda Sreenidhi, Praneeth Mantina, Sawal Devkota, Samea Yusofi, Mengjie Wang'
 

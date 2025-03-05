@@ -56,4 +56,4 @@ $ `npm start`
 # 📖Documentation
 
 You can view the full documentation here:  
-👉 [Read the Docs](https://polyeval.readthedocs.io/en/latest/)
+👉 [Read the Docs](https://gloteval-humaneval.readthedocs.io/en/latest/)
