@@ -8,7 +8,8 @@ GlotEval-HumanEval documentation
 Introduction
 ----------------
 Evaluating large language models, especially for low-resource languages, remains challenging due to fragmented benchmarks focused on high-resource languages. GlotEval addresses this by offering an Automatic Evaluation Toolkit, a suite of tools for standardized LLM performance assessment that supports custom evaluation pipelines across multiple tasks, benchmarks, and metrics.
-GlotEval-HumanEval is a part of the GlotEval. In this part, the results, products of this toolkit, will be displayed through a user-friendly interface, allowing for horizontal comparisons in charts and providing human evaluations.
+
+GlotEval-HumanEval is a component of GlotEval that presents toolkit results through a user-friendly interface, enabling horizontal comparisons via charts and human evaluations.
 
 Supported tasks and benchmarks
 -------------------------------
@@ -86,5 +87,4 @@ We are using the following frameworks and libraries:
    src/components
    src/api
    src/database
-   
-   src/whats-next
+   src/test
