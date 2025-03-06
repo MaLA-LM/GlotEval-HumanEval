@@ -6,7 +6,7 @@ Installation
 
 Open your terminal and clone the repo by typing::
 
-git clone https://github.com/DASP-Polyeval/GlotEval-HumanEval.git
+git clone https://github.com/MaLA-LM/GlotEval-HumanEval.git
 
 Then, cd into the new folder by typing::
 
