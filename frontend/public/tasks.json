@@ -1,0 +1,29 @@
+{
+  "Translation": {
+    "benchmarks": ["Flores-200", "others"],
+    "models": {
+      "Flores-200": {
+        "gemma-7b": {
+          "languages": ["eng_Latn-to-ace_Arab", "others"],
+          "file_paths": {
+            "eng_Latn-to-ace_Arab": "outputs/Flores-200/en-X/gemma-7b/eng_Latn-to-ace_Arab.jsonl",
+            "others": "other.jsonl"
+          }
+        }
+      }
+    }
+  },
+  "Classification": {
+    "benchmarks": ["sib-200"],
+    "models": {
+      "sib-200" : {
+        "bloom-7b1": {
+          "languages": ["ace_Arab"],
+          "file_paths":{
+            "ace_Arab" : "outputs/SIB-200/bloom-7b1/ace_Arab.jsonl"
+          }
+        }
+      }
+    }
+  }
+}

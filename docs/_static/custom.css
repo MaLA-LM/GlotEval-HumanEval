@@ -1,0 +1,24 @@
+.admonition {
+  background-color: transparent !important;
+  border: rgb(230, 230, 230) 1px solid;
+  border-radius: 3px 3px 3px 3px;
+}
+.admonition > p.admonition-title {
+  padding: 0.5em 1em;
+  border-radius: 3px 3px 0 0;
+  font-weight: bold;
+  font-size: 1em;
+  color: #000000;
+  background-color: rgb(230, 230, 230);
+}
+.admonition > p.admonition-title::before {
+  content: none;
+}
+
+.admonition-container {
+  display: flex;
+  justify-content: space-between;
+}
+.admonition-container .admonition {
+  width: 48%;
+}
