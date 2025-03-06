@@ -95,11 +95,15 @@ const Metrics = () => {
       "CodeLlama-7b-hf",
       "gemma-2-9b",
       "gemma-7b",
+<<<<<<< HEAD
       //"global_step1000",
       "emma-500-llama2-7b",
       //"global_step11000",
       //"global_step12000",
       //"global_step5000",
+=======
+      "emma-500-llama2-7b",
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
       "Llama-2-7b-chat-hf",
       "Llama-2-7b-hf",
       "LLaMAX2-7B",
@@ -129,7 +133,10 @@ const Metrics = () => {
       "Qwen2-7B",
       "Meta-Llama-3-8B",
       "Meta-Llama-3.1-8B",
+<<<<<<< HEAD
       //"global_step10000",
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
       "occiglot-7b-eu5-instruct",
       "gemma-2-9b",
       "TowerBase-7B-v0.1",
@@ -290,7 +297,10 @@ const Metrics = () => {
       "CodeLlama-7b-hf",
       "gemma-2-9b",
       "gemma-7b",
+<<<<<<< HEAD
       //"global_step10000",
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
       "Llama-2-7b-chat-hf",
       "Llama-2-7b-hf",
       "LLaMAX2-7B",
@@ -366,7 +376,10 @@ const Metrics = () => {
     ],
 
     PolyWrite: [
+<<<<<<< HEAD
       //"global_step10000",
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
       "Llama-2-7b-hf",
       "Llama-2-7b-chat-hf",
       "CodeLlama-7b-hf",

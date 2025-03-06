@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "polyeval",
+=======
+  "name": "GlotEval-HumanEval",
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
   "version": "0.1.0",
   "private": true,
   "dependencies": {

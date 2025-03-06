@@ -99,7 +99,11 @@ const Home = () => {
             sx={{ mb: 4, maxWidth: "800px", mx: "auto" }}
           >
             Evaluate language models across multiple tasks, languages, and
+<<<<<<< HEAD
             metrics. From text classification to machine translation, PolyEval
+=======
+            metrics. From text classification to machine translation, GlotEval-HumanEval
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
             provides the tools you need for thorough model assessment.
           </Typography>
         </Box>

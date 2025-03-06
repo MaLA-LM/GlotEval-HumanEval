@@ -56,6 +56,7 @@ const performance = {
     },
 
 
+<<<<<<< HEAD
     "global_step1000": {
 
       "0-0.2": 132,
@@ -65,6 +66,8 @@ const performance = {
 
     },
 
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
     "emma-500-llama2-7b": {
 
       
@@ -77,6 +80,7 @@ const performance = {
     },
 
 
+<<<<<<< HEAD
     "global_step11000": {
 
 
@@ -110,6 +114,8 @@ const performance = {
 
     },
 
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
 
     "Llama-2-7b-chat-hf": {
 
@@ -437,6 +443,7 @@ const performance = {
     },
 
 
+<<<<<<< HEAD
     "global_step10000": {
 
       "0-0.25": 1298,
@@ -446,6 +453,8 @@ const performance = {
 
 
     },
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
 
 
     "occiglot-7b-eu5-instruct": {
@@ -2343,6 +2352,7 @@ const performance = {
 
 "PolyWrite": {
 
+<<<<<<< HEAD
   "global_step10000": {
 
     "0-1": 177,
@@ -2352,6 +2362,8 @@ const performance = {
 
 
   },
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
 
 
   "Llama-2-7b-hf": {
@@ -2994,6 +3006,7 @@ const performance = {
   },
 
 
+<<<<<<< HEAD
   "global_step10000": {
 
     
@@ -3006,6 +3019,8 @@ const performance = {
   },
 
 
+=======
+>>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
   "Llama-2-7b-chat-hf": {
 
     "0-0.1": 25,

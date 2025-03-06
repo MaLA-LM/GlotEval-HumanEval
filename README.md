@@ -3,7 +3,7 @@
 Large Language Models (LLMs) are widely used, but can generate misleading outputs, posing potential risks. Evaluating LLMs, especially in low-resource languages, remains challenging due to limited benchmarks. GlotEval
 addresses this gap by providing an automatic evaluation toolkit that supports diverse tasks, benchmarks, and metrics. It also integrates human feedback mechanisms, enabling qualitative assessments alongside automated evaluation. By combining both approaches, GlotEval ensures a more comprehensive and reliable assessment of LLM performance across diverse linguistic settings.
 
-GlotEval-HumanEval is a part of the GlotEval. In this part, the results, products of this toolkit, will be displayed through a user-friendly interface, allowing for horizontal comparisons in charts and providing human evaluations.
+GlotEval-HumanEval is a component of GlotEval that presents toolkit results through a user-friendly interface, enabling horizontal comparisons via charts and human evaluations.
 
 ## 🌟 Key Features
 
@@ -27,11 +27,11 @@ GlotEval-HumanEval is a part of the GlotEval. In this part, the results, product
 1. Clone the repository:
 
 Open your terminal and then type:\
-`git clone https://github.com/DASP-Polyeval/GlotEval-HumanEval.git` \
+`git clone https://github.com/MaLA-LM/GlotEval-HumanEval.git` \
 That clones the repo.
 
 Then, cd into the new folder by typing:\
-$`CD polyeval`
+$`CD GlotEval-HumanEval`
 
 Then, cd into the backend folder by typing:\
 $`CD backend`
@@ -41,14 +41,14 @@ $`pip install -r requirements.txt`
 
 Then, type:\
 $ `python app.py`
-This starts the backend\
+This starts the backend
 
 Then, in another terminal, cd into the frontend folder by typing:\
 $`CD polyeval/frontend`
 
 Then, type:\
 $ `npm install`
-This installs the required dependencies.\
+This installs the required dependencies.
 
 To run the React project:\
 $ `npm start`
