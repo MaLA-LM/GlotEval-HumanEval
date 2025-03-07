@@ -34,9 +34,9 @@ function Login({ setUser }) {
   };
 
   const handleSubmit = async (e) => {
-    e?.preventDefault(); // Handle both button click and form submit
+    e.preventDefault(); // Correctly prevent default submission
     setError("");
-    
+
     if (!validateForm()) {
       return;
     }
@@ -50,7 +50,9 @@ function Login({ setUser }) {
       const searchParams = new URLSearchParams(outputBoardParams).toString();
       navigate(from + (searchParams ? `?${searchParams}` : ""));
     } catch (err) {
-      if (err.response?.data?.error) {
+      if (err.response?.status === 401) {
+        setError("Invalid username or password");
+      } else if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else if (err.message === "Network Error") {
         setError("Unable to connect to server. Please check your internet connection.");
@@ -64,8 +66,6 @@ function Login({ setUser }) {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit}
       sx={{
         minHeight: '100vh',
         display: 'flex',
@@ -73,112 +73,115 @@ function Login({ setUser }) {
         py: 4,
       }}
     >
-      <Box
-        sx={{
-          maxWidth: 400,
-          width: '100%',
-          mx: "auto",
-          p: 4,
-          borderRadius: 3,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-        }}
-      >
-        <Typography 
-          variant="h4" 
-          sx={{ 
-            mb: 4, 
-            textAlign: 'center', 
-            fontWeight: 'bold',
-            color: '#667eea',
-          }}
-        >
-          Welcome Back
-        </Typography>
-        
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <TextField
-          label="Username"
-          fullWidth
-          margin="normal"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-            setError("");
-          }}
-          disabled={isLoading}
-          error={error === "Username is required"}
-          sx={{ 
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            }
-          }}
-        />
-        <TextField
-          label="Password"
-          type="password"
-          fullWidth
-          margin="normal"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setError("");
-          }}
-          disabled={isLoading}
-          error={error === "Password is required"}
-          sx={{ 
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            }
-          }}
-        />
-        
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isLoading}
+      {/* Wrap everything inside the <form> element */}
+      <form onSubmit={handleSubmit} style={{width:'100%'}}> 
+        <Box
           sx={{
-            mt: 3,
-            mb: 2,
-            py: 1.5,
-            borderRadius: 2,
-            fontSize: '1.1rem',
-            textTransform: 'none',
-            bgcolor: '#667eea',
-            '&:hover': {
-              bgcolor: '#5a6fd6',
-            },
-            transition: 'transform 0.2s',
-            '&:hover': {
-              transform: 'translateY(-2px)',
-            }
+            maxWidth: 400,
+            width: '100%',
+            mx: "auto",
+            p: 4,
+            borderRadius: 3,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
           }}
-          fullWidth
         >
-          {isLoading ? <CircularProgress size={24} color="inherit" /> : "Login"}
-        </Button>
-
-        <Typography variant="body1" sx={{ mt: 3, textAlign: "center" }}>
-          No account?{" "}
-          <MuiLink 
-            component={Link} 
-            to="/signup"
+          <Typography
+            variant="h4"
             sx={{
-              textDecoration: 'none',
+              mb: 4,
+              textAlign: 'center',
               fontWeight: 'bold',
-              '&:hover': {
-                textDecoration: 'underline',
-              }
+              color: '#667eea',
             }}
           >
-            Sign up
-          </MuiLink>
-        </Typography>
-      </Box>
+            Welcome Back
+          </Typography>
+
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          <TextField
+            label="Username"
+            fullWidth
+            margin="normal"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError("");
+            }}
+            disabled={isLoading}
+            error={error === "Username is required"}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+              }
+            }}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
+            disabled={isLoading}
+            error={error === "Password is required"}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+              }
+            }}
+          />
+
+          <Button
+            type="submit" // Important: Button now knows it's submitting a form
+            variant="contained"
+            disabled={isLoading}
+            sx={{
+              mt: 3,
+              mb: 2,
+              py: 1.5,
+              borderRadius: 2,
+              fontSize: '1.1rem',
+              textTransform: 'none',
+              bgcolor: '#667eea',
+              '&:hover': {
+                bgcolor: '#5a6fd6',
+              },
+              transition: 'transform 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+              }
+            }}
+            fullWidth
+          >
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+          </Button>
+
+          <Typography variant="body1" sx={{ mt: 3, textAlign: "center" }}>
+            No account?{" "}
+            <MuiLink
+              component={Link}
+              to="/signup"
+              sx={{
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                '&:hover': {
+                  textDecoration: 'underline',
+                }
+              }}
+            >
+              Sign up
+            </MuiLink>
+          </Typography>
+        </Box>
+      </form>
     </Box>
   );
 }

@@ -128,6 +128,12 @@ function Dashboard({ user }) {
   };
 
   const handleRowSelect = (row) => {
+    if (!user) {
+      setSnackbarMessage("Please log in to provide feedback");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
+      return;
+    }
     setSelectedRow(row);
     setSidebarOpen(true);
   };
@@ -228,6 +234,13 @@ function Dashboard({ user }) {
   };
 
   const handleEvaluateClick = () => {
+    if (!user) {
+      setSnackbarMessage("Please log in to evaluate entries");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
+      return;
+    }
+
     if (!tableData || tableData.length === 0) {
       setSnackbarMessage("Please load table data first by selecting task, benchmark, model, and language.");
       setSnackbarSeverity("warning");
@@ -235,14 +248,8 @@ function Dashboard({ user }) {
       return;
     }
 
-    // Start evaluation from the beginning
     setCurrentIndex(0);
-    // Only check for existing feedback if user is logged in
-    if (user) {
-      checkExistingFeedback(tableData[0]);
-    } else {
-      setUserFeedback(null);
-    }
+    checkExistingFeedback(tableData[0]);
     setDialogOpen(true);
   };
 

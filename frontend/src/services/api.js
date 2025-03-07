@@ -26,14 +26,12 @@ api.interceptors.response.use(
     if (error.response) {
       // Server responded with error status
       if (error.response.status === 401) {
-        // Unauthorized - clear local storage and redirect to login
+        // Unauthorized - just clear local storage
         localStorage.removeItem('username');
-        window.location.href = '/login';
       }
     } else if (error.request) {
       // Request made but no response received
       console.error('Network Error:', error.request);
-      // You might want to show a network error toast/notification here
     } else {
       // Something else happened while setting up the request
       console.error('Error:', error.message);

@@ -4,35 +4,39 @@ Installation
 .. toctree::
    :maxdepth: 2
 
-Open your terminal and clone the repo by typing::
+Open your terminal and then type:
 
 git clone https://github.com/MaLA-LM/GlotEval-HumanEval.git
 
-Then, cd into the new folder by typing::
+Then, cd into the new folder by typing:
 
 cd GlotEval-HumanEval
 
-Then, cd into the backend folder by typing::
+Then, cd into the backend folder by typing:
 
 cd backend
 
-Then, install all the required dependencies by typing::
+Then, install all the required dependencies by typing:
 
 pip install -r requirements.txt
 
-Then, start the backend by typing::
+Create a new file in the backend directory called ".env", and put a randomly generated long (preferably 24+ characters) hex string in the SECRET_KEY variable.
+
+SECRET_KEY = your_very_long_and_random_secret_key
+
+Now back to the terminal, you are in the backend folder. type:
 
 python app.py
 
-Then, in another terminal, cd into the frontend folder by typing::
+Then, in another terminal, cd into the frontend folder by typing:
 
-cd polyeval/frontend
+cd GlotEval-HumanEval/frontend
 
-Then, installs the required dependencies by typing::
+Then, type:
 
 npm install
 
-To run the React project::
+To run the React project:
 
 npm start
 

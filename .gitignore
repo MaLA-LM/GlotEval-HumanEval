@@ -305,11 +305,8 @@
 # .svelte-kit
 
 # ### react ###
-<<<<<<< HEAD
 # .DS_*
-=======
 .DS_*
->>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
 # **/*.backup.*
 # **/*.back.*
 
@@ -319,6 +316,9 @@ backend/tasks.json
 backend/__pycache__/
 backend/app.db
 docs/_build
+data.db
+.env
+app.db
 # *.sublime*
 
 # psd
@@ -326,3 +326,4 @@ docs/_build
 # sketch
 
 # # End of https://www.toptal.com/developers/gitignore/api/flask,node,react
+backend/app.db

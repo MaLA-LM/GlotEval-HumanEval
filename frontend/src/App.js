@@ -122,9 +122,10 @@ function App() {
           <Route
             path="/metrics"
             element={
-              <ProtectedRoute user={user}>
-                <Metrics user={user} />
-              </ProtectedRoute>
+              // <ProtectedRoute user={user}>
+                // <Metrics user={user} />
+              // </ProtectedRoute>
+              <Metrics />
             }
           />
           <Route path="/guideline" element={<AnnotationGuidelines />} />
