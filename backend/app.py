@@ -1,4 +1,4 @@
-import os, json, bcrypt,importlib
+import os, json, bcrypt, importlib, sys
 from flask import Flask, request, jsonify, session, send_file
 from flask_cors import CORS
 from config import Config
@@ -7,13 +7,27 @@ from models import User, Annotation, Comment
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime, timedelta
 from deep_translator import GoogleTranslator
+import secrets
+
+# Check and generate secret key if needed
+def ensure_secret_key():
+    env_path = os.path.join(os.path.dirname(__file__), '.env')
+    if not os.path.exists(env_path) or 'SECRET_KEY' not in os.environ:
+        # Generate a random 24-byte hex string
+        secret_key = secrets.token_hex(24)
+        with open(env_path, 'w') as f:
+            f.write(f"SECRET_KEY={secret_key}")
+        os.environ['SECRET_KEY'] = secret_key
+
+# Ensure secret key exists before app initialization
+ensure_secret_key()
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['SESSION_COOKIE_SECURE'] = True  # Only send cookies over HTTPS
 app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
 app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'  # CSRF protection
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=8)  # Session expires in 1 hour
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=8)  # Session expires in 8 hours
 
 # Server start timestamp to invalidate old sessions
 SERVER_START_TIME = datetime.utcnow()

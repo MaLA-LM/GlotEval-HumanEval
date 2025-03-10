@@ -20,10 +20,6 @@ Then, install all the required dependencies by typing:
 
 pip install -r requirements.txt
 
-Create a new file in the backend directory called ".env", and put a randomly generated long (preferably 24+ characters) hex string in the SECRET_KEY variable.
-
-SECRET_KEY = your_very_long_and_random_secret_key
-
 Now back to the terminal, you are in the backend folder. type:
 
 python app.py
