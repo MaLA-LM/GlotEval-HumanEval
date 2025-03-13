@@ -89,9 +89,5 @@ We are using the following frameworks and libraries:
    src/components
    src/api
    src/database
-<<<<<<< HEAD
    src/test
-=======
-   
-   src/whats-next
->>>>>>> 2575079414c4fddbe4552ae17c2b8693bdc19143
+

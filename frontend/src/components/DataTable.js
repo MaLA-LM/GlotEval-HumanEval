@@ -12,6 +12,7 @@ import {
   Collapse,
   Box,
   Button,
+  TextField,
 } from "@mui/material";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import CategoryFilter from "./CategoryFilter";
@@ -28,7 +29,7 @@ function DataTable({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({ predicted: "", correct: "" });
   const [expandedRow, setExpandedRow] = useState(null);
-
+  const [jumpToIndex, setJumpToIndex] = useState("");
   const headers =
     columnOrder || (data && data.length > 0 ? Object.keys(data[0]) : []);
 
@@ -63,7 +64,14 @@ function DataTable({
   }, [filteredData.length, rowsPerPage, page]);
 
   if (!data || data.length === 0) return null;
-
+  // Handle jump-to functionality
+  const handleJumpTo = () => {
+    const index = parseInt(jumpToIndex, 10) - 1;
+    if (!isNaN(index) && index >= 0 && index < data.length) {
+      const newPage = Math.floor(index / rowsPerPage);
+      setPage(newPage);
+    }
+  };
   return (
     <Paper sx={{ my: 2 }}>
       {/* Display filter only when the header contains 'predicted_category' and 'correct_category */}
@@ -118,6 +126,8 @@ function DataTable({
                       >
                         {typeof row[head] === "object" && row[head] !== null
                           ? JSON.stringify(row[head])
+                          : head === "model_name"
+                          ? `${row[head]} (${page * rowsPerPage + idx + 1})`
                           : row[head]}
                       </TableCell>
                     ))}
@@ -173,14 +183,37 @@ function DataTable({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={filteredData.length}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "10px",
+        }}
+      >
+        <TablePagination
+          component="div"
+          count={filteredData.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+        {/* JumpToIndex */}
+        <box style={{ display: "flex", alignItems: "center", padding: "10px" }}>
+          <TextField
+            label="Enter Index"
+            variant="outlined"
+            size="small"
+            value={jumpToIndex}
+            onChange={(e) => setJumpToIndex(e.target.value)}
+            sx={{ marginRight: 1, width: "120px" }}
+          />
+          <Button variant="contained" onClick={handleJumpTo}>
+            Skip
+          </Button>
+        </box>
+      </Box>
     </Paper>
   );
 }
