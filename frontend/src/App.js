@@ -123,7 +123,7 @@ function App() {
             path="/metrics"
             element={
               // <ProtectedRoute user={user}>
-                // <Metrics user={user} />
+              // <Metrics user={user} />
               // </ProtectedRoute>
               <Metrics />
             }
@@ -132,7 +132,7 @@ function App() {
           <Route path="/human-feedback" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup setUser={setUser} />} />
-          <Route path="/analytics" element={<Analytics />} />
+          {/* <Route path="/analytics" element={<Analytics />} /> */}
           <Route path="/custom-evaluator" element={<CustomEvaluator />} />
         </Routes>
       </Box>
@@ -178,9 +178,9 @@ function NavigationButtons({ user, handleLogout }) {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem component={Link} to="/analytics" onClick={handleMenuClose}>
+          {/* <MenuItem component={Link} to="/analytics" onClick={handleMenuClose}>
             Graphs
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             component={Link}
             to="/data-visualisation"

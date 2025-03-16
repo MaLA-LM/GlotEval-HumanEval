@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Divider from "@mui/material/Divider";
 import TextClassification from "./TextClassification";
 import Sidebar from "./Sidebar";
 import DashboardSection from "../OutputBoardSection";
-
+import AnalyticsSidebar from "./AnalyticsSidebar";
 const DataVisualisation = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [filters, setFilters] = useState(null);
-
+  const [metrics, setMetrics] = useState(null);
   const taskOptions = {
     0: {
       dataset: ["SIB-200", "Taxi-1500"],
@@ -45,6 +46,11 @@ const DataVisualisation = () => {
   const handleFiltersComplete = (newFilters) => {
     setFilters(newFilters);
   };
+
+  const handleMetricsUpdate = (newMetrics) => {
+    setMetrics(newMetrics);
+  };
+
   const task = {
     0: "Classification",
     1: "Translation",
@@ -80,21 +86,27 @@ const DataVisualisation = () => {
         </Box>
 
         {/* Main content */}
-        <Box sx={{ flex: 1 }}>
+        <Box
+          sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }}
+        >
           {filters && (
             <TextClassification
               externalTabValue={selectedTab}
               filters={filters}
+              sx={{ flexGrow: 1 }}
             />
           )}
 
+          <Divider sx={{ margin: "10px 0" }} />
           {/* Error analysis section (include human evaluation) */}
           {filters && filters.filterType === "model" && (
-            <DashboardSection
-              task={task[selectedTab]}
-              benchmark={filters.dataset}
-              model={filters.filterValue}
-            />
+            <Box sx={{ marginTop: "-60px" }}>
+              <DashboardSection
+                task={task[selectedTab]}
+                benchmark={filters.dataset}
+                model={filters.filterValue}
+              />
+            </Box>
           )}
         </Box>
       </Box>
