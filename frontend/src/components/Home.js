@@ -121,7 +121,7 @@ const Home = () => {
           radial-gradient(circle at 80% 70%, ${theme.palette.secondary.main}15 0%, transparent 50%)
         `,
         opacity: 0.8,
-        zIndex: 0,
+        zIndex: -1,
       }
     }}>
       {/* Hero Section */}
@@ -135,10 +135,11 @@ const Home = () => {
           pt: 12,
           pb: 20,
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 95%)",
+          zIndex: 0,
         }}
       >
         <WavePattern />
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           <Box sx={{ mb: 8, color: "white", textAlign: "center" }}>
             <Typography
               component="h1"
@@ -190,6 +191,7 @@ const Home = () => {
         mt: -24,
         pb: 24,
         pt: 8,
+        zIndex: 1,
         "&::before": {
           content: '""',
           position: "absolute",
@@ -220,7 +222,7 @@ const Home = () => {
           opacity: 0.8,
         }
       }}>
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           <Typography
             variant="h3"
             sx={{
@@ -353,6 +355,7 @@ const Home = () => {
           mt: -16,
           pt: 12,
           pb: 12,
+          zIndex: 2,
           background: `linear-gradient(135deg, 
             ${theme.palette.secondary.main}95 0%,
             ${theme.palette.secondary.dark}95 100%)`,
@@ -376,7 +379,7 @@ const Home = () => {
           }
         }}
       >
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           <Typography
             variant="h3"
             sx={{
