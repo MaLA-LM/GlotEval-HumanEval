@@ -154,9 +154,11 @@ function NavigationButtons({ user, handleLogout }) {
   };
 
   const handleLoginRedirect = () => {
+    const searchParams = new URLSearchParams(location.search);
     navigate("/login", {
       state: {
         from: location.pathname,
+        outputBoardParams: Object.fromEntries(searchParams),
       },
     });
   };
