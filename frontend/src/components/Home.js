@@ -406,10 +406,10 @@ const Home = () => {
           </Typography>
           <Grid container spacing={4} justifyContent="center">
             {[
-              { label: "Supported Languages", value: "x+" },
-              { label: "Evaluation Tasks", value: "y" },
-              { label: "Evaluation Metrics", value: "z+" },
-              { label: "Model Evaluations", value: "1M+" },
+              { label: "Languages", value: "1500+" },
+              { label: "NLP Tasks", value: "6+" },
+              { label: "Evaluation Metrics*", value: "7+" },
+              { label: "Models*", value: "24+" },
             ].map((stat) => (
               <Grid item xs={6} md={3} key={stat.label}>
                 <Paper
@@ -456,6 +456,20 @@ const Home = () => {
               </Grid>
             ))}
           </Grid>
+          <Typography
+          sx={{ 
+            paddingTop: 4,
+            fontWeight: 400,
+            fontSize: "0.8rem", 
+            color: "white",
+            textAlign: "center",
+            mb: 1,
+            alignContent:'center',
+            alignItems:'center',
+            textAlign: "right",
+          }}>
+          *The platform enables users to upload results from new models and customize metrics. However, both the uploading feature and metric customization are currently unstable and need further development to improve their reliability.
+          </Typography>
         </Container>
       </Box>
     </Box>
