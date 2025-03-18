@@ -458,15 +458,16 @@ const Home = () => {
           </Grid>
           <Typography
           sx={{ 
-            paddingTop: 4,
-            fontWeight: 400,
+            paddingTop: 8,
+            textAlign: "center",
+            fontWeight: 100,
             fontSize: "0.8rem", 
             color: "white",
             textAlign: "center",
             mb: 1,
             alignContent:'center',
             alignItems:'center',
-            textAlign: "right",
+            textAlign: "left",
           }}>
           *The platform enables users to upload results from new models and customize metrics. However, both the uploading feature and metric customization are currently unstable and need further development to improve their reliability.
           </Typography>
